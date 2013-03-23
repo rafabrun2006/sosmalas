@@ -1,0 +1,16 @@
+/* 
+    Document   : template
+    Created on : 25/07/2012, 10:58:48
+    Author     : Bruno
+    Description:
+        Purpose of the stylesheet follows.
+*/
+.main-menu{
+    background-color: buttonface;
+    height: 30px;
+}
+.main-menu li{
+    font-size: 13px;
+    display: inline;
+}
+

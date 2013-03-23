@@ -1,0 +1,13 @@
+@charset "UTF-8";
+
+ head h1{
+	text-align:center;
+}
+#faixa {
+	background-color:#ff6600;
+	text-align:center;
+	color:#fff;
+}
+div ul li a{
+	font-size:10pt;
+}

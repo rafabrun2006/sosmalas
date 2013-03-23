@@ -1,0 +1,54 @@
+/* 
+    Document   : css-acoordeon
+    Created on : 12/03/2013, 22:56:38
+    Author     : Hebert Soares
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+ul#menuGeral{
+ margin:0px;
+ padding:0px;
+ font-family:Verdana,Arial,Helvetica,sans-serif;
+ font-size:11px;
+ list-style:none;
+}
+ul#menuGeral li{
+}
+/*-Para todos os atributos 'a', aqui será a marcação da sanfona-*/
+ul#menuGeral a{
+ display:block;
+ padding:3px;
+ cursor:pointer;
+ color:#000;
+ text-decoration:none;
+}
+
+/*-Para todos os atributos 'a' dentro de uma 'li'-*/
+ul#menuGeral li a{
+ padding-left: 20px;
+ background-color:#DDE0EF;
+ border:1px solid #D4D4D4;
+ margin-bottom:1px;
+}
+ul#menuGeral li a:hover{
+ background-color:#B7BDDD;
+}
+
+/*-O conteudo que fica debaixo da opção da sanfona-*/
+ul#menuGeral .conteudoMenu{
+ border-left:1px solid #D4D4D4;
+ border-right:1px solid #D4D4D4;
+ padding:5px;
+ background-color:#F7F7F7;
+}
+ul#menuGeral .conteudoMenu a{
+ background-color:#F7F7F7;
+ padding-left:25px;
+ margin-bottom:0px;
+ border:0px;
+}
+ul#menuGeral .conteudoMenu a:hover{
+ background-color:#DADADA;
+}
+

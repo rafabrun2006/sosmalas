@@ -1,0 +1,9 @@
+<html>
+    <head>
+        <title>SOS-Malas</title>
+    </head>
+    <body>
+        <h4>Seja bem vindo: <?php print_r(Zend_Auth::getInstance()->getIdentity()->email) ?></h4>
+        <?php echo $this->layout()->content; ?>
+    </body>
+</html>

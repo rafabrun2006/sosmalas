@@ -1,0 +1,13 @@
+a .status {
+    display: inline-block;
+    height: 16px;
+    width: 16px;
+}
+
+a .publish_1 {
+    background-image: url("/img/publish.png");
+}
+
+a .publish_0 {
+    background-image: url("/img/unpublish.png");
+}

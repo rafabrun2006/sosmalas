@@ -1,0 +1,108 @@
+#newsSlider{border:1px solid #DDD;width:942px;height:240px;background-color:#FFF;margin-bottom:15px;padding:5px}
+#strut{border:1px solid #DDD;width:942px;height:440px;background-color:#FFF;margin-bottom:15px;padding:5px}
+.boxHoverimg{border-color:#FFF!important}
+.boxHoverh1{color:#FAD946!important}
+#scrollNoticias{float:right;width:595px;height:22px;overflow:hidden!important}
+#scrollNoticias #scroll{position:absolute}
+#scrollNoticias #scroll #noticias{position:relative;_position:absolute;float:left;width:530px;padding-top:2px;overflow:hidden;color:gray}
+#scrollNoticias #scroll #noticias span{display:block}
+#scrollNoticias #scroll #noticias span a{display:block;text-decoration:none;color:gray;margin:0;padding:0}
+#scrollNoticias #scroll #noticias span a:hover{text-decoration:underline}
+#ultimasNoticias{margin-bottom:15px}
+#ultimasNoticias .boxNoticias{height:305px;padding:10px}
+#ultimasNoticias .box{text-align:left;float:left;border:1px solid #DDD;width:212px;_margin:2px;height:285px;margin:3px 8px 3px 3px;padding:5px}
+#ultimasNoticias a{text-decoration:none}
+#ultimasNoticias .box img{width:198px;border:3px solid #DDD;margin:4px}
+#ultimasNoticias .manchete{background:transparent;margin:4px}
+#ultimasNoticias .manchete h1{color:#b31011;margin-bottom:8px}
+#ultimasNoticias .manchete h2{margin-bottom:8px;color:#000}
+#ultimasNoticias .manchete p{color:gray;font-size:8pt}
+#noticiasUltimasScroll{float:left;border:1px solid #DDD;width:458px;height:295px;margin-top:4px;margin-left:7px;overflow:auto}
+#noticiasUltimasScroll a{color:#000!important;font-weight:700}
+#noticiasUltimasScroll a:hover{color:#FFF!important}
+#noticiasUltimasScroll .manchete{color:#000!important;display:block;clear:both;min-height:30px;margin-bottom:5px;border-bottom:1px dotted #DDD;padding:5px}
+#noticiasUltimasScroll .data{background-image:url(../images/bg_tabs.jpg)!important;background-position:0 0;background-color:#FFF;border:1px solid #DDD!important;width:35px;text-align:center;margin-right:10px;float:left;padding:5px!important}
+#noticiasUltimasScroll .data .dia{font-size:10pt;font-weight:700;color:#000!important}
+#noticiasUltimasScroll .data .mesano{font-size:8pt;font-weight:700;color:#000!important}
+#noticiasUltimasScroll .txt{margin-top:5px!important;display:block;font-weight:400}
+#noticiasUltimasScroll .espaco{margin-left:1px;margin-right:1px}
+#multimidia .box{text-align:left;border:1px solid #DDD;width:680px;margin-right:8px;height:260px;padding:12px}
+#multimidia #videos #listagem{width:305px;float:left;margin-right:10px}
+#multimidia #videos #listagem #video{border:1px solid #DDD;height:65px;margin-bottom:5px;padding:8px}
+#multimidia #videos #listagem #video img{width:80px;height:55px;border:3px solid #DDD}
+#multimidia #videos #listagem #video .chamada{padding-left:8px;width:185px}
+#multimidia #videos #listagem h1{color:#b31011;margin-bottom:3px}
+#multimidia #videos #listagem h2{font-size:9pt;margin-bottom:0;font-weight:400;color:gray}
+#multimidia #videos #player{border:1px solid #DDD;width:345px;height:241px;float:left;overflow:hidden;padding:8px}
+#multimidia #videos #player #player_video{border:1px solid #DDD;margin:0;padding:0}
+#multimidia #fotos #galerias{width:660px;height:255px;border:1px solid #DDD;padding:10px}
+#multimidia #fotos .galeria{width:320px;height:130px;display:inline-block}
+#multimidia #fotos .galeria img{float:left;margin-right:5px;width:80px;height:55px;border:3px solid #DDD}
+#multimidia #fotos .manchete{float:right;width:220px;margin-right:5px}
+#audios{float:right}
+#audios .box{text-align:left;border:1px solid #DDD;width:212px;margin-right:5px;height:264px;padding:10px}
+#audios #listagem{width:195px;margin-bottom:0;border:1px solid #DDD;height:215px;padding:8px}
+#audios #listagem div{white-space:inherit;margin-bottom:10px}
+#audios #listagem .img{float:right;margin:5px}
+#audios #listagem .chamada{width:195px;padding-bottom:10px;border-bottom:1px solid #ECECEC}
+#audios #listagem h2{font-size:9pt;margin-bottom:0;font-weight:700;color:gray}
+#audios #listagem p{margin-top:5px}
+#audios #playerAudio{margin-top:8px;border:1px solid #DDD;padding:0}
+#programas{float:left;margin-top:15px;border:1px solid #DDD;width:684px;height:202px;background-color:#FFF;margin-left:-1px;margin-right:10px;padding:10px}
+#programas #listagem{width:582px;overflow:hidden;float:left;margin-left:15px;margin-right:10px;height:196px}
+#programas #listagem #carousel{width:10000px}
+#programas #listagem #programa{text-align:center;float:left;margin-right:9px;border:1px solid #ECECEC;width:160px;height:170px;padding:12px}
+#programas #listagem #programa img{width:150px;height:110px;border:2px solid #DDD}
+#programas #listagem #programa h2{text-align:left;margin-top:5px;color:gray}
+#programas .bt_back{float:left;background:url(../images/p_back.gif);width:38px;height:199px;cursor:pointer}
+#programas .bt_back:hover{background:url(../images/p_backHover.gif)}
+#programas .bt_next{float:right;background:url(../images/p_next.gif);width:38px;height:199px;cursor:pointer}
+#programas .bt_next:hover{background:url(../images/p_nextHover.gif)}
+#newsletter p{margin:0;padding:0}
+#newsletter{margin-top:15px;float:right}
+#newsletter .box{text-align:left;border:1px solid #DDD;width:211px;margin-right:5px;height:100px;padding:10px}
+#newsletter form{margin-top:10px}
+#newsletter form label{width:4em;float:left;text-align:right;margin-right:.5em;display:block;margin-top:6px}
+#newsletter form p{margin-bottom:5px;margin-right:8px}
+#newsletter form input{color:#969696;font-size:10pt;border:1px solid #DDD;background:url(../images/bg_input.jpg) repeat-x #FFF;padding:3px}
+#newsletter form .submit{width:35px;height:24px;font-size:9px!important}
+#newsletter form .submit:hover{background-image:none;color:#FFF;background-color:#000099}
+#social{float:right;margin-right:4px;margin-top:14px;text-align:center!important;border:1px solid #DDD;width:215px;height:37px;padding:8px}
+#social ul{text-align:center!important;list-style:none;margin:0}
+#social li{float:left;margin-right:6px}
+.boxHoverBg,#ultimasNoticias .box:hover{background:#900000 url(../images/bg_box_noticias.jpg)}
+.boxHoverh2,.boxHoverp{color:#fff!important}
+#scrollNoticias #scroll div,#newsletter img{float:left;margin-right:10px}
+#noticiasUltimasScroll .manchete:hover,.videosHoverBg{background:#900000 url(../images/bg_videos.jpg) repeat-x}
+#multimidia,#multimidia #videos #listagem #video div{float:left}
+#multimidia #fotos .galeria:hover *,#programas #listagem #programa:hover *{color:#CB0101;border-color:#CE1212!important}
+
+
+
+
+#container_d h1{font-weight:700;font-size:9pt;color:#000}
+#container_d h2{font-weight:400;font-size:8pt;color:gray;margin-top:5px}
+#container_d h3{font-size:25pt;letter-spacing:-2px}
+#container_d .left{float:left;width:4px;min-height:150px;background:url(../images/bg_conteudo_left.png) #FFF no-repeat top left}
+#container_d .right{float:left;width:4px;min-height:150px;background:url(../images/bg_conteudo_right.png) #FFF no-repeat top left}
+#container_d{text-align:justify!important}
+#container_d .conteudo{float:left;background:url(../images/bg_conteudo.png) #FFF repeat-x;width:925px;padding:10px}
+#foto{float:left;height:208px;overflow:hidden;margin:15px}
+#foto img{border:3px solid #F1F1F1!important}
+#foto img:hover{border-color:#BF0C0C!important}
+#foto #legenda{position:relative;margin-top:-55px;display:none;margin-left:3px;height:50px;width:269px;background:url(../images/alpha.png)}
+#foto #legenda span{display:block;color:#FFF!important;padding:5px}
+.margem{padding:5px 10px!important}
+fieldset{border:transparent}
+#form p{display:block;margin-bottom:10px}
+#form label{font-size:9pt;width:8em;float:left;text-align:right;margin-right:.8em;display:block;padding:3px}
+#form input{color:#000;background:#fff;border:1px solid #ccc;padding:5px}
+#form input:focus{color:#000;background:#fff}
+#form button{color:#000;background:#EEE;border:2px outset #ccc;margin-left:11em}
+
+
+
+#galeria {float:left;height:130px;overflow:hidden;margin:0px 0px 0px 0px}
+#galeria img{border:3px solid #F1F1F1!important}
+#galeria img:hover{border-color:#BF0C0C!important}
+#galeria #legenda{position:relative;margin-top:-55px;display:none;margin-left:3px;height:50px;width:269px;background:url(../images/alpha.png)}

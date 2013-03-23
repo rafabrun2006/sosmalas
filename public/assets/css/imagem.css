@@ -1,0 +1,28 @@
+/*       BANNER             */
+/*       FAZ AJUSTE DA IMAGEM DO BANNER NA TELA PRINCIPAL             */
+#frameBanners{ position:absolute;top:0;left:0;}
+	#frameBanners ul{margin:0;padding:0;z-index:30;}
+	#frameBanners ul li{float:left;padding:0;margin:0;list-style:none;}
+	#teaser{
+			position:relative;
+			padding: 0px 0px 0px 0px;
+			overflow:hidden;
+			width:941px;
+			height:239px;
+			margin-top:0px;
+			margin-left:0px;
+			
+			}
+	
+	#controle{margin-top:210px;float:right;position:absolute;z-index:50;right:20px;}
+	#controle ul li{float:left;padding:0;margin:0;width:24px; height:37px;list-style:none;}
+	#controle ul li a{width:24px; height:37px;text-decoration:none;}
+	#controle ul li a div.btControl{width:24px; height:37px;text-decoration:none;}
+	#controle ul{padding:0;margin:0;}
+/*       FIM BANNER             */
+*	
+{
+
+	border:0px;
+	
+}

@@ -1,0 +1,42 @@
+<form action="" method="post">
+    <table>
+        <tr>
+            <td>Buscar <input name="os" type="text" size="35"/>
+                <input type="submit" name="botao" class="btn" value="Consultar" </td>
+        </tr>
+    </table>
+    <br>
+
+
+ <?php if(isset($_POST["botao"])){
+     echo "botão foi clicado";
+
+      ?>
+    
+    <table class="table table-striped">
+        <thead>
+        <th>OS</th>
+        <th>Cliente</th>
+        <th>Data do Pedido</th>
+        <th>Previsão de Coleta</th>
+        <th>Status</th>
+        </thead>
+        <tbody>
+            <?php
+           
+            foreach ($this->listColeta as $coleta): ?>
+            <tr>
+                <td><?php echo $coleta->os ?></td>
+                <td><?php echo $coleta->cliente ?></td>
+                <td><?php echo $coleta->data_pedido ?></td>
+                <td><?php echo $coleta->previsao_coleta ?></td>
+                <td><?php echo $coleta->status ?></td>
+
+            </tr>
+            <?php endforeach; ?>
+        
+        </tbody>
+    </table>
+</form>
+<?php }?>
+

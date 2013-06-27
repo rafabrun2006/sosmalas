@@ -1,0 +1,42 @@
+<form action="" method="post">
+    <table>
+        <tr>
+            <td>Buscar <input name="nome" type="text" size="35"/>
+                <input type="submit" value="OK"  class="btn"</td>
+        </tr>
+    </table>
+
+    <table class="table table-striped">
+        <thead>
+        <th>Data de entrada</th>
+        <th>Empresa</th>
+        <th>Processo</th>
+        <th>Marca</th>
+        <th>Nome</th>
+        <th>Dano</th>
+        <th>Preço</th>
+        <th>Data de conclusão</th>
+        <th>Data de previsão</th>
+        <th>Data de entrega</th>
+        </thead>
+        <tbody>
+            <?php foreach ($this->listEntrada as $entrada): ?>
+            <tr>
+                <td><?php echo $entrada->data_entrada ?></td>
+                <td><?php echo $entrada->empresa ?></td>
+                <td><?php echo $entrada->processo ?></td>
+                <td><?php echo $entrada->marca ?></td>
+                <td><?php echo $entrada->nome ?></td>
+                <td><?php echo $entrada->dano ?></td>
+                <td><?php echo $entrada->preco ?></td>
+                <td><?php echo $entrada->data_conclusao ?></td>
+                <td><?php echo $entrada->data_previsao ?></td>
+                <td><?php echo $entrada->data_entrega ?></td>
+
+                <td><a href="/entrada/delete/id/<?php echo $entrada->id ?>">Delete</a></td>
+                <td><a href="/entrada/editar-entrada/id/<?php echo $entrada->id ?>">Editar</a></td>
+            </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</form>

@@ -1,6 +1,6 @@
 <?php
 
-class Simova_Plugins_Layout extends Zend_Controller_Plugin_Abstract {
+class SOSMalas_Plugins_Layout extends Zend_Controller_Plugin_Abstract {
 
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
 

@@ -1,0 +1,44 @@
+<form action="" class="form-inline" method="post">
+    <div class="control-group">
+        Filtrar por OS: <input class="input-mini" name="os_coleta" type="text" size="35">
+        <button class="btn" type="submit">Buscar</button>
+    </div>
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <th>OS</th>
+        <th>Cliente</th>
+        <th>Data do Pedido</th>
+        <th>Endereço</th>
+        <th>Ponto de Referência</th>
+        <th>Telefone Fixo</th>
+        <th>PCM</th>
+        <th>Previsão de Coleta</th>
+        <th>Tipo</th>
+        <th>Status</th>
+        <th></th>
+        </thead>
+        <tbody>
+            <?php foreach ($this->listColeta as $coleta): ?>
+                <tr>
+                    <td><?php echo $coleta->os_coleta ?></td>
+                    <td><?php echo $coleta->cliente_id ?></td>
+                    <td><?php echo $coleta->data_pedido_coleta ?></td>
+                    <td><?php //echo $coleta->endereco      ?></td>
+                    <td><?php //echo $coleta->ponto_referencia      ?></td>
+                    <td><?php //echo $coleta->fone_fixo      ?></td>
+                    <td><?php echo $coleta->pcm_coleta ?></td>
+                    <td><?php echo $coleta->previsao_coleta ?></td>
+                    <td><?php echo $coleta->tipo_coleta ?></td>
+                    <td><?php echo $coleta->status_coleta ?></td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn" href="/coleta/delete/os/<?php echo $coleta->os_coleta ?>"><i class="icon-edit"></i></a>
+                            <a class="btn btn-danger" href="/coleta/editar-coleta/os/<?php echo $coleta->os_coleta ?>"><i class="icon-trash icon-white"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</form>

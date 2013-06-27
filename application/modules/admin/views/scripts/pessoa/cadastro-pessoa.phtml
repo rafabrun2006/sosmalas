@@ -1,0 +1,39 @@
+<form action="" method="post" class="form-horizontal">
+      <?php echo 'Mensagem: '.$this->texto ?>
+ 
+        <?php echo $this->form->id?>
+    
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Nome: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->nome?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">E-mail: </label>
+    <div class="controls">
+      <!-- <input type="text" name="email" value="<?php echo $this->email ?>"><br>-->
+         <?php echo $this->form->email?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputPassword">Senha: </label>
+    <div class="controls">
+      <!--<input type="password" name="senha" value="<?php echo $this->senha ?>">-->
+         <?php echo $this->form->senha?>
+    </div>
+  </div>
+    <div class="control-group">
+    <label class="control-label" for="inputPassword">Confirmar senha: </label>
+    <div class="controls">
+      <!--<input type="password" name="senha" value="<?php echo $this->senha2 ?>">-->
+         <?php echo $this->form->senha?>
+    </div>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">Salvar</button>
+    </div>
+  </div>
+</form>

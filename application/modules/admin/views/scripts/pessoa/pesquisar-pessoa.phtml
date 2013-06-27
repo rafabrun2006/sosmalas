@@ -1,0 +1,34 @@
+<form action="" method="post" class="form-inline">
+    <legend>Funcionários</legend>
+    <div class="control-group">
+        <div class="controls">
+            Filtrar por Nome: 
+            <input class="input-xlarge" name="nome_pessoa" type="text" size="35">
+            <button type="submit" class="btn">Buscar</button>
+        </div>
+    </div>
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <th>ID</th>
+        <th>Nome</th>
+        <th>Email</th>
+        <th></th>
+        </thead>
+        <tbody>
+            <?php foreach ($this->listPessoa as $pessoa): ?>
+                <tr>
+                    <td><?php echo $pessoa->id_pessoa ?></td>
+                    <td><?php echo $pessoa->nome_pessoa ?></td>
+                    <td><?php echo $pessoa->email_pessoa ?></td>
+                    <td width="80">
+                        <div class="btn-group">
+                            <a class="btn btn-success" href="/pessoa/delete/id/<?php echo $pessoa->id_pessoa ?>"><i class="icon-edit icon-white"></i></a>
+                            <a class="btn btn-danger" href="/pessoa/editar-pessoa/id/<?php echo $pessoa->id_pessoa ?>"><i class="icon-trash icon-white"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</form>

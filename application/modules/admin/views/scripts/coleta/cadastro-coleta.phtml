@@ -1,0 +1,107 @@
+<head>
+
+  <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.2/themes/smoothness/jquery-ui.css" />
+  <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+  <script src="http://code.jquery.com/ui/1.10.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="/resources/demos/style.css" />
+  <script>
+  $(function() {
+    $( "#datepicker" ).datepicker({
+      showOtherMonths: true,
+      selectOtherMonths: true
+    });
+  });
+  </script>
+
+
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+
+
+
+<form action="" method="post" class="form-horizontal">
+      <?php echo 'Mensagem: '.$this->texto ?>
+
+        <?php echo $this->form->id?>
+
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Cliente: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->cliente?>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">E-mail: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->email ?>"><br>-->
+         <?php echo $this->form->email?>
+    </div>
+  </div>
+
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Data do pedido: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+        <input type="text" name="data_pedido" id="datepicker" value="<?php echo $this->data_pedido ?>">
+        <!-- <?php echo $this->form->data_pedido?>-->
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Endereço: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->endereco?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Ponto de referência: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->ponto_referencia?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Telefone fixo: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->fone_fixo?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">PCM: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->pcm?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Previsão de coleta: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->previsao_coleta?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Tipo: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->tipo?>
+    </div>
+  </div>
+  <div class="control-group">
+    <label class="control-label" for="inputEmail">Status: </label>
+    <div class="controls">
+        <!--<input type="text" name="nome" value="<?php echo $this->nome ?>"><br>-->
+         <?php echo $this->form->status?>
+    </div>
+  </div>
+    
+  <div class="control-group">
+    <div class="controls">
+      <button type="submit" class="btn">Salvar</button>
+    </div>
+  </div>
+</form>

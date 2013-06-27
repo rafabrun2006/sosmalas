@@ -7,13 +7,13 @@
  *
  * @author bruno
  */
-class AuthController extends Zend_Controller_Action {
+class Admin_AuthController extends Zend_Controller_Action {
 
     /**
      * Metodo construtor da classe
      */
     public function indexAction() {
-        $this->redirect('/auth/login');
+        $this->redirect($this->getRequest()->getModuleName() . '/auth/login');
     }
 
     /**
@@ -35,8 +35,8 @@ class AuthController extends Zend_Controller_Action {
                 $authAdapter = new Zend_Auth_Adapter_DbTable();
                 $authAdapter
                         ->setTableName('pessoa') //Indicando ao zend qual a tabela para autenticacao
-                        ->setCredentialColumn('senha') //Indicando o campo para senha
-                        ->setIdentityColumn('email'); //Indicando o campo para usuario
+                        ->setCredentialColumn('senha_pessoa') //Indicando o campo para senha
+                        ->setIdentityColumn('email_pessoa'); //Indicando o campo para usuario
 
                 $authAdapter
                         ->setIdentity($post['email']) //Preenchendo o usuario
@@ -46,10 +46,10 @@ class AuthController extends Zend_Controller_Action {
 
                     //Preenchendo os dados da sessao do usuario autenticado
                     Zend_Auth::getInstance()->getStorage()
-                            ->write($authAdapter->getResultRowObject(null, 'senha'));
+                            ->write($authAdapter->getResultRowObject(null, 'senha_pessoa'));
                     
                     //Se login certo, redireciona para principal
-                    $this->_redirect('/index');
+                    $this->_redirect($this->getRequest()->getModuleName() . '/index');
                 } else {
                     //Se login errado, apresenta mensagem de erro
                     $this->view->mensagem = '<b>Usuário</b> e/ou <b>Senha</b> inválidos! ';
@@ -57,7 +57,7 @@ class AuthController extends Zend_Controller_Action {
             } else {
 
                 //Caso nao preenchido os campos necessarios, retorna mensagem
-                $this->view->mensagem = '<b>Usuário</b> e <b>Senha</b> e de preenchimento obrigatório';
+                $this->view->mensagem = '<b>Usuário</b> e <b>Senha</b> é de preenchimento obrigatório';
             }
         }
     }
@@ -68,7 +68,7 @@ class AuthController extends Zend_Controller_Action {
     public function logoutAction() {
         $auth = Zend_Auth::getInstance();
         $auth->clearIdentity();
-        $this->_redirect('/auth/login');
+        $this->_redirect($this->getRequest()->getModuleName() . '/auth/login');
     }
 
 }

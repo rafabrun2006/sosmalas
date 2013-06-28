@@ -1,0 +1,53 @@
+<div class="span6">
+    <?php echo $this->element->os_coleta ?>
+
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Cliente: </label>
+        <div class="controls">
+            <div class="required">
+                <?php echo $this->element->nome_pessoa ?>
+            </div>
+            <?php echo $this->element->cliente_id ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Data do pedido: </label>
+        <div class="controls">
+            <?php echo $this->element->data_pedido_coleta ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">PCM: </label>
+        <div class="controls">
+            <?php echo $this->element->pcm_coleta ?>
+        </div>
+    </div>
+</div>
+<div class="span5">
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Previsão de coleta: </label>
+        <div class="controls">
+            <?php echo $this->element->previsao_coleta ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Tipo: </label>
+        <div class="controls">
+            <?php echo $this->element->tipo_coleta ?>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputEmail">Status: </label>
+        <div class="controls">
+            <?php echo $this->element->status_coleta ?>
+        </div>
+    </div>
+</div>
+<div class="span12">
+    <div class="control-group form-actions">
+        <div class="controls">
+            <button type="submit" class="btn btn-primary">Salvar</button>
+            <button type="reset" class="btn">Limpar</button>
+        </div>
+    </div>
+</div>

@@ -18,29 +18,14 @@ class Admin_ColetaController extends Zend_Controller_Action {
 
             if ($form->isValid($post)) {
                 $os = $model->insert($post);
-                $status = $this->_request->getParam('status');
-                $email = $this->_request->getParam('email');
+                $status = $post['status_coleta'];
 
-                $config = array('auth' => 'login',
-                    'username' => 'rhi.grupo1@gmail.com',
-                    'password' => 'fortiumgama',
-                    'ssl' => 'ssl',
-                    'port' => '465'
-                );
-
-                $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $config);
-
-                $mail = new Zend_Mail();
+                $mail = new SOSMalas_Mail();
                 $mail->setBodyText('Prezado cliente, seu processo de número ' . $os . ' foi cadastrado com sucesso e encontra-se no seguinte status: ' . $status);
                 $mail->setFrom('rhi.grupo1@gmail.com', 'Sistema SOS Malas');
-                $mail->addTo($email, 'Cliente');
-                $mail->setSubject('dentro do if');
-                $mail->send($transport);
-
-                if ($os) {
-                    $this->view->texto = 'Usuario ' . $os . ' inserido com sucesso';
-                    $this->_redirect('/coleta/cadastro-coleta');
-                }
+                $mail->addTo('rafabrun2006@gmail.com', 'Cliente');
+                $mail->setSubject('subject');
+                $mail->sendEmail();
             }
         }
 
@@ -50,32 +35,33 @@ class Admin_ColetaController extends Zend_Controller_Action {
     public function deleteAction() {
         $model = new Application_Model_Coleta();
 
-        $os = $model->delete('os = ' . $this->_getParam('os'));
+        $model->delete(array('os_coleta' => $this->_getParam('os_coleta')));
 
-        $this->_redirect('/coleta/pesquisar-coleta');
-        $this->view->texto = 'Usuario ' . $id . ' deletado com sucesso!';
+        $this->_redirect('/admin/coleta/pesquisar-coleta');
     }
 
-    public function editarColetaAction() {
+    public function editarAction() {
 
         $model = new Application_Model_Coleta();
-        $result = $model->find($this->_getParam('os'))->toArray();
+        $getArray = $model->getArrayById($this->_getParam('os_coleta'));
+        $result = $getArray[0];
 
-        $form = new Application_Form_Coleta();
+        $result['previsao_coleta'] = SOSMalas_Date::dateToView($result['previsao_coleta']);
+        $result['data_pedido_coleta'] = SOSMalas_Date::dateToView($result['data_pedido_coleta']);
 
-        //echo '<pre>';
-        //print_r($result);
-
-
+        $form = new Admin_Form_Coleta();
 
         if ($this->_request->isPost()) {
             $post = $this->_request->getPost();
             if ($form->isValid($post)) {
-                $os = $model->edit($post);
+                $model->update($post);
             }
+
+            $form->populate($post);
+        } else {
+            $form->populate($result);
         }
 
-        $form->populate($result[0]);
         $this->view->form = $form;
     }
 

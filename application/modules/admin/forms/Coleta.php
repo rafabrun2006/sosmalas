@@ -5,77 +5,68 @@ class Admin_Form_Coleta extends Zend_Form {
     const erro = 'Campo de preenchimento obrigatório!';
 
     function init() {
-        $os = new Zend_Form_Element_Hidden('os');
+        $os = new Zend_Form_Element_Hidden('os_coleta');
         $this->addElement($os);
+        
+        $nome_cliente  = new Zend_Form_Element_Text('nome_pessoa', array('class'=>'input-xlarge search-pessoa', 'autocomplete'=>'off', 'data-provide'=>'typeahead', 'required'=>true, 'id'=>'search-pessoa'));
+        $this->addElement($nome_cliente);
 
-        $cliente = new Zend_Form_Element_Text('cliente');
+        $cliente = new Zend_Form_Element_Hidden('cliente_id');
         $cliente->setRequired(true)
                 ->addErrorMessage(self::erro);
         $this->addElement($cliente);
 
-        $email = new Zend_Form_Element_Text('email');
-        $email->setRequired(true)
-                ->addErrorMessage(self::erro);
-        $this->addElement($email);
-
-        $data_pedido = new Zend_Form_Element_Text('data_pedido');
+        $data_pedido = new Zend_Form_Element_Text('data_pedido_coleta', array('class'=>'date'));
         $data_pedido->setRequired(true)
                 ->addErrorMessage(self::erro)
         ;
 
         $this->addElement($data_pedido);
 
-        $endereco = new Zend_Form_Element_text('endereco');
-        $endereco->setRequired(true)
-                ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
-        ;
-        $this->addElement($endereco);
-
-        $ponto_referencia = new Zend_Form_Element_text('ponto_referencia');
-        $ponto_referencia->setRequired(true)
-                ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
-        ;
-        $this->addElement($ponto_referencia);
-
-        $fone_fixo = new Zend_Form_Element_text('fone_fixo');
-        $fone_fixo->setRequired(true)
-                ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
-        ;
-        $this->addElement($fone_fixo);
-
-        $pcm = new Zend_Form_Element_text('pcm');
+        $pcm = new Zend_Form_Element_text('pcm_coleta');
         $pcm->setRequired(true)
                 ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
         ;
         $this->addElement($pcm);
 
-        $previsao_coleta = new Zend_Form_Element_text('previsao_coleta');
+        $previsao_coleta = new Zend_Form_Element_text('previsao_coleta', array('class'=>'date'));
         $previsao_coleta->setRequired(true)
                 ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
         ;
         $this->addElement($previsao_coleta);
 
-        $tipo = new Zend_Form_Element_text('tipo');
+        $tipo = new Zend_Form_Element_text('tipo_coleta');
         $tipo->setRequired(true)
                 ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
         ;
         $this->addElement($tipo);
 
-        $status = new Zend_Form_Element_Text('status');
+        $status = new Zend_Form_Element_Select('status_coleta');
         $status->setRequired(true)
                 ->addErrorMessage(self::erro)
-                //->addValidator(new Zend_Validate_Identical('senha'))
         ;
         $this->addElement($status);
 
         foreach($this->getElements() as $element ) {
             $element->removeDecorator('label')->removeDecorator('htmltag');
+        }
+        
+        $this->populaStatusColeta();
+        
+        $this->setDecorators(array(
+            array('ViewScript',
+                array('viewScript' => 'coleta/form-coleta.phtml')
+            )
+        ));
+    }
+    
+    public function populaStatusColeta(){
+        $statusColeta = new Application_Model_StatusColeta();
+        
+        $this->getElement('status_coleta')->addMultiOption(null, '--');
+        
+        foreach($statusColeta->fetchAll() as $value){
+            $this->getElement('status_coleta')->addMultiOption($value->id_status_coleta, $value->nome_status_coleta);
         }
     }
 }

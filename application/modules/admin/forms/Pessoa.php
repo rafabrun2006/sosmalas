@@ -31,11 +31,11 @@ class Admin_Form_Pessoa extends Zend_Form {
                 ->setLabel("Email:");
         $this->addElement($email);
 
-        $tel_res = new Zend_Form_Element_Text('tel_res_pessoa');
+        $tel_res = new Zend_Form_Element_Text('tel_res_pessoa', array('class'=>'fone'));
         $tel_res->setLabel("Telefone Residencial:");
         $this->addElement($tel_res);
 
-        $tel_cel = new Zend_Form_Element_Text('tel_cel_pessoa');
+        $tel_cel = new Zend_Form_Element_Text('tel_cel_pessoa', array('class'=>'fone'));
         $tel_cel->setLabel('Telefone Celular:');
         $this->addElement($tel_cel);
 

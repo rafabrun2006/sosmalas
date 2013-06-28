@@ -1,31 +1,8 @@
-<form action="" method="post" class="form-horizontal">
-    <?php echo 'Mensagem: '.$this->texto ?>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->form->id_pessoa ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label" for="inputEmail">Nome: </label>
-        <div class="controls">
-            <?php echo $this->form->nome_pessoa ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label" for="inputEmail">E-mail: </label>
-        <div class="controls">
-            <?php echo $this->form->email_pessoa ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <label class="control-label" for="inputPassword">Senha: </label>
-        <div class="controls">
-            <?php echo $this->form->senha_pessoa ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <button type="submit" class="btn">Salvar</button>
-        </div>
-    </div>
+<form class="form-inline" method="post">
+    <fieldset>
+        <legend>Funcionário >> Editar</legend>
+        <?php
+        echo $this->form;
+        ?>
+    </fieldset>
 </form>

@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
+class Application_Model_Pessoa extends SOSMalas_Db_Mapper {
 
     protected $_name = 'pessoa';
     protected $_primary = 'id_pessoa';
@@ -29,8 +29,19 @@ class Application_Model_Pessoa extends Zend_Db_Table_Abstract {
         return $this->fetchAll($query)->toArray();
     }
 
-    public function edit($array) {
-        $this->update($array, 'id = ' . $array['id']);
+    public function update($array) {
+        return parent::update($array);
+    }
+
+    public function searchPerson(array $where) {
+
+        $query = $this->select();
+
+        foreach ($where as $key => $value) {
+            $query->where($key . ' ' . $value);
+        }
+
+        return $this->fetchAll($query)->toArray();
     }
 
 }

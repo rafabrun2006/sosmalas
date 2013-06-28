@@ -1,0 +1,18 @@
+<?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of Const
+ *
+ * @author Bruno
+ */
+class SOSMalas_Const {
+
+    const DATE_FORMAT_DB = 'Y-m-d';
+    const DATE_FORMAT_VIEW = 'd-m-Y';
+    
+}

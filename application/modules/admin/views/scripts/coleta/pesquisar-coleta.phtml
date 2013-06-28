@@ -9,9 +9,6 @@
         <th>OS</th>
         <th>Cliente</th>
         <th>Data do Pedido</th>
-        <th>Endereço</th>
-        <th>Ponto de Referência</th>
-        <th>Telefone Fixo</th>
         <th>PCM</th>
         <th>Previsão de Coleta</th>
         <th>Tipo</th>
@@ -22,19 +19,16 @@
             <?php foreach ($this->listColeta as $coleta): ?>
                 <tr>
                     <td><?php echo $coleta->os_coleta ?></td>
-                    <td><?php echo $coleta->cliente_id ?></td>
-                    <td><?php echo $coleta->data_pedido_coleta ?></td>
-                    <td><?php //echo $coleta->endereco      ?></td>
-                    <td><?php //echo $coleta->ponto_referencia      ?></td>
-                    <td><?php //echo $coleta->fone_fixo      ?></td>
+                    <td><?php echo $coleta->nome_pessoa ?></td>
+                    <td><?php echo SOSMalas_Date::dateToView($coleta->data_pedido_coleta) ?></td>
                     <td><?php echo $coleta->pcm_coleta ?></td>
-                    <td><?php echo $coleta->previsao_coleta ?></td>
+                    <td><?php echo SOSMalas_Date::dateToView($coleta->previsao_coleta) ?></td>
                     <td><?php echo $coleta->tipo_coleta ?></td>
                     <td><?php echo $coleta->status_coleta ?></td>
                     <td>
                         <div class="btn-group">
-                            <a class="btn" href="/coleta/delete/os/<?php echo $coleta->os_coleta ?>"><i class="icon-edit"></i></a>
-                            <a class="btn btn-danger" href="/coleta/editar-coleta/os/<?php echo $coleta->os_coleta ?>"><i class="icon-trash icon-white"></i></a>
+                            <a class="btn" href="/admin/coleta/editar/os_coleta/<?php echo $coleta->os_coleta ?>"><i class="icon-edit"></i></a>
+                            <a class="btn btn-danger" href="/admin/coleta/delete/os_coleta/<?php echo $coleta->os_coleta ?>"><i class="icon-trash icon-white"></i></a>
                         </div>
                     </td>
                 </tr>

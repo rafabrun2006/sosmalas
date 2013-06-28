@@ -1,6 +1,6 @@
 <?php
 
-class Application_Model_Coleta extends Zend_Db_Table_Abstract {
+class Application_Model_Coleta extends SOSMalas_Db_Mapper {
     
     protected $_name = 'coletas';
     protected $_primary = 'os_coleta';
@@ -8,14 +8,13 @@ class Application_Model_Coleta extends Zend_Db_Table_Abstract {
     public function listColeta($where = NULL){
         $query = $this->select()
                 ->from(array('c' => 'coletas'), array('*'))
-                //->joinInner(array('p' => 'tb_pessoa'), 'p.cod_pessoa = f.cod_pessoa', array('*'))
+                ->joinInner(array('p' => 'pessoa'), 'p.id_pessoa = c.cliente_id', array('*'))
                 ->setIntegrityCheck(false);
 
         if($where){
-            $query->where(key($where)." like ?", "%{$where['os']}%");
+            $query->where(key($where)." like ?", "%{$where['os_coleta']}%");
         }
         
-        //echo $query;
         return $this->fetchAll($query);
     }
 
@@ -23,19 +22,27 @@ class Application_Model_Coleta extends Zend_Db_Table_Abstract {
 
         $query = $this->select()
                 ->from(array('c' => 'coletas'), array('*'))
-                /*->join(array('p' => 'tb_pessoa'), 'f.cod_pessoa = p.cod_pessoa', array('*'))
-                ->join(array('e' => 'tb_endereco'), 'p.cod_end = e.cod_end', array('*'))
-                ->join(array('t' => 'tb_telefone'), 't.cod_pessoa = p.cod_pessoa', array('*'))
-                ->joinLeft(array('l' => 'tb_login'), 'l.cod_login = p.cod_login', array('*'))*/
-                ->where('c.coletas = ?', $coletas)
+                ->join(array('p' => 'pessoa'), 'c.cliente_id = p.id_pessoa', array('*'))
+                ->where('c.os_coleta = ?', $coletas)
                 ->setIntegrityCheck(false)
                 ;
 
         return $this->fetchAll($query)->toArray();
     }
 
-    public function edit($array){
-        $this->update($array, array('os' => $array['os']));
+    public function update($array){
+        $array['data_pedido_coleta'] = SOSMalas_Date::dateToBanco($array['data_pedido_coleta']);
+        $array['previsao_coleta'] = SOSMalas_Date::dateToBanco($array['previsao_coleta']);
+        
+        parent::update($array);
+    }
+    
+    public function insert($data){
+        
+        $data['data_pedido_coleta']  = SOSMalas_Date::dateToBanco($data['data_pedido_coleta']);
+        $data['previsao_coleta']  = SOSMalas_Date::dateToBanco($data['previsao_coleta']);
+        
+        return parent::insert($data);
     }
 }
 

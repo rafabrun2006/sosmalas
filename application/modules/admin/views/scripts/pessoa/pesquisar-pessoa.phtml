@@ -3,7 +3,7 @@
     <div class="control-group">
         <div class="controls">
             Filtrar por Nome: 
-            <input class="input-xlarge" name="nome_pessoa" type="text" size="35">
+            <input required="required" class="input-xlarge" id="search-pessoa" autocomplete="off" name="nome_pessoa" type="text" size="35">
             <button type="submit" class="btn">Buscar</button>
         </div>
     </div>
@@ -23,8 +23,8 @@
                     <td><?php echo $pessoa->email_pessoa ?></td>
                     <td width="80">
                         <div class="btn-group">
-                            <a class="btn btn-success" href="/pessoa/delete/id/<?php echo $pessoa->id_pessoa ?>"><i class="icon-edit icon-white"></i></a>
-                            <a class="btn btn-danger" href="/pessoa/editar-pessoa/id/<?php echo $pessoa->id_pessoa ?>"><i class="icon-trash icon-white"></i></a>
+                            <a class="btn btn-success" href="/admin/pessoa/editar/id_pessoa/<?php echo $pessoa->id_pessoa ?>"><i class="icon-edit icon-white"></i></a>
+                            <a class="btn btn-danger" href="/admin/pessoa/delete/id_pessoa/<?php echo $pessoa->id_pessoa ?>"><i class="icon-trash icon-white"></i></a>
                         </div>
                     </td>
                 </tr>

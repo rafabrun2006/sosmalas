@@ -15,4 +15,6 @@ class SOSMalas_Const {
     const DATE_FORMAT_DB = 'Y-m-d';
     const DATE_FORMAT_VIEW = 'd-m-Y';
     
+    const MSG01 = 'Operação realizada com sucesso';
+    const MSG02 = 'Erro ao executar a opeção';
 }

@@ -36,7 +36,8 @@ class Admin_AuthController extends Zend_Controller_Action {
                 $authAdapter
                         ->setTableName('pessoa') //Indicando ao zend qual a tabela para autenticacao
                         ->setCredentialColumn('senha_pessoa') //Indicando o campo para senha
-                        ->setIdentityColumn('email_pessoa'); //Indicando o campo para usuario
+                        ->setIdentityColumn('email_pessoa') //Indicando o campo para usuario
+                        ->setAmbiguityIdentity(true);
 
                 $authAdapter
                         ->setIdentity($post['email']) //Preenchendo o usuario

@@ -1,107 +1,103 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
     <head>
-        <meta name="keywords" content="" />
-        <meta name="description" content="" />
-        <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title>Painel Administrativo</title>
-
-        <link href="/assets/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="/assets/css/bootstrap.css" rel="stylesheet" type="text/css" />
-        <link href="/assets/css/datepicker.css" rel="stylesheet" type="text/css" />
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" href="/assets/css/bootstrap.css">
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/assets/css/datepicker.css">
+        <title>Principal</title>
     </head>
     <body>
-        <div class="navbar navbar-fixed-top">
+        <div class="navbar navbar-inverse navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid">
-                    <div class="navbar">
-                        <a class="brand" href="/admin/index">SOS Malas - Painel Administrativo</a>
-                    </div>
-                    <div class="pull-right">
-                        <div class="btn-group">
-                            <a class="btn btn-primary" href="#"><i class="icon-user icon-white"></i> <?php echo Zend_Auth::getInstance()->getIdentity()->nome_pessoa ?></a>
-                            <a class="btn btn-primary dropdown-toggle" data-toggle="dropdown" href="#"><span class="caret"></span></a>
-                            <ul class="dropdown-menu">
-                                <li>
-                                    <a href="/admin/pessoa/editar/id/<?php echo Zend_Auth::getInstance()->getIdentity()->id_pessoa ?>">
-                                        <i class="icon-pencil"></i> 
-                                        Editar Perfil
-                                    </a>
-                                </li>
-                                <li class="divider"></li>
-                            </ul>
-                        </div>
+                <div class="container">
+                    <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="/admin/index" class="brand">SOS Malas</a>
+                    <div class="nav-collapse collapse">
+                        <ul class="nav">
+                            <li class="active"><a href="/admin/index">Principal</a></li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <strong>Pessoas</strong>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-header">Menu de Usuários</li>
+                                    <li><a href="/admin/pessoa/cadastro"><i class="icon-plus"></i> Cadastrar Pessoa</a></li>
+                                    <li><a href="/admin/pessoa/pesquisar-pessoa"><i class="icon-search"></i> Consultar Pessoa</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <strong>Coletas</strong>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-header">Menu de Coletas</li>
+                                    <li><a href="/admin/coleta/cadastro-coleta" ><i class="icon-plus"></i> Cadastrar Coleta</a></li>
+                                    <li><a href="/admin/coleta/pesquisar-coleta"><i class="icon-search"></i> Consultar Coleta</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                                    <strong>Entradas</strong>
+                                    <b class="caret"></b>
+                                </a>
+                                <ul class="dropdown-menu">
+                                    <li class="nav-header">Protocolo de chegada de malas</li>
+                                    <li><a href="/admin/entrada/cadastro"><i class="icon-plus"></i> Cadastrar</a></li>
+                                    <li><a href="/admin/entrada/pesquisar-entrada"><i class="icon-search"></i> Consultar</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                        <a class="btn btn-danger pull-right" href="/admin/auth/logout">Sair</a>
+                        <div class="btn btn-info pull-right"><?php echo Zend_Auth::getInstance()->getIdentity()->nome_pessoa ?></div>
                     </div>
                 </div>
             </div>
         </div>
-        <br></br>
-        <br></br>
-        <div class="container-fluid">
-            <div class="row-fluid">
-                <div class="span3">
-                    <div class="well sidebar-nav">
-                        <ul class="nav nav-list">
-                            <li class="active"><a>Menu</a></li>
-                            <li>
-                                <li class="itemMenu"><a class="nav-header" href="#">Funcionários</a></li>
-                                <ul class="conteudoMenu">
-                                    <li><a href="/admin/pessoa/cadastro">Cadastrar</a></li>
-                                    <li><a href="/admin/pessoa/pesquisar-pessoa">Consultar</a></li>
-
-                                </ul>
-                            </li>
-                            <li>
-                                <li class="itemMenu"><a class="nav-header" href="#">Processos</a></li>
-                                <ul class="conteudoMenu">
-                                    <li><a href="/admin/coleta/cadastro-coleta" >Cadastrar</a></li>
-                                    <li><a href="/admin/coleta/pesquisar-coleta">Consultar</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <li class="itemMenu"><a class="nav-header" href="#">Protocolo de chegada de malas</a></li>
-                                <ul class="conteudoMenu">
-                                    <li><a href="/admin/entrada/cadastro-entrada" >Cadastrar</a></li>
-                                    <li><a href="/admin/entrada/pesquisar-entrada">Consultar</a></li>
-                                </ul>
-                            </li>
-                            <li>
-                                <li class="itemMenu"><a class="nav-header" href="/admin/coleta/consultar-status">Consultar Status</a></li>
-
-                            </li>
-                            <li>
-                                <li class="itemMenu"><a class="nav-header" href="#">Peças</a></li>
-                                <ul class="conteudoMenu">
-                                    <li><a href="#">Cadastrar</a></li>
-                                    <li><a href="#">Consultar</a></li>
-                                </ul>
-                            </li>
-
-
-
-                            <li>
-                                <li class="itemMenu"><a class="nav-header" href="/admin/auth/logout">Sair</a></li>
-                            </li>
-                        </ul>
-                    </div>
-                </div>
-                <div class="span9">
+        <br>
+        <br>
+        <br>
+        <div class="container">
+            <div class="row">
+                <section class="span12">
                     <?php echo $this->layout()->content ?>
-                </div>
+                </section>
             </div>
             <hr>
-                <footer>
-                    &copy; SOS Malas
-                </footer>
+<!--            <div class="row">
+                <div class="span6">
+                    <h4>Ultimas OS</h4>
+                    <ul>
+                        <li>Suporte para sistema...</li>
+                        <li>Instalação do pacote....</li>
+                    </ul>
+                    <p><a class="btn" href="#">Ver Todas</a></p>
+                </div>
+                <div class="span6">
+                    <h4>Pendentes</h4>
+                    <ul>
+                        <li>Instalação do windows...</li>
+                        <li>Instalação do pacote....</li>
+                    </ul>
+                    <p><a class="btn" href="#">Ver Todas</a></p>
+                </div>
+            </div>
+            <hr>-->
+            <footer>
+                &copy; SOS Malas
+            </footer>
         </div>
         <script type="text/javascript" src="/assets/js/jquery.min.js"></script>
         <script type="text/javascript" src="/assets/js/bootstrap.js"></script>
         <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="/assets/js/acoordeon.js"></script>
         <script type="text/javascript" src="/assets/js/dropdown-bootstrap.js"></script>
-        <script type="text/javascript" src="/assets/js/datepicker/locales/bootstrap-datepicker.br.js"></script>
+        <!--<script type="text/javascript" src="/assets/js/datepicker/locales/bootstrap-datepicker.br.js"></script>-->
         <script type="text/javascript" src="/assets/js/datepicker/bootstrap-datepicker.js"></script>
         <script type="text/javascript" src="/assets/js/datepicker/bootstrap-datepicker.min.js"></script>
         <script type="text/javascript" src="/assets/js/datepicker/bootstrap-timepicker.js"></script>

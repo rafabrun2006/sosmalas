@@ -4,6 +4,8 @@
  */
 $(document).ready(function() {
 
+    $('.dropdown-toggle').dropdown();
+
     $('.date').datepicker({
         format: 'dd-mm-yyyy',
         monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
@@ -13,6 +15,8 @@ $(document).ready(function() {
     $('.date').mask('99-99-9999');
     
     $('.fone').mask('(99)9999-9999');
+    
+    $('.money').maskMoney({symbol:'R$ ' ,decimal:".", thousands:"."});
     
     $('.btn-danger').click(function(){
        if(!confirm('Tem certeza que deseja continuar esta operação?')){

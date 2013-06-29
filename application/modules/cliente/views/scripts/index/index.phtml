@@ -1,27 +1,20 @@
 <style type="text/css">
-    .panel{
-        background-color: yellowgreen;
-        border-radius: 5px;
-        border: 1px solid;
-        max-width: 60%;
-        margin: 3% 20% 0 20%;
-        padding: 5px;
+    .form-horizontal{
+        margin: 15% 0 20% 0;
     }
 </style>
-<div class="panel">
-    <h2> O que faltava? </h2>
+<form class="form-horizontal">
+    <h4>
+        <center>Verifique como se encontra o estado do seu pedido</center>
+    </h4>
     <br>
-    <ul>
-        <li>Criação do Bootstrap de cada módulo "modulo/Bootstrap.php"</li>
-        <br>
-        <li>Retirar linhas duplicadas que sobrepunham configurações já feitas no arquivo <b>application.ini</b></li>
-        <br>
-        <li>Criação de diretorios padrões já criados no modulo <strong>Admin</strong> para o modulo <strong>Cliente</strong> dentre eles (view/scripts e view/layout/layout.phtml</li>
-        <br>
-        <li>Reescrita dos nomes das controllers do modulo admin, porque apartir do momento que se começa a utilizar modulos, o Zend obrigatoriamente cobra que sejam utilizados prefixos nos nomes dos modulos exemplo <strong>Admin_AuthController</strong></li>
-        <br>
-        <li>Deleção de diretorios que não serão mais utilizados</li>
-        <br>
-        <li>Modificação da nomeclatura das classes de formularios para adptação a utilização de modulos</li>
-    </ul>
-</div>
+    <br>
+    <br>
+    <div class="control-group">
+        <label class="control-label">Buscar</label>
+        <div class="controls">
+            <input type="text" value="<?php echo @$this->params['hashcod'] ?>" name="hashcod" class="input-xxlarge" placeholder="Insira o codigo da sua coleta e então clique em verificar">
+            <button class="btn btn-primary">Verificar</button>
+        </div>
+    </div>
+</form>

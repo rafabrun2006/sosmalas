@@ -34,7 +34,6 @@ class SOSMalas_Db_Mapper extends Zend_Db_Table_Abstract {
                 $arrayFields[$key] = $value;
             }
         }
-
         return parent::update($arrayFields, $this->_primary[1] . '=' . $data[$this->_primary[1]]);
     }
     

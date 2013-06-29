@@ -1,0 +1,48 @@
+<?php echo $this->flashMessenger() ?>
+<form action="" method="post">
+    <legend>Entrada >> Consulta</legend>
+    <div class="form-search">
+        <div class="control-group">
+            Filtrar: <input name="nome" type="text" size="35"/>
+            <input type="submit" value="Buscar"  class="btn">
+        </div>
+    </div>
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <th>Data de entrada</th>
+        <th>Empresa</th>
+        <th>Processo</th>
+        <th>Marca</th>
+        <th>Nome</th>
+        <th>Dano</th>
+        <th>Preço</th>
+        <th>Data de conclusão</th>
+        <th>Data de previsão</th>
+        <th>Data de entrega</th>
+        <th></th>
+        </thead>
+        <tbody>
+            <?php foreach ($this->listEntrada as $entrada): ?>
+                <tr>
+                    <td><?php echo SOSMalas_Date::dateToView($entrada->data_entrada) ?></td>
+                    <td><?php echo $entrada->empresa_entrada ?></td>
+                    <td><?php echo $entrada->processo_entrada ?></td>
+                    <td><?php echo $entrada->marca_entrada ?></td>
+                    <td><?php echo $entrada->nome_entrada ?></td>
+                    <td><?php echo $entrada->dano_entrada ?></td>
+                    <td><?php echo number_format($entrada->preco_entrada, 2, ',', '.') ?></td>
+                    <td><?php echo SOSMalas_Date::dateToView($entrada->data_conclusao_entrada) ?></td>
+                    <td><?php echo SOSMalas_Date::dateToView($entrada->data_previsao_entrada) ?></td>
+                    <td><?php echo SOSMalas_Date::dateToView($entrada->data_entrega_entrada) ?></td>
+                    <td>
+                        <div class="btn-group">
+                            <a class="btn" href="/admin/entrada/editar/id/<?php echo $entrada->id_entrada ?>"><i class="icon-edit"></i></a>
+                            <a class="btn btn-danger" href="/admin/entrada/delete/id/<?php echo $entrada->id_entrada ?>"><i class="icon-trash icon-white"></i></a>
+                        </div>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</form>

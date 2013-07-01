@@ -18,19 +18,23 @@ class Admin_ColetaController extends Zend_Controller_Action {
             $modelPessoa = new Application_Model_Pessoa();
 
             $pessoa = $modelPessoa->find($post['cliente_id']);
-            
+
             if ($pessoa) {
                 if ($form->isValid($post)) {
                     try {
                         $os = $model->insert($post);
 
+                        $htmlEmail = 'Prezado cliente, seu processo de número ' .
+                                $os . ' foi cadastrado com sucesso <br> caso queira consulta-la ' .
+                                'acesse o link http://sistema.sosmalas.com.br/index/os/hashcod/' . base64_encode($os);
+
                         $mail = new SOSMalas_Mail('UTF8');
-                        $mail->setBodyText('Prezado cliente, seu processo de número ' . $os . ' foi cadastrado com sucesso');
+                        $mail->setBodyHtml($htmlEmail);
                         $mail->setFrom('naoresponda@sosmalas.com.br', 'Sistema SOS Malas');
                         $mail->addTo($pessoa[0]->email_pessoa, 'Cliente');
                         $mail->setSubject('Registro de Coleta - SOS Malas');
-                        if($mail->sendEmail()){
-                            $this->_helper->flashMessenger(array('success' => 'Coleta registrada com sucesso, um email foi enviado para '.$pessoa[0]->email_pessoa));
+                        if ($mail->sendEmail()) {
+                            $this->_helper->flashMessenger(array('success' => 'Coleta registrada com sucesso, um email foi enviado para ' . $pessoa[0]->email_pessoa));
                             $this->_redirect('/admin/coleta/pesquisar-coleta');
                         }
                     } catch (Exception $e) {
@@ -39,7 +43,7 @@ class Admin_ColetaController extends Zend_Controller_Action {
                 } else {
                     $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG03));
                 }
-            }else{
+            } else {
                 $this->_helper->flashMessenger(array('danger' => 'Este cliente não está registrado no sistema, por favor registre-o'));
             }
         }

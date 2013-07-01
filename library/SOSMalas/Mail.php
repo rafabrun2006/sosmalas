@@ -12,8 +12,8 @@
  */
 class SOSMalas_Mail extends Zend_Mail {
 
-    const EMAIL = 'rhi.grupo1@gmail.com';
-    const PASSWORD = 'fortiumgama';
+    const EMAIL = 'naoresponda@sosmalas.com.br';
+    const PASSWORD = '$0$Malas123';
     const SSL = 'ssl';
     const PORT = '465';
 
@@ -32,7 +32,7 @@ class SOSMalas_Mail extends Zend_Mail {
     }
 
     public function sendEmail() {
-        $transport = new Zend_Mail_Transport_Smtp('smtp.gmail.com', $this->config);
+        $transport = new Zend_Mail_Transport_Smtp('mail.sosmalas.com', $this->config);
         return $this->send($transport);
     }
 

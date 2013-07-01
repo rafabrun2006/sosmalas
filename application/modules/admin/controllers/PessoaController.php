@@ -17,9 +17,11 @@ class Admin_PessoaController extends Zend_Controller_Action {
             $model = new Application_Model_Pessoa();
 
             if ($form->isValid($post)) {
-                $id = $model->insert($post);
+                $model->insert($post);
+                $this->_helper->flashMessenger(array('sucess' => SOSMalas_Const::MSG02));
                 $this->_redirect('/pessoa/pesquisar-pessoa');
-                $this->view->texto = 'Usuario ' . $id . ' inserido com sucesso';
+            } else {
+                $this->_helper->flashMessenger(array('sucess' => SOSMalas_Const::MSG03));
             }
         }
 
@@ -29,9 +31,12 @@ class Admin_PessoaController extends Zend_Controller_Action {
     public function deleteAction() {
         $model = new Application_Model_Pessoa();
 
-        $model->delete(array('id_pessoa'=>$this->_getParam('id_pessoa')));
-
-        $this->_redirect('/admin/pessoa/pesquisar-pessoa');
+        if ($model->delete(array('id_pessoa' => $this->_getParam('id_pessoa')))) {
+            $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
+            $this->_redirect('/admin/pessoa/pesquisar-pessoa');
+        }else{
+            $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG02));
+        }
     }
 
     public function editarAction() {
@@ -45,10 +50,13 @@ class Admin_PessoaController extends Zend_Controller_Action {
             $post = $this->_request->getPost();
             if ($form->isValid($post)) {
                 $model->update($post);
+                $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
+                $this->_redirect('/admin/pessoa/pesquisar-pessoa');
+            } else {
+                $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG03));
             }
-            
+
             $form->populate($post);
-            
         } else {
             $form->populate($result[0]);
         }

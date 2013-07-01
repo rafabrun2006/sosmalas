@@ -13,6 +13,10 @@
         <th>ID</th>
         <th>Nome</th>
         <th>Email</th>
+        <th>Tel. Celular</th>
+        <th>Tel. Residencial</th>
+        <th>Endereço</th>
+        <th>Ponto Referencia</th>
         <th></th>
         </thead>
         <tbody>
@@ -21,9 +25,13 @@
                     <td><?php echo $pessoa->id_pessoa ?></td>
                     <td><?php echo $pessoa->nome_pessoa ?></td>
                     <td><?php echo $pessoa->email_pessoa ?></td>
+                    <td><?php echo $pessoa->tel_cel_pessoa ?></td>
+                    <td><?php echo $pessoa->tel_res_pessoa ?></td>
+                    <td><?php echo $pessoa->endereco_pessoa ?></td>
+                    <td><?php echo $pessoa->ponto_ref_pessoa ?></td>
                     <td width="80">
                         <div class="btn-group">
-                            <a class="btn btn-success" href="/admin/pessoa/editar/id_pessoa/<?php echo $pessoa->id_pessoa ?>"><i class="icon-edit icon-white"></i></a>
+                            <a class="btn" href="/admin/pessoa/editar/id_pessoa/<?php echo $pessoa->id_pessoa ?>"><i class="icon-edit"></i></a>
                             <a class="btn btn-danger" href="/admin/pessoa/delete/id_pessoa/<?php echo $pessoa->id_pessoa ?>"><i class="icon-trash icon-white"></i></a>
                         </div>
                     </td>

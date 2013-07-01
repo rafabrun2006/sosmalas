@@ -4,6 +4,11 @@
  */
 $(document).ready(function() {
 
+    /*Usado pela função de busca auto-complete de pessoa*/
+    var nomePessoa = null;
+    var idPessoa = null;
+    var mapped;
+
     $('.dropdown-toggle').dropdown();
 
     $('.date').datepicker({
@@ -31,8 +36,8 @@ $(document).ready(function() {
                 mapped = {};
 
                 $.each(data, function(key, value) {
-                    mapped[value.nome_pessoa] = value.id_pessoa;
-                    labels.push(value.nome_pessoa);
+                    mapped[value.id_pessoa] = value;
+                    labels.push(value.id_pessoa+'.'+value.nome_pessoa+'-'+value.tel_cel_pessoa);
                 });
 
                 process(labels);
@@ -40,8 +45,14 @@ $(document).ready(function() {
         },
         items: 10,
         updater: function(item) {
-            $('#cliente_id').val(mapped[item]);
-            return item;
+            retiraPonto = item.split('.');
+            nome = retiraPonto[1].split('-');
+            
+            nomePessoa = nome[0];
+            idPessoa = retiraPonto[0];
+            
+            $('#cliente_id').val(retiraPonto[0]);
+            return nomePessoa;
         }
     });
 

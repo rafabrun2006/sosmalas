@@ -1,4 +1,5 @@
 <form action="" class="form-inline" method="post">
+    <legend>Coleta >> Consulta</legend>
     <div class="control-group">
         Filtrar por OS: <input class="input-mini" name="os_coleta" type="text" size="35">
         <button class="btn" type="submit">Buscar</button>
@@ -24,7 +25,7 @@
                     <td><?php echo $coleta->pcm_coleta ?></td>
                     <td><?php echo SOSMalas_Date::dateToView($coleta->previsao_coleta) ?></td>
                     <td><?php echo $coleta->tipo_coleta ?></td>
-                    <td><?php echo $coleta->status_coleta ?></td>
+                    <td><?php echo $this->statusColeta[$coleta->status_coleta] ?></td>
                     <td>
                         <div class="btn-group">
                             <a class="btn" href="/admin/coleta/editar/os_coleta/<?php echo $coleta->os_coleta ?>"><i class="icon-edit"></i></a>

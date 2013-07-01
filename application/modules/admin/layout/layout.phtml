@@ -5,6 +5,7 @@
         <link rel="stylesheet" href="/assets/css/bootstrap.css">
         <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
         <link rel="stylesheet" href="/assets/css/datepicker.css">
+        <link rel="stylesheet" href="/assets/css/icons-desktop.css">
         <title>Principal</title>
     </head>
     <body>
@@ -16,10 +17,10 @@
                         <span class="icon-bar"></span>
                         <span class="icon-bar"></span>
                     </button>
-                    <a href="/admin/index" class="brand">SOS Malas</a>
+                    <a href="/admin/index" class="brand" title="SOS Malas">SOS Malas</a>
                     <div class="nav-collapse collapse">
                         <ul class="nav">
-                            <li class="active"><a href="/admin/index">Principal</a></li>
+                            <li class="active"><a href="/admin/index">Área de Trabalho</a></li>
                             <li class="dropdown">
                                 <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                     <strong>Pessoas</strong>
@@ -66,6 +67,7 @@
         <div class="container">
             <div class="row">
                 <section class="span12">
+                    <?php echo $this->flashMessenger() ?>
                     <?php echo $this->layout()->content ?>
                 </section>
             </div>

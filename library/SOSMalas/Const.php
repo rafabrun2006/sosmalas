@@ -17,4 +17,5 @@ class SOSMalas_Const {
     
     const MSG01 = 'Operação realizada com sucesso';
     const MSG02 = 'Erro ao executar a opeção';
+    const MSG03 = 'Verifique seu formulário, os campos obrigatórios não foram preenchidos';
 }

@@ -18,8 +18,8 @@ SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
 --
 -- Banco de Dados: `sosmalas`
 --
-CREATE DATABASE `sosmalas` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
-USE `sosmalas`;
+
+USE `sistema`;
 
 -- --------------------------------------------------------
 

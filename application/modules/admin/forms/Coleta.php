@@ -8,10 +8,7 @@ class Admin_Form_Coleta extends Zend_Form {
         $os = new Zend_Form_Element_Hidden('os_coleta');
         $this->addElement($os);
         
-        $nome_cliente  = new Zend_Form_Element_Text('nome_pessoa', array('class'=>'input-xlarge search-pessoa', 'autocomplete'=>'off', 'data-provide'=>'typeahead', 'required'=>true, 'id'=>'search-pessoa'));
-        $this->addElement($nome_cliente);
-
-        $cliente = new Zend_Form_Element_Hidden('cliente_id');
+        $cliente = new Zend_Form_Element_Text('cliente_email');
         $cliente->setRequired(true)
                 ->addErrorMessage(self::erro);
         $this->addElement($cliente);

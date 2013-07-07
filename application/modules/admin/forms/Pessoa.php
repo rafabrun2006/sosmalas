@@ -47,7 +47,7 @@ class Admin_Form_Pessoa extends Zend_Form {
         $ponto_ref->setLabel('Ponto de Referencia:');
         $this->addElement($ponto_ref);
 
-        $senha = new Zend_Form_Element_password('senha_pessoa');
+        $senha = new Zend_Form_Element_Password('senha_pessoa');
         $senha->setRequired(true)
                 ->addErrorMessage(self::erro)
                 ->setLabel("Senha:");

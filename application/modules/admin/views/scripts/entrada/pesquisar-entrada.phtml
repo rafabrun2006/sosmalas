@@ -3,13 +3,14 @@
     <legend>Entrada >> Consulta</legend>
     <div class="form-search">
         <div class="control-group">
-            Filtrar: <input name="nome" type="text" size="35"/>
+            Filtrar: <input name="id_entrada" class="input-mini number" type="number"/>
             <input type="submit" value="Buscar"  class="btn">
         </div>
     </div>
     <br>
     <table class="table table-striped table-bordered">
         <thead>
+        <th>ID</th>
         <th>Data de entrada</th>
         <th>Empresa</th>
         <th>Processo</th>
@@ -25,6 +26,7 @@
         <tbody>
             <?php foreach ($this->listEntrada as $entrada): ?>
                 <tr>
+                    <td><?php echo $entrada->id_entrada ?></td>
                     <td><?php echo SOSMalas_Date::dateToView($entrada->data_entrada) ?></td>
                     <td><?php echo $entrada->empresa_entrada ?></td>
                     <td><?php echo $entrada->processo_entrada ?></td>

@@ -8,9 +8,8 @@ class Application_Model_Coleta extends SOSMalas_Db_Mapper {
     public function listColeta($where = NULL){
         $query = $this->select()
                 ->from(array('c' => 'coletas'), array('*'))
-                ->joinInner(array('p' => 'pessoa'), 'p.id_pessoa = c.cliente_id', array('*'))
                 ->setIntegrityCheck(false);
-
+        
         if($where){
             $query->where(key($where)." like ?", "%{$where['os_coleta']}%");
         }
@@ -22,7 +21,6 @@ class Application_Model_Coleta extends SOSMalas_Db_Mapper {
 
         $query = $this->select()
                 ->from(array('c' => 'coletas'), array('*'))
-                ->join(array('p' => 'pessoa'), 'c.cliente_id = p.id_pessoa', array('*'))
                 ->where('c.os_coleta = ?', $coletas)
                 ->setIntegrityCheck(false)
                 ;
@@ -34,7 +32,7 @@ class Application_Model_Coleta extends SOSMalas_Db_Mapper {
         $array['data_pedido_coleta'] = SOSMalas_Date::dateToBanco($array['data_pedido_coleta']);
         $array['previsao_coleta'] = SOSMalas_Date::dateToBanco($array['previsao_coleta']);
         
-        parent::update($array);
+        return parent::update($array);
     }
     
     public function insert($data){

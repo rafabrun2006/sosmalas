@@ -11,7 +11,7 @@ class Application_Model_Entrada extends SOSMalas_Db_Mapper {
                 ->setIntegrityCheck(false);
 
         if ($where) {
-            $query->where(key($where) . " like ?", "%{$where['id']}%");
+            $query->where(key($where) . " like ?", "%{$where['id_entrada']}%");
         }
 
         return $this->fetchAll($query);

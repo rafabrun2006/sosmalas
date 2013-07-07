@@ -20,7 +20,7 @@
             <?php foreach ($this->listColeta as $coleta): ?>
                 <tr>
                     <td><?php echo $coleta->os_coleta ?></td>
-                    <td><?php echo $coleta->nome_pessoa ?></td>
+                    <td><?php echo $coleta->cliente_email ?></td>
                     <td><?php echo SOSMalas_Date::dateToView($coleta->data_pedido_coleta) ?></td>
                     <td><?php echo $coleta->pcm_coleta ?></td>
                     <td><?php echo SOSMalas_Date::dateToView($coleta->previsao_coleta) ?></td>

@@ -24,20 +24,26 @@
             <caption><h2>Resultado</h2></caption>
             <thead>
             <th>ID</th>
+            <th>Data da Coleta</th>
+            <th>Nome do Passageiro</th>
+            <th>Numero Processo</th>
+            <th>Concerto Realizado</th>
+            <th>Data Entrega</th>
+            <!--<th>ID</th>
             <th>PCM</th>
-            <th>Data Pedido</th>
+            <th>Data da Pedido</th>
             <th>Previsão Coleta</th>
             <th>Tipo Coleta</th>
-            <th>Status Coleta</th>
+            <th>Status Coleta</th>-->
             </thead>
             <tbody>
                 <tr>
                     <td><?php echo $this->coleta[0]->os_coleta ?></td>
-                    <td><?php echo $this->coleta[0]->pcm_coleta ?></td>
                     <td><?php echo SOSMalas_Date::dateToView($this->coleta[0]->data_pedido_coleta) ?></td>
-                    <td><?php echo SOSMalas_Date::dateToView($this->coleta[0]->previsao_coleta) ?></td>
+                    <td><?php echo $this->coleta[0]->pcm_coleta ?></td>
                     <td><?php echo $this->coleta[0]->tipo_coleta ?></td>
                     <td><?php echo $this->statusColeta[$this->coleta[0]->status_coleta] ?></td>
+                    <td><?php echo SOSMalas_Date::dateToView($this->coleta[0]->previsao_coleta) ?></td>
                 </tr>
             </tbody>
         </table>

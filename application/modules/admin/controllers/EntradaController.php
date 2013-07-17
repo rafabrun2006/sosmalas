@@ -78,7 +78,7 @@ class Admin_EntradaController extends Zend_Controller_Action {
     public function ajaxSearchEntradaAction(){
         $modelc = new Application_Model_Entrada();
 
-        $result = $modelc->listEntrada(array('id_entrada' => $this->_getParam('id_entrada')))->toArray();
+        $result = $modelc->searchLikeFields(array(), $this->_getParam('search'))->toArray();
         
         $this->_helper->json($result);
     }

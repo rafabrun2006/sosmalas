@@ -10,7 +10,7 @@ $(document).ready(function() {
         source: function(query, process) {
             
             $.get('/admin/entrada/ajax-search-entrada', 
-                {id_entrada:query}, function(data) {
+                {search:query}, function(data) {
                 labels = [];
                 mapped = {};
 
@@ -19,10 +19,10 @@ $(document).ready(function() {
                     labels.push(value.id_entrada + '-Empresa: (' + value.empresa_entrada + ') Dano: (' + value.dano_entrada + ')');
                 });
 
-                process(labels);
+                return process(labels);
             });
         },
-        items: 10,
+        items: 20,
         updater: function(item) {
             split = item.split('-');
             return split[0];

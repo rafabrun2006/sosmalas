@@ -106,7 +106,7 @@ class Admin_ColetaController extends Zend_Controller_Action {
     public function ajaxSearchColetaAction(){
         $modelc = new Application_Model_Coleta();
         
-        $result = $modelc->listColeta(array('os_coleta' => $this->_getParam('os_coleta')))->toArray();
+        $result = $modelc->searchLikeFields(array(), $this->_getParam('os_coleta'))->toArray();
         
         return $this->_helper->json($result);
     }

@@ -48,7 +48,8 @@ class Admin_Form_Pessoa extends Zend_Form {
         $this->addElement($ponto_ref);
 
         $senha = new Zend_Form_Element_Password('senha_pessoa');
-        $senha->setRequired(true)
+        $senha->setRenderPassword(true)
+                ->setRequired(true)
                 ->addErrorMessage(self::erro)
                 ->setLabel("Senha:");
         $this->addElement($senha);

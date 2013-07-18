@@ -1,0 +1,23 @@
+<script type="text/javascript">
+    function confirma() {
+        if (!confirm("Somente faça esta operação se orientado pelo programador do sistema")) {
+            return false;
+        }
+    }
+
+    function habilita() {
+        document.getElementById('btn-atualiza').removeAttribute('disabled');
+    }
+</script>
+<div class="alert alert-danger">
+    Cuidado ao executar esta operação ela foi criada somente para facilitar um trabalho
+    de atualização do software orientado pelo desenvolvedor.
+</div>
+<form method='post'>
+    <div class="control-group">
+        <button disabled="" id="btn-atualiza" class="btn btn-danger" onclick="return confirma()" type='submit'>
+            Atualizar Versão do Sistema <?php echo $this->version ?>
+        </button>
+        <input onclick="habilita()" type="checkbox" value=""> Habilitar Atualização
+    </div>
+</form>

@@ -16,7 +16,13 @@ $(document).ready(function() {
 
                 $.each(data, function(key, value) {
                     mapped[value.os_coleta] = value;
-                    labels.push(value.os_coleta + '-' + value.tipo_coleta + '-' + value.cliente_email);
+                    labels.push(
+                            value.os_coleta + ':' + 
+                            value.tipo_coleta + ' | ' + 
+                            value.cliente_email + ' | ' + 
+                            value.data_pedido_coleta + ' | ' +
+                            value.pcm_coleta + ' | ' +
+                            value.previsao_coleta);
                 });
 
                 process(labels);
@@ -24,7 +30,7 @@ $(document).ready(function() {
         },
         items: 10,
         updater: function(item) {
-            split = item.split('-');
+            split = item.split(':');
             return split[0];
         }
     });

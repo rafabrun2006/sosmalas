@@ -16,7 +16,16 @@ $(document).ready(function() {
 
                 $.each(data, function(key, value) {
                     mapped[value.id_entrada] = value;
-                    labels.push(value.id_entrada + '-Empresa: (' + value.empresa_entrada + ') Dano: (' + value.dano_entrada + ')');
+                    labels.push(
+                            value.id_entrada + ':' + 
+                            value.empresa_entrada + ' | ' + 
+                            value.dano_entrada + ' | ' +
+                            value.data_entrada + ' | ' +
+                            value.marca_entrada + ' | ' +
+                            value.preco_entrada + ' | ' +
+                            value.data_conclusao_entrada + ' | ' +
+                            value.data_entrega_entrada
+                        );
                 });
 
                 return process(labels);
@@ -24,7 +33,7 @@ $(document).ready(function() {
         },
         items: 20,
         updater: function(item) {
-            split = item.split('-');
+            split = item.split(':');
             return split[0];
         }
     });

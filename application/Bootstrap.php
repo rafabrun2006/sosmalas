@@ -16,6 +16,7 @@ class Bootstrap extends Zend_Application_Bootstrap_Bootstrap
 
         $front->registerPlugin(new SOSMalas_Plugins_Layout());
         $front->registerPlugin(new SOSMalas_Plugins_Acl());
+        $front->registerPlugin(new SOSMalas_Plugins_Navigation());
     }
 
 }

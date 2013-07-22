@@ -28,6 +28,20 @@ class Application_Model_Entrada extends SOSMalas_Db_Mapper {
         return $this->fetchAll($query)->toArray();
     }
 
+    public function getProcessos(array $where = null) {
+        $query = $this->select()
+                ->from(array('e' => 'entrada'), array('*'))
+                ->join(array('p' => 'pessoa'), 'p.id_pessoa = e.empresa_entrada', array('*'));
+
+        foreach ($where as $key => $value) {
+            $query->where($key . ' = ?', $value);
+        }
+        
+        $query->setIntegrityCheck(false);
+        
+        return $this->fetchAll($query);
+    }
+
     public function update($data) {
 
         $data['data_entrada'] = SOSMalas_Date::dateToBanco($data['data_entrada']);

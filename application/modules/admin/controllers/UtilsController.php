@@ -34,4 +34,10 @@ class Admin_UtilsController extends Zend_Controller_Action {
 
     }
 
+    public function permissaoAction(){
+        
+        $this->_helper->viewRenderer->setNoRender(true);
+        
+    }
+    
 }

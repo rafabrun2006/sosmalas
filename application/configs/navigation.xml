@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+
+<root>
+    <roles>
+        <user>
+            <parent></parent>
+            <name>user</name>
+            <level>3</level>
+        </user>
+        <member>
+            <parent>user</parent>
+            <name>member</name>
+            <level>2</level>
+        </member>
+        <admin>
+            <parent>member</parent>
+            <name>admin</name>
+            <level>1</level>
+        </admin>
+    </roles>
+    <admin>
+        <index class="active">
+            <module>admin</module>
+            <controller>index</controller>
+            <action>index</action>
+            <role>member</role>
+            <label>Index</label>
+        </index>
+        
+        <pessoa class="dropdown">
+            <module>admin</module>
+            <controller>pessoa</controller>
+            <action>index|cadastro|editar|pesquisar-pessoa|delete|ajax-search-person</action>
+            <role>member|admin|admin|admin|admin|admin</role>
+            <label>Pessoa</label>
+        </pessoa>
+        
+        <coleta class="dropdown">
+            <module>admin</module>
+            <controller>coleta</controller>
+            <action>index|cadastro-coleta|editar|pesquisar-coleta|delete|ajax-search-coleta</action>
+            <role>member|admin|admin|member|admin|member</role>
+            <label>Coleta</label>
+        </coleta>
+        
+        <entrada class="dropdown">
+            <module>admin</module>
+            <controller>entrada</controller>
+            <action>index|cadastro|editar|pesquisar-entrada|delete|ajax-search-entrada</action>
+            <role>member|admin|admin|member|admin|member</role>
+            <label>Entrada</label>
+        </entrada>
+        
+        <processos class="dropdown">
+            <module>admin</module>
+            <controller>processos</controller>
+            <action>index|pesquisar|ajax-search-processo|member-pesquisar|admin-pesquisar</action>
+            <role>member|admin|admin|member|admin|member</role>
+            <label>Processo</label>
+        </processos>
+        
+        <auth class="">
+            <module>admin</module>
+            <controller>auth</controller>
+            <action>index|logout|login</action>
+            <role>member|member|member</role>
+            <label>Login</label>
+        </auth>
+    </admin>
+</root>

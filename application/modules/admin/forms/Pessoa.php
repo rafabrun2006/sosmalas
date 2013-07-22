@@ -54,6 +54,12 @@ class Admin_Form_Pessoa extends Zend_Form {
                 ->setLabel("Senha:");
         $this->addElement($senha);
         
+        $tipoAcesso = new Zend_Form_Element_Select('tx_tipo_acesso');
+        $tipoAcesso->setLabel('Tipo de Acesso: ');
+        $this->addElement($tipoAcesso);
+        
+        $this->comboTipoAcesso();
+        
         $this->setDecorators(array(
             array('ViewScript',
                 array('viewScript' => 'pessoa/form-pessoa.phtml')
@@ -63,6 +69,14 @@ class Admin_Form_Pessoa extends Zend_Form {
         foreach ($this->getElements() as $element) {
             $element->removeDecorator('HtmlTag');
             $element->removeDecorator('DtDdWrapper');
+        }
+    }
+    
+    public function comboTipoAcesso(){
+        $model = new Application_Model_TipoAcesso();
+        
+        foreach($model->fetchAll() as $value){
+            $this->getElement('tx_tipo_acesso')->addMultiOption($value->id_tipo_acesso, $value->descricao_tipo_acesso);
         }
     }
 

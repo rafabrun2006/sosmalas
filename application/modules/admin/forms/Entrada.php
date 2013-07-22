@@ -24,7 +24,7 @@ class Admin_Form_Entrada extends Zend_Form {
                 ->addErrorMessage(self::erro);
         $this->addElement($data_entrada);
 
-        $empresa = new Zend_Form_Element_Text('empresa_entrada');
+        $empresa = new Zend_Form_Element_Select('empresa_entrada');
         $empresa->setRequired(true)
                 ->setLabel('Empresa:')
                 ->addErrorMessage(self::erro);
@@ -84,6 +84,8 @@ class Admin_Form_Entrada extends Zend_Form {
                 ->addErrorMessage(self::erro);
         $this->addElement($data_entrega);
 
+        $this->populaComboEmpresa();
+        
         $this->setDecorators(array(
             array('ViewScript',
                 array('viewScript' => 'entrada/form-entrada.phtml')
@@ -93,6 +95,15 @@ class Admin_Form_Entrada extends Zend_Form {
         foreach ($this->getElements() as $element) {
             $element->removeDecorator('HtmlTag');
             $element->removeDecorator('DtDdWrapper');
+        }
+    }
+    
+    public function populaComboEmpresa(){
+        $model = new Application_Model_Pessoa();
+        $this->getElement('empresa_entrada')->addMultiOption(null, '--');
+        
+        foreach($model->fetchAll() as $value){
+            $this->getElement('empresa_entrada')->addMultiOption($value->id_pessoa, $value->nome_pessoa);
         }
     }
 

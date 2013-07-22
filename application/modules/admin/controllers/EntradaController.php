@@ -56,7 +56,12 @@ class Admin_EntradaController extends Zend_Controller_Action {
                 $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
             }
         }
-
+        
+        $result[0]['data_entrada'] = SOSMalas_Date::dateToView($result[0]['data_entrada']);
+        $result[0]['data_conclusao_entrada'] = SOSMalas_Date::dateToView($result[0]['data_conclusao_entrada']);
+        $result[0]['data_entrega_entrada'] = SOSMalas_Date::dateToView($result[0]['data_entrega_entrada']);
+        $result[0]['data_previsao_entrada'] = SOSMalas_Date::dateToView($result[0]['data_previsao_entrada']);
+        
         $form->populate($result[0]);
         $this->view->form = $form;
     }

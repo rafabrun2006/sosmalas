@@ -11,5 +11,10 @@
  * @author bruno
  */
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap {
-    //put your code here
+    
+    public function _initSessionNavigationXml(){
+        $session = new Zend_Session_Namespace();
+        $session->sessionNavigationXml = new Zend_Config_Xml(APPLICATION_PATH . '/configs/navigation.xml');
+    }
+    
 }

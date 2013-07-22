@@ -31,7 +31,7 @@ class Application_Model_Entrada extends SOSMalas_Db_Mapper {
     public function getProcessos(array $where = null) {
         $query = $this->select()
                 ->from(array('e' => 'entrada'), array('*'))
-                ->join(array('p' => 'pessoa'), 'p.id_pessoa = e.empresa_entrada', array('*'));
+                ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = e.empresa_entrada', array('*'));
 
         foreach ($where as $key => $value) {
             $query->where($key . ' = ?', $value);

@@ -59,7 +59,7 @@ and open the template in the editor.
             <module>admin</module>
             <controller>processos</controller>
             <action>index|pesquisar|ajax-search-processo|member-pesquisar|admin-pesquisar</action>
-            <role>member|admin|admin|member|admin|member</role>
+            <role>member|admin|member|member|admin</role>
             <label>Processo</label>
         </processos>
         

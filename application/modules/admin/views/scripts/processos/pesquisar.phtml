@@ -1,31 +1,40 @@
-<fieldset>
-    <legend>Processos</legend>
-
-<table class="table table-bordered table-striped table-condensed">
-    <thead>
-    <th>Nº Processo</th>
-    <th>Nº OS</th>
-    <th>Nome PAX</th>
-    <th>Quant. Bags.</th>
-    <th>Serviço Realizado</th>
-    <th>Data Coleta</th>
-    <th>Data Entrega</th>
-    <th>Obs.</th>
-    </thead>
-    <tbody>
-        <?php foreach($this->processos as $processo): ?>
-        <tr>
-            <td><?php echo $processo->id_entrada ?></td>
-            <td><?php echo $processo->id_entrada ?></td>
-            <td><?php echo $processo->id_entrada ?></td>
-            <td><?php echo $processo->id_entrada ?></td>
-            <td><?php echo $processo->id_entrada ?></td>
-            <td>Roda de canto</td>
-            <td>66-66-8888</td>
-            <td>66-66-8888</td>
-            <td>blalalal</td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
+<form action="" method="post">
+    <fieldset>
+        <legend>Processos</legend>
+        <div class="form-search">
+            <div class="control-group">
+                Filtrar: <input autocomplete="off" id="id_processo" name="id_processo" class="number" type="number"/>
+                <input type="submit" value="Buscar"  class="btn">
+            </div>
+        </div>
+        <br>
+        <table class="table table-bordered table-striped table-condensed">
+            <thead>
+            <th>Nº Processo</th>
+            <th>Nº OS</th>
+            <th>Nome PAX</th>
+            <th>Quant. Bags.</th>
+            <th>Serviço Realizado</th>
+            <th>Data Coleta</th>
+            <th>Data Entrega</th>
+            <th>Obs.</th>
+            </thead>
+            <tbody>
+                <?php foreach ($this->processos as $processo): ?>
+                    <tr>
+                        <td><?php echo $processo->id_processo ?></td>
+                        <td><?php echo $processo->os_processo ?></td>
+                        <td><?php echo $processo->nome_pax_processo ?></td>
+                        <td><?php echo $processo->qtd_bagagem_processo ?></td>
+                        <td><?php echo $processo->servico_realizado_processo ?></td>
+                        <td><?php echo SOSMalas_Date::dateToView($processo->data_coleta_processo) ?></td>
+                        <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
+                        <td><?php echo $processo->obs_processo ?></td>
+                        <td></td>
+                    </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
     </fieldset>
+</form>
+<script type="text/javascript" src="/assets/js/auto-complete-processo.js"></script>

@@ -41,13 +41,19 @@ class SOSMalas_Db_Mapper extends Zend_Db_Table_Abstract {
         return parent::delete($this->_primary . ' = ' . $where[$this->_primary]);
     }
 
-    public function searchLikeFields(array $fieldsRejected = array(), $value = null) {
+    public function searchLikeFields(array $fieldsRejected = array(), $value = null, array $whereAnd = null) {
         $query = $this->select();
 
         foreach ($this->_getCols() as $col) {
             if (!in_array($col, $fieldsRejected)) {
                 $query->orHaving($col . ' like ' . "'%{$value}%'");
                 $query->limit(10);
+            }
+        }
+        
+        foreach($whereAnd as $key => $value){
+            if(!empty($value)){
+                $query->where($key . ' = ?', $value);
             }
         }
 

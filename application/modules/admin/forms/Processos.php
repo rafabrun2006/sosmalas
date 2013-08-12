@@ -20,7 +20,6 @@ class Admin_Form_Processos extends Zend_Form {
 
         $data_coleta = new Zend_Form_Element_Text('data_coleta_processo', array('class'=>'date'));
         $data_coleta->setLabel('Data Coleta:')
-                ->setRequired(true)
                 ->addErrorMessage(self::erro);
         $this->addElement($data_coleta);
 
@@ -57,8 +56,7 @@ class Admin_Form_Processos extends Zend_Form {
 
 
         $data_entrega = new Zend_Form_Element_text('data_entrega_processo', array('class'=>'date'));
-        $data_entrega->setRequired(true)
-                ->setLabel('Data Entrega: ')
+        $data_entrega->setLabel('Data Entrega: ')
                 ->addErrorMessage(self::erro);
         $this->addElement($data_entrega);
 

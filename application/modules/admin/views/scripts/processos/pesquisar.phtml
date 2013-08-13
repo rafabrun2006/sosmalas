@@ -33,12 +33,12 @@
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
                         <td><?php echo $processo->obs_processo ?></td>
                         <td>
-                            <a class="btn" href="/admin/processos/editar">
+                            <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
                                 <i class="icon-edit"></i>
                             </a>
                         </td>
                         <td>
-                            <a class="btn btn-danger" href="/admin/processos/delete">
+                            <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
                                 <i class="icon-trash icon-white"></i>
                             </a>
                         </td>

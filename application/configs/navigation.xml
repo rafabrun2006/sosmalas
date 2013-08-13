@@ -58,8 +58,8 @@ and open the template in the editor.
         <processos class="dropdown">
             <module>admin</module>
             <controller>processos</controller>
-            <action>index|pesquisar|ajax-search-processo|member-pesquisar|admin-pesquisar</action>
-            <role>member|admin|member|member|admin</role>
+            <action>index|pesquisar|ajax-search-processo|member-pesquisar|admin-pesquisar|editar|delete</action>
+            <role>member|admin|member|member|admin|editar|delete</role>
             <label>Processo</label>
         </processos>
         

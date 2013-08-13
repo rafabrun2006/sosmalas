@@ -18,7 +18,11 @@ class SOSMalas_Date {
      * @return type
      */
     public static function dateToBanco($date) {
-        return date(SOSMalas_Const::DATE_FORMAT_DB, strtotime($date));
+        if(!is_null($date)){
+            return date(SOSMalas_Const::DATE_FORMAT_DB, strtotime($date));
+        }else{
+            return null;
+        }
     }
 
     /**

@@ -18,6 +18,8 @@
             <th>Data Coleta</th>
             <th>Data Entrega</th>
             <th>Obs.</th>
+            <th></th>
+            <th></th>
             </thead>
             <tbody>
                 <?php foreach ($this->processos as $processo): ?>
@@ -30,7 +32,16 @@
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_coleta_processo) ?></td>
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
                         <td><?php echo $processo->obs_processo ?></td>
-                        <td></td>
+                        <td>
+                            <a class="btn" href="/admin/processos/editar">
+                                <i class="icon-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="/admin/processos/delete">
+                                <i class="icon-trash icon-white"></i>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

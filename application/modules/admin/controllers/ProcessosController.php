@@ -80,5 +80,13 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         
         $this->_helper->json($result);
     }
+    
+    public function editarAction(){
+        ;
+    }
+    
+    public function deleteAction(){
+        $this->_redirect('/admin/processos/pesquisar');
+    }
 
 }

@@ -15,9 +15,11 @@
             <th>Nome PAX</th>
             <th>Quant. Bags.</th>
             <th>Serviço Realizado</th>
-            <th>Data Coleta</th>
-            <th>Data Entrega</th>
+            <th width="85">Data Coleta</th>
+            <th width="90">Data Entrega</th>
             <th>Obs.</th>
+            <th></th>
+            <th></th>
             </thead>
             <tbody>
                 <?php foreach ($this->processos as $processo): ?>
@@ -30,7 +32,16 @@
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_coleta_processo) ?></td>
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
                         <td><?php echo $processo->obs_processo ?></td>
-                        <td></td>
+                        <td>
+                            <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
+                                <i class="icon-edit"></i>
+                            </a>
+                        </td>
+                        <td>
+                            <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
+                                <i class="icon-trash icon-white"></i>
+                            </a>
+                        </td>
                     </tr>
                 <?php endforeach; ?>
             </tbody>

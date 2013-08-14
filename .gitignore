@@ -2,3 +2,7 @@
 /.zfproject.xml
 /.zfproject.xml
 /public/.htaccess
+/nbproject/project.xml
+/nbproject/project.properties
+/nbproject/private/config.properties
+/nbproject/private/properties

@@ -32,7 +32,7 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
         $this->allow('member', 'admin:coleta', array('pesquisar-coleta'));
         $this->allow('member', 'admin:entrada', array('pesquisar-entrada'));
         $this->allow('member', 'admin:auth', array('login', 'logout'));
-        $this->allow('member', 'admin:processos', array('pesquisar', 'member-pesquisar'));
+        $this->allow('member', 'admin:processos', array('pesquisar', 'member-pesquisar', 'ajax-search-processo'));
         
         $this->allow('admin');
         

@@ -63,6 +63,14 @@ and open the template in the editor.
             <label>Processo</label>
         </processos>
         
+        <utils class="">
+            <module>admin</module>
+            <controller>utils</controller>
+            <action>atualiza-versao|</action>
+            <role>admin|</role>
+            <label>Admin</label>
+        </utils>
+        
         <auth class="">
             <module>admin</module>
             <controller>auth</controller>

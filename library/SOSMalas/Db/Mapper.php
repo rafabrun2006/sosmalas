@@ -12,7 +12,7 @@
  */
 class SOSMalas_Db_Mapper extends Zend_Db_Table_Abstract {
 
-    public function insert($data) {
+    public function insert(array $data) {
 
         $arrayFields = array();
 
@@ -25,7 +25,7 @@ class SOSMalas_Db_Mapper extends Zend_Db_Table_Abstract {
         return parent::insert($arrayFields);
     }
 
-    public function update($data) {
+    public function update(array $data, $where) {
 
         $arrayFields = array();
 
@@ -34,7 +34,7 @@ class SOSMalas_Db_Mapper extends Zend_Db_Table_Abstract {
                 $arrayFields[$key] = $value;
             }
         }
-        return parent::update($arrayFields, $this->_primary[1] . '=' . $data[$this->_primary[1]]);
+        return parent::update($arrayFields, $this->_primary[1] . '=' . $data[$this->_primary[1]], $where);
     }
 
     public function delete($where) {

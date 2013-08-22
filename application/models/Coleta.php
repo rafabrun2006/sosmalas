@@ -28,14 +28,14 @@ class Application_Model_Coleta extends SOSMalas_Db_Mapper {
         return $this->fetchAll($query)->toArray();
     }
 
-    public function update($array){
+    public function update(array $array, $where){
         $array['data_pedido_coleta'] = SOSMalas_Date::dateToBanco($array['data_pedido_coleta']);
         $array['previsao_coleta'] = SOSMalas_Date::dateToBanco($array['previsao_coleta']);
         
-        return parent::update($array);
+        return parent::update($array, $where);
     }
     
-    public function insert($data){
+    public function insert(array $data){
         
         $data['data_pedido_coleta']  = SOSMalas_Date::dateToBanco($data['data_pedido_coleta']);
         $data['previsao_coleta']  = SOSMalas_Date::dateToBanco($data['previsao_coleta']);

@@ -29,8 +29,8 @@ class Application_Model_Pessoa extends SOSMalas_Db_Mapper {
         return $this->fetchAll($query)->toArray();
     }
 
-    public function update($array) {
-        return parent::update($array);
+    public function update(array $array, $where) {
+        return parent::update($array, $where);
     }
 
     public function searchPerson(array $where) {

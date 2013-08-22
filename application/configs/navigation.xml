@@ -59,9 +59,17 @@ and open the template in the editor.
             <module>admin</module>
             <controller>processos</controller>
             <action>index|pesquisar|ajax-search-processo|member-pesquisar|admin-pesquisar|editar|delete</action>
-            <role>member|admin|member|member|admin|editar|delete</role>
+            <role>member|admin|member|member|admin|admin|admin|</role>
             <label>Processo</label>
         </processos>
+        
+        <utils>
+            <module>admin</module>
+            <controller>utils</controller>
+            <action>atualiza-versao</action>
+            <role>admin</role>
+            <label>Utils</label>
+        </utils>
         
         <auth class="">
             <module>admin</module>

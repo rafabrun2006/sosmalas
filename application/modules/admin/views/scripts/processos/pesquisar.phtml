@@ -48,4 +48,13 @@
         </table>
     </fieldset>
 </form>
+<div class="pagination pagination-centered">
+    <ul>
+        <?php foreach($this->nextPage as $next): ?>
+        <li>
+            <a href="/admin/processos/<?php echo $this->action ?>/page/<?php echo $next ?>"><?php echo $next ?></a>
+        </li>
+        <?php endforeach; ?>
+    </ul>
+</div>
 <script type="text/javascript" src="/assets/js/auto-complete-processo.js"></script>

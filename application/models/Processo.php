@@ -42,7 +42,7 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         return $this->fetchAll($query);
     }
 
-    public function update(array $data, $where) {
+    public function update(array $data, $where = null) {
 
         $data['data_coleta_processo'] = SOSMalas_Date::dateToBanco($data['data_coleta_processo']);
         $data['data_entrega_processo'] = SOSMalas_Date::dateToBanco($data['data_entrega_processo']);

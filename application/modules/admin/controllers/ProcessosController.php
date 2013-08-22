@@ -30,15 +30,41 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $where = array(
             'pessoa_entrada' => Zend_Auth::getInstance()->getIdentity()->id_pessoa
         );
-
-        $this->view->processos = $modelEntrada->getProcessos($where);
+        
+        $paginator = Zend_Paginator::factory($modelEntrada->getProcessos($where));
+        $paginator->setItemCountPerPage(20);
+        $paginator->setCurrentPageNumber($this->_getParam('page'));
+        
+        $i = 1;
+        $nextPage = array();
+        
+        while($i <= $paginator->count()){
+            $nextPage[] = $i++;
+        }
+        
+        $this->view->nextPage = $nextPage;
+        $this->view->action = 'member-pesquisar';
+        $this->view->processos = $paginator;
         $this->render('pesquisar');
     }
 
     public function adminPesquisarAction() {
         $modelEntrada = new Application_Model_Processo();
 
-        $this->view->processos = $modelEntrada->getProcessos(array());
+        $paginator = Zend_Paginator::factory($modelEntrada->getProcessos(array()));
+        $paginator->setItemCountPerPage(20);
+        $paginator->setCurrentPageNumber($this->_getParam('page'));
+        
+        $i = 1;
+        $nextPage = array();
+        
+        while($i <= $paginator->count()){
+            $nextPage[] = $i++;
+        }
+        
+        $this->view->nextPage = $nextPage;
+        $this->view->processos = $paginator;
+        $this->view->action = 'admin-pesquisar';
 
         $this->render('pesquisar');
     }

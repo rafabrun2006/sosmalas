@@ -44,9 +44,9 @@ CREATE TABLE IF NOT EXISTS `processos` (
 --
 
 INSERT INTO `processos` (`id_processo`, `os_processo`, `nome_pax_processo`, `qtd_bagagem_processo`, `servico_realizado_processo`, `data_coleta_processo`, `data_entrega_processo`, `obs_processo`, `pessoa_entrada`) VALUES
-(1, 11, 'Pax', 11, 'Conserto', '2013-08-04', '2013-08-04', 'Observação', 5),
-(2, 11, 'Pax', 11, 'Conserto', '2013-08-04', '2013-08-04', 'Observação', 5),
-(3, 33, 'Pax', 99, 'Conserto', '2013-08-05', '2013-08-07', 'Observação', 6);
+(1, 11, 'Pax', 11, 'Conserto', '2013-08-04', '2013-08-04', 'Observação', 1),
+(2, 11, 'Pax', 11, 'Conserto', '2013-08-04', '2013-08-04', 'Observação', 1),
+(3, 33, 'Pax', 99, 'Conserto', '2013-08-05', '2013-08-07', 'Observação', 1);
 
 --
 -- Restrições para as tabelas dumpadas

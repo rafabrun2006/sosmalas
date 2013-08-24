@@ -50,11 +50,13 @@
 </form>
 <div class="pagination pagination-centered">
     <ul>
-        <?php foreach($this->nextPage as $next): ?>
-        <li>
-            <a href="/admin/processos/<?php echo $this->action ?>/page/<?php echo $next ?>"><?php echo $next ?></a>
-        </li>
+        <li><a href="/admin/processos/<?php echo $this->action . '/page/' . $this->lastPage ?>">Anterior</a></li>
+        <?php foreach ($this->page as $next): ?>
+            <li class="<?php echo $next['active'] ?>">
+                <a href="/admin/processos/<?php echo $this->action ?>/page/<?php echo $next['number'] ?>"><?php echo $next['number'] ?></a>
+            </li>
         <?php endforeach; ?>
+        <li><a href="/admin/processos/<?php echo $this->action . '/page/' . $this->nextPage ?>">Proxima</a></li>            
     </ul>
 </div>
 <script type="text/javascript" src="/assets/js/auto-complete-processo.js"></script>

@@ -36,13 +36,21 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $paginator->setCurrentPageNumber($this->_getParam('page'));
         
         $i = 1;
-        $nextPage = array();
+        $page = array();
         
         while($i <= $paginator->count()){
-            $nextPage[] = $i++;
+            $active = $paginator->getCurrentPageNumber() == $i ? 'active':'';
+            $page[] = array('number' => $i, 'active'=>$active);
+            $i++;
         }
         
-        $this->view->nextPage = $nextPage;
+        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ? 
+                $paginator->getCurrentPageNumber()-1 : '#';
+        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ? 
+                $paginator->getCurrentPageNumber()+1 : '#';
+        $this->view->page = $page;
+        
+        $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->action = 'member-pesquisar';
         $this->view->processos = $paginator;
         $this->render('pesquisar');
@@ -52,20 +60,27 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $modelEntrada = new Application_Model_Processo();
 
         $paginator = Zend_Paginator::factory($modelEntrada->getProcessos(array()));
-        $paginator->setItemCountPerPage(20);
+        $paginator->setItemCountPerPage(1);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
         
         $i = 1;
-        $nextPage = array();
+        $page = array();
         
         while($i <= $paginator->count()){
-            $nextPage[] = $i++;
+            $active = $paginator->getCurrentPageNumber() == $i ? 'active':'';
+            $page[] = array('number' => $i, 'active'=>$active);
+            $i++;
         }
         
-        $this->view->nextPage = $nextPage;
+        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ? 
+                $paginator->getCurrentPageNumber()-1 : '#';
+        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ? 
+                $paginator->getCurrentPageNumber()+1 : '#';
+        $this->view->page = $page;
+        
+        $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->processos = $paginator;
         $this->view->action = 'admin-pesquisar';
-
         $this->render('pesquisar');
     }
 

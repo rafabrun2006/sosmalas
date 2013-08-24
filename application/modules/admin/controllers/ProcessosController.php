@@ -60,7 +60,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $modelEntrada = new Application_Model_Processo();
 
         $paginator = Zend_Paginator::factory($modelEntrada->getProcessos(array()));
-        $paginator->setItemCountPerPage(1);
+        $paginator->setItemCountPerPage(20);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
         
         $i = 1;

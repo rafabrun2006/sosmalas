@@ -18,70 +18,35 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
     public function pesquisarAction() {
         $auth = Zend_Auth::getInstance()->getIdentity();
+        $where = array();
+        
+        if (!$auth->tx_tipo_acesso == 'admin') {
+            $where = array('pessoa_entrada' => Zend_Auth::getInstance()->getIdentity()->id_pessoa);
+        }
 
-        $method = $auth->tx_tipo_acesso . '-pesquisar';
-
-        $this->getResponse()->setRedirect($method);
-    }
-
-    public function memberPesquisarAction() {
         $modelEntrada = new Application_Model_Processo();
 
-        $where = array(
-            'pessoa_entrada' => Zend_Auth::getInstance()->getIdentity()->id_pessoa
-        );
-        
-        $paginator = Zend_Paginator::factory($modelEntrada->getProcessos($where));
+        $paginator = $modelEntrada->getProcessosPagination($where);
         $paginator->setItemCountPerPage(20);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
         
         $i = 1;
         $page = array();
-        
-        while($i <= $paginator->count()){
-            $active = $paginator->getCurrentPageNumber() == $i ? 'active':'';
-            $page[] = array('number' => $i, 'active'=>$active);
+
+        while ($i <= $paginator->count()) {
+            $active = $paginator->getCurrentPageNumber() == $i ? 'active' : '';
+            $page[] = array('number' => $i, 'active' => $active);
             $i++;
         }
-        
-        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ? 
-                $paginator->getCurrentPageNumber()-1 : '#';
-        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ? 
-                $paginator->getCurrentPageNumber()+1 : '#';
-        $this->view->page = $page;
-        
-        $this->view->current = $paginator->getCurrentPageNumber();
-        $this->view->action = 'member-pesquisar';
-        $this->view->processos = $paginator;
-        $this->render('pesquisar');
-    }
 
-    public function adminPesquisarAction() {
-        $modelEntrada = new Application_Model_Processo();
-
-        $paginator = Zend_Paginator::factory($modelEntrada->getProcessos(array()));
-        $paginator->setItemCountPerPage(20);
-        $paginator->setCurrentPageNumber($this->_getParam('page'));
-        
-        $i = 1;
-        $page = array();
-        
-        while($i <= $paginator->count()){
-            $active = $paginator->getCurrentPageNumber() == $i ? 'active':'';
-            $page[] = array('number' => $i, 'active'=>$active);
-            $i++;
-        }
-        
-        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ? 
-                $paginator->getCurrentPageNumber()-1 : '#';
-        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ? 
-                $paginator->getCurrentPageNumber()+1 : '#';
+        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ?
+                $paginator->getCurrentPageNumber() - 1 : '#';
+        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ?
+                $paginator->getCurrentPageNumber() + 1 : '#';
         $this->view->page = $page;
-        
+
         $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->processos = $paginator;
-        $this->view->action = 'admin-pesquisar';
-        $this->render('pesquisar');
     }
 
     public function cadastrarAction() {
@@ -160,10 +125,10 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         if ($this->_getParam('id')) {
             $processoModel = new Application_Model_Processo();
 
-            if($processoModel->delete(array('id_processo' => $this->_getParam('id')))) {
+            if ($processoModel->delete(array('id_processo' => $this->_getParam('id')))) {
                 $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
                 $this->_redirect('/admin/processos/pesquisar');
-            }else{
+            } else {
                 $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
             }
         }

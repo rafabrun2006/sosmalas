@@ -19,7 +19,6 @@
             <th width="90">Data Entrega</th>
             <th>Obs.</th>
             <th></th>
-            <th></th>
             </thead>
             <tbody>
                 <?php foreach ($this->processos as $processo): ?>
@@ -33,14 +32,14 @@
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
                         <td><?php echo $processo->obs_processo ?></td>
                         <td>
-                            <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
-                                <i class="icon-edit"></i>
-                            </a>
-                        </td>
-                        <td>
-                            <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
-                                <i class="icon-trash icon-white"></i>
-                            </a>
+                            <div class="btn-group">
+                                <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
+                                    <i class="icon-edit"></i>
+                                </a>
+                                <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
+                                    <i class="icon-trash icon-white"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>
@@ -50,13 +49,17 @@
 </form>
 <div class="pagination pagination-centered">
     <ul>
-        <li><a href="/admin/processos/<?php echo $this->action . '/page/' . $this->lastPage ?>">Anterior</a></li>
+        <li>
+            <a href="/admin/processos/pesquisar/page/<?= $this->lastPage ?>"><i class="icon-step-backward"></i></a>
+        </li>
         <?php foreach ($this->page as $next): ?>
-            <li class="<?php echo $next['active'] ?>">
-                <a href="/admin/processos/<?php echo $this->action ?>/page/<?php echo $next['number'] ?>"><?php echo $next['number'] ?></a>
+            <li class="<?= $next['active'] ?>">
+                <a href="/admin/processos/pesquisar/page/<?= $next['number'] ?>"><?= $next['number'] ?></a>
             </li>
         <?php endforeach; ?>
-        <li><a href="/admin/processos/<?php echo $this->action . '/page/' . $this->nextPage ?>">Proxima</a></li>            
+        <li>
+            <a href="/admin/processos/pesquisar/page/<?= $this->nextPage ?>"><i class="icon-step-forward"></i></a>
+        </li>            
     </ul>
 </div>
-<script type="text/javascript" src="/assets/js/auto-complete-processo.js"></script>
+<script type="text/javascript" src="/assets/js/processo.js"></script>

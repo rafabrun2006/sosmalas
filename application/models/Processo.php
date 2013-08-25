@@ -57,6 +57,21 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
 
         return parent::insert($data);
     }
+    
+    public function getProcessosPagination(array $where = null){
+        
+        $query = $this->select()
+                ->from(array('e' => 'processos'), array('*'))
+                ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = e.pessoa_entrada', array('*'));
+
+        foreach ($where as $key => $value) {
+            $query->where($key . ' = ?', $value);
+        }
+        
+        $query->setIntegrityCheck(false);
+        
+        return Zend_Paginator::factory($query);
+    }
 
 }
 

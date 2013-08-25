@@ -40,4 +40,9 @@ class Admin_UtilsController extends Zend_Controller_Action {
         
     }
     
+    public function verificaVersaoAction(){
+        $result = shell_exec("cd /home/sosmalas/public_html/sistema/sosmalas/; git log -1;");
+        $this->_helper->json(array('version' => $result));
+    }
+    
 }

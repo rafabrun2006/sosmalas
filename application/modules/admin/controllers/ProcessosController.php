@@ -21,7 +21,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $where = array();
         $post = $this->_request->getPost();
         
-        if($this->_request->isPost()){
+        if($this->_request->isPost() and !empty($post['id_processo'])){
             $where['id_processo'] = $post['id_processo'];
         }
         

@@ -19,9 +19,14 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     public function pesquisarAction() {
         $auth = Zend_Auth::getInstance()->getIdentity();
         $where = array();
+        $post = $this->_request->getPost();
+        
+        if($this->_request->isPost()){
+            $where['id_processo'] = $post['id_processo'];
+        }
         
         if (!$auth->tx_tipo_acesso == 'admin') {
-            $where = array('pessoa_entrada' => Zend_Auth::getInstance()->getIdentity()->id_pessoa);
+            $where['pessoa_entrada'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
         }
 
         $modelEntrada = new Application_Model_Processo();

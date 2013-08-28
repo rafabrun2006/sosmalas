@@ -1,0 +1,15 @@
+<div class="pagination pagination-centered">
+    <ul>
+        <li>
+            <a href="/admin/processos/pesquisar/page/<?= $this->lastPage ?>"><i class="icon-step-backward"></i></a>
+        </li>
+        <?php foreach ($this->page as $next): ?>
+            <li class="<?= $next['active'] ?>">
+                <a href="/admin/processos/pesquisar/page/<?= $next['number'] ?>"><?= $next['number'] ?></a>
+            </li>
+        <?php endforeach; ?>
+        <li>
+            <a href="/admin/processos/pesquisar/page/<?= $this->nextPage ?>"><i class="icon-step-forward"></i></a>
+        </li>            
+    </ul>
+</div>

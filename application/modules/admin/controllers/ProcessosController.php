@@ -52,6 +52,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->processos = $paginator;
+        $this->view->paginacao = $this->view->render('processos/paginacao.phtml');
     }
 
     public function cadastrarAction() {

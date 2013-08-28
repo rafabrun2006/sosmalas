@@ -6,6 +6,7 @@
                 Filtrar: <input autocomplete="off" id="id_processo" name="id_processo" class="number" type="number"/>
                 <input type="submit" value="Buscar"  class="btn">
             </div>
+            <?php echo $this->paginacao ?>
         </div>
         <br>
         <table class="table table-bordered table-striped table-condensed">
@@ -47,19 +48,5 @@
         </table>
     </fieldset>
 </form>
-<div class="pagination pagination-centered">
-    <ul>
-        <li>
-            <a href="/admin/processos/pesquisar/page/<?= $this->lastPage ?>"><i class="icon-step-backward"></i></a>
-        </li>
-        <?php foreach ($this->page as $next): ?>
-            <li class="<?= $next['active'] ?>">
-                <a href="/admin/processos/pesquisar/page/<?= $next['number'] ?>"><?= $next['number'] ?></a>
-            </li>
-        <?php endforeach; ?>
-        <li>
-            <a href="/admin/processos/pesquisar/page/<?= $this->nextPage ?>"><i class="icon-step-forward"></i></a>
-        </li>            
-    </ul>
-</div>
+<?php echo $this->paginacao ?>
 <script type="text/javascript" src="/assets/js/processo.js"></script>

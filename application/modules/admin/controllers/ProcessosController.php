@@ -25,7 +25,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             $where['id_processo'] = $post['id_processo'];
         }
         
-        if (!$auth->tx_tipo_acesso == 'admin') {
+        if ($auth->tx_tipo_acesso != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
             $where['pessoa_entrada'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
         }
 

@@ -13,15 +13,19 @@
 class SOSMalas_Plugins_Navigation extends Zend_Controller_Plugin_Abstract {
 
     public function dispatchLoopStartup(\Zend_Controller_Request_Abstract $request) {
+        $session = new Zend_Session_Namespace();
 
         if (Zend_Auth::getInstance()->hasIdentity()) {
-            $registerRoleResource = new SOSMalas_Acl_RegisterRoleResource($request);
 
+            if (!$session->registerRoleResource) {
+                $session->registerRoleResource = new SOSMalas_Acl_RegisterRoleResource($request);
+            }
+            
             $role = Zend_Auth::getInstance()->getIdentity()->tx_tipo_acesso;
             $resource = $request->getModuleName() . ':' . $request->getControllerName();
             $action = $request->getActionName();
 
-            if (!$registerRoleResource->isAllowed($role, $resource, $action)) {
+            if (!$session->registerRoleResource->isAllowed($role, $resource, $action)) {
                 $request->setControllerName('index');
                 $request->setActionName('information');
                 $request->setParam('MSG_SIS', array('ERROR', SOSMalas_Const::MSG_SIS01));

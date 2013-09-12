@@ -66,8 +66,8 @@ and open the template in the editor.
         <utils class="">
             <module>admin</module>
             <controller>utils</controller>
-            <action>atualiza-versao|</action>
-            <role>admin|</role>
+            <action>atualiza-versao</action>
+            <role>admin</role>
             <label>Admin</label>
         </utils>
         

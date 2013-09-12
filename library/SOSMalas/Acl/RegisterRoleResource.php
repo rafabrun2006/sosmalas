@@ -27,15 +27,9 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
 
         $this->initRegisterRoles();
         $this->initRegisterResources();
-        
-        $this->allow('member', 'admin:index');
-        $this->allow('member', 'admin:coleta', array('pesquisar-coleta'));
-        $this->allow('member', 'admin:entrada', array('pesquisar-entrada'));
-        $this->allow('member', 'admin:auth', array('login', 'logout'));
-        $this->allow('member', 'admin:processos', array('pesquisar', 'member-pesquisar', 'ajax-search-processo'));
-        
+
         $this->allow('admin');
-        
+
         return $this;
     }
 
@@ -51,9 +45,15 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
         foreach ($this->admin as $params) {
             $controller = $params['controller'];
             $module = $params['module'];
+            $action = explode('|', $params['action']);
+            $role = explode('|', $params['role']);
 
             $resource = $module . ':' . $controller;
             $this->add(new Zend_Acl_Resource($resource));
+            
+            for($i = 0;$i<count($action);$i++){
+                $this->allow($role[$i], $resource, $action[$i]);
+            }
         }
     }
 

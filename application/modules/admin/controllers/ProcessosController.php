@@ -18,6 +18,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
     public function pesquisarAction() {
         $auth = Zend_Auth::getInstance()->getIdentity();
+        $acl = new Zend_Session_Namespace();
         $where = array();
         $post = $this->_request->getPost();
         
@@ -50,6 +51,11 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 $paginator->getCurrentPageNumber() + 1 : '#';
         $this->view->page = $page;
 
+        $this->view->editar = $acl->registerRoleResource->isAllowed(
+                $auth->tx_tipo_acesso, 'admin:processos', 'editar') ? true:false;
+        $this->view->delete = $acl->registerRoleResource->isAllowed(
+                $auth->tx_tipo_acesso, 'admin:processos', 'delete') ? true:false;
+        
         $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->processos = $paginator;
         $this->view->paginacao = $this->view->render('processos/paginacao.phtml');

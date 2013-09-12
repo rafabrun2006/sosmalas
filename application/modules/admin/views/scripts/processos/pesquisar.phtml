@@ -34,12 +34,16 @@
                         <td><?php echo $processo->obs_processo ?></td>
                         <td>
                             <div class="btn-group">
+                                <?php if($this->editar): ?>
                                 <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
                                     <i class="icon-edit"></i>
                                 </a>
+                                <?php endif; ?>
+                                <?php if($this->delete): ?>
                                 <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
                                     <i class="icon-trash icon-white"></i>
                                 </a>
+                                <?php endif; ?>
                             </div>
                         </td>
                     </tr>

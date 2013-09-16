@@ -1,6 +1,11 @@
+<?php 
+    $user = Zend_Auth::getInstance()->getIdentity();
+    $session = new Zend_Session_Namespace(); 
+?>
 <fieldset>
     <legend>Área de Trabalho</legend>
     <ul class="thumbnails">
+       <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:pessoa')): ?> 
         <li class="span2" alt="Registro de Entradas">
             <div class="thumbnail">
                 <center><h4>Pessoas</h4></center>
@@ -17,7 +22,7 @@
                 </center>
             </div>
         </li>
-
+        <?php endif; ?>
 <!--        <li class="span2" alt="Registro de Entradas">
             <div class="thumbnail">
                 <center><h4>Entradas</h4></center>
@@ -55,7 +60,7 @@
                 </center>
             </div>
         </li>-->
-        
+        <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:processos', 'pesquisar')): ?>     
         <li class="span2" alt="">
             <div class="thumbnail">
                 <center><h4>Processos</h4></center>
@@ -72,7 +77,7 @@
                 </center>
             </div>
         </li>
-
+        <?php endif; ?>
         <li class="span2">
             <div class="thumbnail">
                 <i class="icon-logout" title="Sair do Sistema"></i>

@@ -19,7 +19,7 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($id);
 
         $data_coleta = new Zend_Form_Element_Text('data_coleta_processo', array('class'=>'date'));
-        $data_coleta->setLabel('Data Coleta:')
+        $data_coleta->setLabel('Coleta:')
                 ->addErrorMessage(self::erro);
         $this->addElement($data_coleta);
 
@@ -37,13 +37,13 @@ class Admin_Form_Processos extends Zend_Form {
 
         $nomepax = new Zend_Form_Element_text('nome_pax_processo');
         $nomepax->setRequired(true)
-                ->setLabel('Nome Pax: ')
+                ->setLabel('Passageiro: ')
                 ->addErrorMessage(self::erro);
         $this->addElement($nomepax);
 
         $qtd_bagagem = new Zend_Form_Element_text('qtd_bagagem_processo');
         $qtd_bagagem->setRequired(true)
-                ->setLabel('Qtd de Bagagens: ')
+                ->setLabel('Quant.: ')
                 ->addErrorMessage(self::erro);
         $this->addElement($qtd_bagagem);
 
@@ -56,7 +56,7 @@ class Admin_Form_Processos extends Zend_Form {
 
 
         $data_entrega = new Zend_Form_Element_text('data_entrega_processo', array('class'=>'date'));
-        $data_entrega->setLabel('Data Entrega: ')
+        $data_entrega->setLabel('Entrega: ')
                 ->addErrorMessage(self::erro);
         $this->addElement($data_entrega);
 

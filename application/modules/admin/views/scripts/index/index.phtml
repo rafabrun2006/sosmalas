@@ -67,12 +67,16 @@
                 <i class="icon-package"></i>
                 <center>
                     <div class="btn-group">
-                        <a href="/admin/processos/cadastrar" class="btn" title="Cadastrar">
-                            <i class="icon-plus"></i>
-                        </a>
-                        <a href="/admin/processos/pesquisar" class="btn btn-navbar btn-info" title="Consultar">
-                            <i class="icon-search icon-white"></i>
-                        </a>
+                        <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:processos', 'cadastrar')): ?> 
+                            <a href="/admin/processos/cadastrar" class="btn" title="Cadastrar">
+                                <i class="icon-plus"></i>
+                            </a>
+                        <?php endif; ?>
+                        <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:processos', 'pesquisar')): ?>
+                            <a href="/admin/processos/pesquisar" class="btn btn-navbar btn-info" title="Consultar">
+                                <i class="icon-search icon-white"></i>
+                            </a>
+                        <?php endif; ?>
                     </div>
                 </center>
             </div>

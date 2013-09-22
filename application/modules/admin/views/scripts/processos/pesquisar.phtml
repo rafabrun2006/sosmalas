@@ -3,8 +3,10 @@
         <legend>Processos</legend>
         <div class="form-search">
             <div class="control-group">
-                Filtrar: <input autocomplete="off" id="id_processo" name="id_processo" class="number" type="number"/>
+                Filtrar: <input autocomplete="off" id="id_processo" name="id_processo" class="number" type="text"/>
                 <input type="submit" value="Buscar"  class="btn">
+                <p>
+                <div class="alert alert-info">Em buscas por data digite-a completamente e use o formato: <b>10-08-2013</b></div>
             </div>
             <?php echo $this->paginacao ?>
         </div>

@@ -16,17 +16,17 @@ $(document).ready(function() {
         monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
         daysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
     });
-    
+
     $('.date').mask('99-99-9999');
-    
+
     $('.fone').mask('(99)9999-9999');
-    
-    $('.money').maskMoney({symbol:'R$ ' ,decimal:".", thousands:"."});
-    
-    $('.btn-danger').click(function(){
-       if(!confirm('Tem certeza que deseja continuar esta operação?')){
-           return false;
-       }
+
+    $('.money').maskMoney({symbol: 'R$ ', decimal: ".", thousands: "."});
+
+    $('.btn-danger').click(function() {
+        if (!confirm('Tem certeza que deseja continuar esta operação?')) {
+            return false;
+        }
     });
 
     $('#search-pessoa').typeahead({
@@ -47,10 +47,10 @@ $(document).ready(function() {
         updater: function(item) {
             retiraPonto = item.split('.');
             nome = retiraPonto[1].split('-');
-            
+
             nomePessoa = nome[0];
             idPessoa = retiraPonto[0];
-            
+
             $('#cliente_id').val(retiraPonto[0]);
             return nomePessoa;
         }
@@ -82,3 +82,7 @@ $(document).ready(function() {
     }
 });
 
+function dateToView(dateString) {
+    var data = dateString.split('-');
+    return data[2] + '-' + data[1] + '-' + data[0];
+}

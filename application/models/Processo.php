@@ -62,7 +62,9 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         
         $query = $this->select()
                 ->from(array('e' => 'processos'), array('*'))
-                ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = e.pessoa_entrada', array('*'));
+                ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = e.pessoa_entrada', array('*'))
+                ->join(array('s'=>'status_processo'), 'e.status_processo_id = s.id_status_processo', array('nome_status_processo'))
+                ;
 
         foreach ($where as $key => $value) {
             $query->where($key . ' = ?', $value);

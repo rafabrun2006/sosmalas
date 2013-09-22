@@ -18,7 +18,7 @@ class Admin_Form_Processos extends Zend_Form {
         $id = new Zend_Form_Element_Hidden('id_processo');
         $this->addElement($id);
 
-        $data_coleta = new Zend_Form_Element_Text('data_coleta_processo', array('class'=>'date'));
+        $data_coleta = new Zend_Form_Element_Text('data_coleta_processo', array('class' => 'date'));
         $data_coleta->setLabel('Coleta:')
                 ->addErrorMessage(self::erro);
         $this->addElement($data_coleta);
@@ -54,8 +54,13 @@ class Admin_Form_Processos extends Zend_Form {
                 ->addErrorMessage(self::erro);
         $this->addElement($servico_realizado);
 
+        $status = new Zend_Form_Element_Select('status_processo_id');
+        $status->setLabel('Status Processo: ')
+                ->addErrorMessage(self::erro)
+                ->setRequired(true);
+        $this->addElement($status);
 
-        $data_entrega = new Zend_Form_Element_text('data_entrega_processo', array('class'=>'date'));
+        $data_entrega = new Zend_Form_Element_text('data_entrega_processo', array('class' => 'date'));
         $data_entrega->setLabel('Entrega: ')
                 ->addErrorMessage(self::erro);
         $this->addElement($data_entrega);
@@ -67,7 +72,8 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($obs);
 
         $this->populaComboEmpresa();
-        
+        $this->populaComboStatus();
+
         $this->setDecorators(array(
             array('ViewScript',
                 array('viewScript' => 'processos/form-processo.phtml')
@@ -79,13 +85,22 @@ class Admin_Form_Processos extends Zend_Form {
             $element->removeDecorator('DtDdWrapper');
         }
     }
-    
-    public function populaComboEmpresa(){
+
+    public function populaComboEmpresa() {
         $model = new Application_Model_Pessoa();
         $this->getElement('pessoa_entrada')->addMultiOption(null, '--');
-        
-        foreach($model->fetchAll() as $value){
+
+        foreach ($model->fetchAll() as $value) {
             $this->getElement('pessoa_entrada')->addMultiOption($value->id_pessoa, $value->nome_pessoa);
+        }
+    }
+
+    public function populaComboStatus() {
+        $model = new Application_Model_StatusProcesso();
+        $this->getElement('status_processo_id')->addMultiOption(null, '--');
+
+        foreach ($model->fetchAll() as $value) {
+            $this->getElement('status_processo_id')->addMultiOption($value->id_status_processo, $value->nome_status_processo);
         }
     }
 

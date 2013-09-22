@@ -20,6 +20,7 @@
             <th>Serviço Realizado</th>
             <th width="85">Coleta</th>
             <th width="90">Entrega</th>
+            <th>Status</th>
             <th>Obs.</th>
             <th></th>
             </thead>
@@ -33,6 +34,7 @@
                         <td><?php echo $processo->servico_realizado_processo ?></td>
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_coleta_processo) ?></td>
                         <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
+                        <td><?php echo $processo->nome_status_processo ?></td>
                         <td><?php echo $processo->obs_processo ?></td>
                         <td>
                             <div class="btn-group">

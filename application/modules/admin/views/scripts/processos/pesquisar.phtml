@@ -1,16 +1,22 @@
-<form action="" method="post">
+<form action="" method="post" class="form-search" style="font-size: 12px;">
     <fieldset>
         <legend>Processos</legend>
-        <div class="form-search">
-            <div class="control-group">
-                Filtrar: <input autocomplete="off" id="id_processo" name="id_processo" class="number" type="text"/>
-                <input type="submit" value="Buscar"  class="btn">
-                <p>
-                <div class="alert alert-info">Em buscas por data digite-a completamente e use o formato: <b>10-08-2013</b></div>
+        <div class="control-group">
+            <label class="control-label">
+                <input autocomplete="off" id="id_processo" placeholder="Nome, Data, ID, Serviço" name="id_processo" class="number show" type="text"/>
+            </label>
+            <div class="btn-group">
+                <input placeholder="Data Coleta" id="appendInput" name="data_coleta_processo" type="text" class="date hide span2">
             </div>
+            <input placeholder="Data Entrega" name="data_entrega_processo" type="text" class="date hide span2">
+            <input placeholder="Passageiro" type="text" name="" class="hide">
+            <input placeholder="Quantidade" class="hide input-small" type="text">
+            <input placeholder="Serviço Realizado" type="text" class="hide">
+            <a href="#action" class="btn btn-small" id="search-advanced">Mais Filtros</a>
+            <button type="reset" class="btn btn-small">Limpar</button>
+            <button type="submit" class="btn btn-small btn-primary">Buscar</button>
             <?php echo $this->paginacao ?>
         </div>
-        <br>
         <table class="table table-bordered table-striped table-condensed">
             <thead>
             <th>ID</th>
@@ -38,15 +44,15 @@
                         <td><?php echo $processo->obs_processo ?></td>
                         <td>
                             <div class="btn-group">
-                                <?php if($this->editar): ?>
-                                <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
-                                    <i class="icon-edit"></i>
-                                </a>
+                                <?php if ($this->editar): ?>
+                                    <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
+                                        <i class="icon-edit"></i>
+                                    </a>
                                 <?php endif; ?>
-                                <?php if($this->delete): ?>
-                                <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
-                                    <i class="icon-trash icon-white"></i>
-                                </a>
+                                <?php if ($this->delete): ?>
+                                    <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
+                                        <i class="icon-trash icon-white"></i>
+                                    </a>
                                 <?php endif; ?>
                             </div>
                         </td>

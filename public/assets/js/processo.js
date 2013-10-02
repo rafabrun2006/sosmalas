@@ -4,9 +4,10 @@
  */
 
 $(document).ready(function() {
-
+    var visible = false;
+    
     $('#id_processo').typeahead({
-        
+
         source: function(query, process) {
 
             $.get('/admin/processos/ajax-search-processo',
@@ -42,4 +43,16 @@ $(document).ready(function() {
         }
     });
 
+    $('#search-advanced').click(function(){
+        if(visible == false){
+            $('.hide').show().removeAttr('disabled');
+            $('.show').attr('disabled', 'disabled');
+            $(this).html('Menos Filtros');
+        }else{
+            $('.hide').hide().attr('disabled', 'disabled');
+            $('.show').removeAttr('disabled');
+            $(this).html('Mais Filtros');
+        }
+        visible = !visible;
+    });
 });

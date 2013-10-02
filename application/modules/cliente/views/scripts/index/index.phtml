@@ -49,6 +49,6 @@
         </table>
     <?php else: ?>
     <div class="alert alert-info">Nenhum resultado encontrado para o código informado: 
-        <strong><?php echo $this->params['hashcod'] ?></strong></div>
+        <strong><?php echo @$this->params['hashcod'] ?></strong></div>
     <?php endif; ?>
 </form>

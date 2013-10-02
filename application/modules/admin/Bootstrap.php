@@ -12,6 +12,10 @@
  */
 class Admin_Bootstrap extends Zend_Application_Module_Bootstrap {
 
+    public function _initConfigEnviroment() {
+        Zend_Registry::set('layoutTitle', $this->getApplication()->getOption('layoutTitle'));
+    }
+
     public function _initSessionNavigationXml() {
 //        $session = new Zend_Session_Namespace();
 //        

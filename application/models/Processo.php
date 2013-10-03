@@ -67,7 +67,7 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
                 ;
 
         foreach ($where as $key => $value) {
-            $query->where($key . ' = ?', $value);
+            $query->where($key . ' like '."'%$value%'");
         }
         
         $query->setIntegrityCheck(false);

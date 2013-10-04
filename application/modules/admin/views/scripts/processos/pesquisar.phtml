@@ -3,15 +3,15 @@
         <legend>Processos</legend>
         <div class="control-group">
             <label class="control-label">
-                <input autocomplete="off" id="id_processo" placeholder="Nome, Data, ID, Serviço" name="id_processo" class="number show" type="text"/>
+                <input autocomplete="off" id="id_processo" value="<?=$this->id_processo ?>" placeholder="Nome, Data, ID, Serviço" name="id_processo" class="number show" type="text"/>
             </label>
             <div class="btn-group">
-                <input placeholder="Data Coleta" id="appendInput" name="data_coleta_processo" type="text" class="date hide span2">
+                <input placeholder="Data Coleta" id="appendInput" value="<?=$this->data_coleta_processo ?>" name="data_coleta_processo" type="text" class="date hide span2">
             </div>
-            <input placeholder="Data Entrega" name="data_entrega_processo" type="text" class="date hide span2">
-            <input placeholder="Passageiro" type="text" name="nome_pax_processo" class="hide">
-            <input placeholder="Quantidade" class="hide input-small" name="qtd_bagagem_processo" type="text">
-            <input placeholder="Serviço Realizado" type="text" name="servico_realizado_processo" class="hide">
+            <input placeholder="Data Entrega" name="data_entrega_processo" value="<?=$this->data_entrega_processo ?>" type="text" class="date hide span2">
+            <input placeholder="Passageiro" type="text" value="<?=$this->nome_pax_processo ?>" name="nome_pax_processo" class="hide">
+            <input placeholder="Quantidade" class="hide input-small" value="<?=$this->qtd_bagagem_processo ?>" name="qtd_bagagem_processo" type="text">
+            <input placeholder="Serviço Realizado" type="text" value="<?=$this->servico_realizado_processo ?>" name="servico_realizado_processo" class="hide">
             <a href="#" class="btn btn-small" id="search-advanced">Mais Filtros</a>
             <button type="reset" class="btn btn-small">Limpar</button>
             <button type="submit" class="btn btn-small btn-primary">Buscar</button>
@@ -30,8 +30,8 @@
             <th>Obs.</th>
             <th></th>
             </thead>
-            <tbody>
-                <?php foreach ($this->processos as $processo): ?>
+            <tbody class="tbody">
+                <?php foreach ($this->processos as $key=>$processo): ?>
                     <tr>
                         <td><?php echo $processo->id_processo ?></td>
                         <td><?php echo $processo->os_processo ?></td>
@@ -59,8 +59,9 @@
                     </tr>
                 <?php endforeach; ?>
             </tbody>
+            <input id="page" type="hidden" value="1" name="page">
         </table>
     </fieldset>
 </form>
-<?php echo $this->paginacao ?>
+<?= $this->paginacao; ?>
 <script type="text/javascript" src="/assets/js/processo.js"></script>

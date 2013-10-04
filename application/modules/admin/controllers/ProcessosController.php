@@ -17,48 +17,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     }
 
     public function pesquisarAction() {
-        $auth = Zend_Auth::getInstance()->getIdentity();
-        $acl = new Zend_Session_Namespace();
-        $where = array();
-        $post = $this->_request->getPost();
-        
-        if($this->_request->isPost()){
-            $where = $post;
-        }
-        
-        if ($auth->tx_tipo_acesso != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
-            $where['pessoa_entrada'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
-        }
-
-        $modelEntrada = new Application_Model_Processo();
-
-        $paginator = $modelEntrada->getProcessosPagination($where);
-        $paginator->setItemCountPerPage(20);
-        $paginator->setCurrentPageNumber($this->_getParam('page'));
-        
-        $i = 1;
-        $page = array();
-
-        while ($i <= $paginator->count()) {
-            $active = $paginator->getCurrentPageNumber() == $i ? 'active' : '';
-            $page[] = array('number' => $i, 'active' => $active);
-            $i++;
-        }
-
-        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ?
-                $paginator->getCurrentPageNumber() - 1 : '#';
-        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ?
-                $paginator->getCurrentPageNumber() + 1 : '#';
-        $this->view->page = $page;
-
-        $this->view->editar = $acl->registerRoleResource->isAllowed(
-                $auth->tx_tipo_acesso, 'admin:processos', 'editar') ? true:false;
-        $this->view->delete = $acl->registerRoleResource->isAllowed(
-                $auth->tx_tipo_acesso, 'admin:processos', 'delete') ? true:false;
-        
-        $this->view->current = $paginator->getCurrentPageNumber();
-        $this->view->processos = $paginator;
-        $this->view->paginacao = $this->view->render('processos/paginacao.phtml');
+        return $this->pesquisar();
     }
 
     public function cadastrarAction() {
@@ -144,6 +103,69 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
             }
         }
+    }
+
+    public function ajaxPesquisarAction() {
+        $this->getHelper('layout')->disableLayout();
+        $this->pesquisar();
+        $this->render('pesquisar');
+    }
+
+    public function pesquisar() {
+        $auth = Zend_Auth::getInstance()->getIdentity();
+        $acl = new Zend_Session_Namespace();
+        $where = array();
+        $post = $this->_request->getPost();
+        unset($post['page']);
+        
+        if ($this->_request->isPost()) {
+            $post['data_coleta_processo'] = array_key_exists('data_coleta_processo', $post) ?
+                 SOSMalas_Date::dateToBanco($post['data_coleta_processo']) : null;
+            $post['data_entrega_processo'] = array_key_exists('data_entrega_processo', $post) ?
+                 SOSMalas_Date::dateToBanco($post['data_entrega_processo']) : null;
+            
+            $where = $post;
+        }
+
+        if ($auth->tx_tipo_acesso != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
+            $where['pessoa_entrada'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
+        }
+
+        $modelEntrada = new Application_Model_Processo();
+
+        $paginator = $modelEntrada->getProcessosPagination($where);
+        $paginator->setItemCountPerPage(20);
+        $paginator->setCurrentPageNumber($this->_getParam('page'));
+
+        $i = 1;
+        $page = array();
+
+        while ($i <= $paginator->count()) {
+            $active = $paginator->getCurrentPageNumber() == $i ? 'active' : '';
+            $page[] = array('number' => $i, 'active' => $active);
+            $i++;
+        }
+
+        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ?
+                $paginator->getCurrentPageNumber() - 1 : '#';
+        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ?
+                $paginator->getCurrentPageNumber() + 1 : '#';
+        $this->view->page = $page;
+
+        $this->view->editar = $acl->registerRoleResource->isAllowed(
+                        $auth->tx_tipo_acesso, 'admin:processos', 'editar') ? true : false;
+        $this->view->delete = $acl->registerRoleResource->isAllowed(
+                        $auth->tx_tipo_acesso, 'admin:processos', 'delete') ? true : false;
+        
+        $this->view->id_processo = $this->_getParam('id_processo');
+        $this->view->data_coleta_processo = $this->_getParam('data_coleta_processo');
+        $this->view->data_entrega_processo = $this->_getParam('data_entrega_processo');
+        $this->view->nome_pax_processo = $this->_getParam('nome_pax_processo');
+        $this->view->qtd_bagagem_processo = $this->_getParam('qtd_bagagem_processo');
+        $this->view->servico_realizado_processo = $this->_getParam('servico_realizado_processo');
+        $this->view->current = $paginator->getCurrentPageNumber();
+        $this->view->processos = $paginator;
+        $this->view->paginacao = $this->view->render('processos/paginacao.phtml');
     }
 
 }

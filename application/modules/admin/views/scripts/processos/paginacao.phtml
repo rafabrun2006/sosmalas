@@ -5,7 +5,9 @@
         </li>
         <?php foreach ($this->page as $next): ?>
             <li class="<?= $next['active'] ?>">
-                <a href="/admin/processos/pesquisar/page/<?= $next['number'] ?>"><?= $next['number'] ?></a>
+                <a class="form-paginator" id="<?= $next['number'] ?>" 
+                   href="<?= $next['number'] ?>"><?= $next['number'] ?>
+                </a>
             </li>
         <?php endforeach; ?>
         <li>

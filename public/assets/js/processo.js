@@ -5,13 +5,12 @@
 
 $(document).ready(function() {
     var visible = false;
-    
-    $('#id_processo').typeahead({
 
+    $('#id_processo').typeahead({
         source: function(query, process) {
 
             $.get('/admin/processos/ajax-search-processo',
-                {search:query}, function(data) {
+                    {search: query}, function(data) {
                 labels = [];
                 mapped = {};
 
@@ -20,7 +19,7 @@ $(document).ready(function() {
 
                     var data_entrega = dateToView(value.data_entrega_processo);
                     var data_coleta = dateToView(value.data_coleta_processo);
-                    
+
                     labels.push(
                             value.id_processo + ':' +
                             value.pessoa_entrada + ' | ' +
@@ -43,16 +42,40 @@ $(document).ready(function() {
         }
     });
 
-    $('#search-advanced').click(function(){
-        if(visible == false){
+    $('#search-advanced').click(function() {
+        if (visible == false) {
             $('.hide').show().removeAttr('disabled');
             $('.show').attr('disabled', 'disabled');
             $(this).html('Menos Filtros');
-        }else{
+        } else {
             $('.hide').hide().attr('disabled', 'disabled');
             $('.show').removeAttr('disabled');
             $(this).html('Mais Filtros');
         }
         visible = !visible;
+    });
+    
+    $('.form-search').submit(function(){
+        
+        $.ajax({
+            url:'/admin/processos/ajax-pesquisar',
+            data:$('.form-search').serialize(),
+            type:'post',
+            dataType:'html',
+            success: function(response){
+                $('section').html(response);
+            },
+            error: function(){
+                alert('Erro no carregamento dos dados');
+            }
+        });
+        
+        return false;
+    });
+    
+    $('.form-paginator').click(function(){
+        $('#page').val(parseInt($(this).html()));
+        $(this).submit();
+        return false;
     });
 });

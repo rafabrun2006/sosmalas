@@ -12,9 +12,11 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
 
     $('.date').datepicker({
-        format: 'dd-mm-yyyy',
-        monthsShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-        daysShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sab']
+            format: 'dd-mm-yyyy',
+            language: 'pt-BR',
+            autoclose: true,
+            todayHighlight: true,
+            clearBtn: true,
     });
 
     $('.date').mask('99-99-9999');
@@ -37,7 +39,7 @@ $(document).ready(function() {
 
                 $.each(data, function(key, value) {
                     mapped[value.id_pessoa] = value;
-                    labels.push(value.id_pessoa+'.'+value.nome_pessoa+'-'+value.tel_cel_pessoa);
+                    labels.push(value.id_pessoa + '.' + value.nome_pessoa + '-' + value.tel_cel_pessoa);
                 });
 
                 process(labels);

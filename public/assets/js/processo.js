@@ -54,28 +54,35 @@ $(document).ready(function() {
         }
         visible = !visible;
     });
-    
-    $('.form-search').submit(function(){
-        
+
+    //inicia lista de processos geral
+    searchProcessos();
+
+    $('.form-search').submit(function() {
+        searchProcessos();
+        return false;
+    });
+
+    $('.form-paginator').live('click', function() {
+        loading();
+        $('#page').val(parseInt($(this).attr('id')));
+        $(this).submit();
+        loaded();
+        return false;
+    });
+
+    function searchProcessos() {
         $.ajax({
-            url:'/admin/processos/ajax-pesquisar',
-            data:$('.form-search').serialize(),
-            type:'post',
-            dataType:'html',
-            success: function(response){
-                $('section').html(response);
+            url: '/admin/processos/ajax-pesquisar',
+            data: $('.form-search').serialize(),
+            type: 'post',
+            dataType: 'html',
+            success: function(response) {
+                $('.table-processos').html(response);
             },
-            error: function(){
+            error: function() {
                 alert('Erro no carregamento dos dados');
             }
         });
-        
-        return false;
-    });
-    
-    $('.form-paginator').click(function(){
-        $('#page').val(parseInt($(this).html()));
-        $(this).submit();
-        return false;
-    });
+    }
 });

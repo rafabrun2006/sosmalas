@@ -17,7 +17,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     }
 
     public function pesquisarAction() {
-        return $this->pesquisar();
+        ;
     }
 
     public function cadastrarAction() {
@@ -107,23 +107,19 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
     public function ajaxPesquisarAction() {
         $this->getHelper('layout')->disableLayout();
-        $this->pesquisar();
-        $this->render('pesquisar');
-    }
 
-    public function pesquisar() {
         $auth = Zend_Auth::getInstance()->getIdentity();
         $acl = new Zend_Session_Namespace();
         $where = array();
         $post = $this->_request->getPost();
         unset($post['page']);
-        
+
         if ($this->_request->isPost()) {
             $post['data_coleta_processo'] = array_key_exists('data_coleta_processo', $post) ?
-                 SOSMalas_Date::dateToBanco($post['data_coleta_processo']) : null;
+                    SOSMalas_Date::dateToBanco($post['data_coleta_processo']) : null;
             $post['data_entrega_processo'] = array_key_exists('data_entrega_processo', $post) ?
-                 SOSMalas_Date::dateToBanco($post['data_entrega_processo']) : null;
-            
+                    SOSMalas_Date::dateToBanco($post['data_entrega_processo']) : null;
+
             $where = $post;
         }
 
@@ -156,7 +152,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                         $auth->tx_tipo_acesso, 'admin:processos', 'editar') ? true : false;
         $this->view->delete = $acl->registerRoleResource->isAllowed(
                         $auth->tx_tipo_acesso, 'admin:processos', 'delete') ? true : false;
-        
+
         $this->view->id_processo = $this->_getParam('id_processo');
         $this->view->data_coleta_processo = $this->_getParam('data_coleta_processo');
         $this->view->data_entrega_processo = $this->_getParam('data_entrega_processo');

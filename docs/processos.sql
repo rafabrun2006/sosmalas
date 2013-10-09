@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Máquina: localhost
--- Data de Criação: 22-Set-2013 às 04:45
+-- Data de Criação: 09-Out-2013 às 06:49
 -- Versão do servidor: 5.5.23
 -- versão do PHP: 5.4.16
 
@@ -36,10 +36,10 @@ CREATE TABLE IF NOT EXISTS `processos` (
   `data_entrega_processo` date DEFAULT NULL,
   `obs_processo` varchar(250) NOT NULL,
   `pessoa_entrada` int(11) NOT NULL,
-  `status_processo_id` int(11) NOT NULL DEFAULT '1',
+  `status_processo_text` varchar(255) NOT NULL,
   PRIMARY KEY (`id_processo`),
   KEY `pessoa_entrada` (`pessoa_entrada`),
-  KEY `id_status_processo` (`status_processo_id`)
+  KEY `id_status_processo` (`status_processo_text`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=375 ;
 
 --
@@ -50,7 +50,6 @@ CREATE TABLE IF NOT EXISTS `processos` (
 -- Limitadores para a tabela `processos`
 --
 ALTER TABLE `processos`
-  ADD CONSTRAINT `processos_ibfk_2` FOREIGN KEY (`status_processo_id`) REFERENCES `status_processo` (`id_status_processo`),
   ADD CONSTRAINT `processos_ibfk_1` FOREIGN KEY (`pessoa_entrada`) REFERENCES `pessoa` (`id_pessoa`) ON DELETE NO ACTION ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

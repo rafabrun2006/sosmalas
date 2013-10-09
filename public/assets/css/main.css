@@ -1,0 +1,21 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 09/10/2013, 02:12:43
+    Author     : Bruno
+*/
+.loading {
+    background-image: url("../img/ajax-loader.gif");
+    background-position: center center;
+    background-repeat: no-repeat;
+    z-index: 1030;
+    background-color:#000;
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0px;
+}
+

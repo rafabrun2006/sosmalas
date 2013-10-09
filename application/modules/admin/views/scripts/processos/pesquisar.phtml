@@ -1,67 +1,22 @@
+<script type="text/javascript" src="/assets/js/processo.js"></script>
 <form action="" method="post" class="form-search" style="font-size: 12px;">
     <fieldset>
         <legend>Processos</legend>
         <div class="control-group">
             <label class="control-label">
-                <input autocomplete="off" id="id_processo" value="<?=$this->id_processo ?>" placeholder="Nome, Data, ID, Serviço" name="id_processo" class="number show" type="text"/>
+                <input autocomplete="off" id="id_processo" value="<?= $this->id_processo ?>" placeholder="Nome, Data, ID, Serviço" name="id_processo" class="number show" type="text"/>
             </label>
             <div class="btn-group">
-                <input placeholder="Data Coleta" id="appendInput" value="<?=$this->data_coleta_processo ?>" name="data_coleta_processo" type="text" class="date hide span2">
+                <input placeholder="Data Coleta" id="appendInput" value="<?= $this->data_coleta_processo ?>" name="data_coleta_processo" type="text" class="date hide span2">
             </div>
-            <input placeholder="Data Entrega" name="data_entrega_processo" value="<?=$this->data_entrega_processo ?>" type="text" class="date hide span2">
-            <input placeholder="Passageiro" type="text" value="<?=$this->nome_pax_processo ?>" name="nome_pax_processo" class="hide">
-            <input placeholder="Quantidade" class="hide input-small" value="<?=$this->qtd_bagagem_processo ?>" name="qtd_bagagem_processo" type="text">
-            <input placeholder="Serviço Realizado" type="text" value="<?=$this->servico_realizado_processo ?>" name="servico_realizado_processo" class="hide">
+            <input placeholder="Data Entrega" name="data_entrega_processo" value="<?= $this->data_entrega_processo ?>" type="text" class="date hide span2">
+            <input placeholder="Passageiro" type="text" value="<?= $this->nome_pax_processo ?>" name="nome_pax_processo" class="hide">
+            <input placeholder="Quantidade" class="hide input-small" value="<?= $this->qtd_bagagem_processo ?>" name="qtd_bagagem_processo" type="text">
+            <input placeholder="Serviço Realizado" type="text" value="<?= $this->servico_realizado_processo ?>" name="servico_realizado_processo" class="hide">
             <a href="#" class="btn btn-small" id="search-advanced">Mais Filtros</a>
             <button type="reset" class="btn btn-small">Limpar</button>
             <button type="submit" class="btn btn-small btn-primary">Buscar</button>
-            <?php echo $this->paginacao ?>
         </div>
-        <table class="table table-bordered table-striped table-condensed">
-            <thead>
-            <th>ID</th>
-            <th>DPR/AHL</th>
-            <th>Passageiro</th>
-            <th>Quant.</th>
-            <th>Serviço Realizado</th>
-            <th width="85">Coleta</th>
-            <th width="90">Entrega</th>
-            <th>Status</th>
-            <th>Obs.</th>
-            <th></th>
-            </thead>
-            <tbody class="tbody">
-                <?php foreach ($this->processos as $key=>$processo): ?>
-                    <tr>
-                        <td><?php echo $processo->id_processo ?></td>
-                        <td><?php echo $processo->os_processo ?></td>
-                        <td><?php echo $processo->nome_pax_processo ?></td>
-                        <td><?php echo $processo->qtd_bagagem_processo ?></td>
-                        <td><?php echo $processo->servico_realizado_processo ?></td>
-                        <td><?php echo SOSMalas_Date::dateToView($processo->data_coleta_processo) ?></td>
-                        <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
-                        <td><?php echo $processo->nome_status_processo ?></td>
-                        <td><?php echo $processo->obs_processo ?></td>
-                        <td>
-                            <div class="btn-group">
-                                <?php if ($this->editar): ?>
-                                    <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
-                                        <i class="icon-edit"></i>
-                                    </a>
-                                <?php endif; ?>
-                                <?php if ($this->delete): ?>
-                                    <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
-                                        <i class="icon-trash icon-white"></i>
-                                    </a>
-                                <?php endif; ?>
-                            </div>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-            <input id="page" type="hidden" value="1" name="page">
-        </table>
     </fieldset>
+    <div class="table-processos"><!--Content dinamico requisicao ajax--></div>
 </form>
-<?= $this->paginacao; ?>
-<script type="text/javascript" src="/assets/js/processo.js"></script>

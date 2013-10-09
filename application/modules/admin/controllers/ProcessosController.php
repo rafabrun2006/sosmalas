@@ -110,6 +110,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $auth = Zend_Auth::getInstance()->getIdentity();
         $acl = new Zend_Session_Namespace();
+        $whereLike = array();
         $where = array();
         $post = $this->_request->getPost();
         unset($post['page']);
@@ -120,7 +121,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             $post['data_entrega_processo'] = array_key_exists('data_entrega_processo', $post) ?
                     SOSMalas_Date::dateToBanco($post['data_entrega_processo']) : null;
 
-            $where = $post;
+            $whereLike = $post;
         }
 
         if ($auth->tx_tipo_acesso != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
@@ -129,7 +130,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $modelEntrada = new Application_Model_Processo();
 
-        $paginator = $modelEntrada->getProcessosPagination($where);
+        $paginator = $modelEntrada->getProcessosPagination($where, $whereLike);
         $paginator->setItemCountPerPage(20);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
 

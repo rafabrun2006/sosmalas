@@ -58,18 +58,26 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         return parent::insert($data);
     }
     
-    public function getProcessosPagination(array $where = null){
+    public function getProcessosPagination(array $where = null, array $whereLike = null){
         
         $query = $this->select()
                 ->from(array('e' => 'processos'), array('*'))
                 ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = e.pessoa_entrada', array('*'))
                 ;
 
-        foreach ($where as $key => $value) {
-            $query->where($key . ' like '."'%$value%'");
+        foreach ($whereLike as $key => $value) {
+            if($value){
+                $query->where($key . ' like '."'%$value%'");
+            }
         }
         
-        $query->setIntegrityCheck(false);
+        foreach ($where as $key => $value) {
+            if($value){
+                $query->where($key . ' = ?', $value);
+            }
+        }
+        
+        echo $query->setIntegrityCheck(false);
         
         return Zend_Paginator::factory($query);
     }

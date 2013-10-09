@@ -4,6 +4,10 @@
 
 $(document).ready(function() {
 
+    $('#overlay').click(function(){
+        loaded();
+    });
+
 });
 
 function loading() {

@@ -64,14 +64,13 @@ $(document).ready(function() {
     });
 
     $('.form-paginator').live('click', function() {
-        loading();
         $('#page').val(parseInt($(this).attr('id')));
-        $(this).submit();
-        loaded();
+        searchProcessos();
         return false;
     });
 
     function searchProcessos() {
+        loading();
         $.ajax({
             url: '/admin/processos/ajax-pesquisar',
             data: $('.form-search').serialize(),
@@ -79,9 +78,11 @@ $(document).ready(function() {
             dataType: 'html',
             success: function(response) {
                 $('.table-processos').html(response);
+                loaded();
             },
             error: function() {
                 alert('Erro no carregamento dos dados');
+                loaded();
             }
         });
     }

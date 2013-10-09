@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Bruno
 */
 .loading {
-    background-image: url("../img/ajax-loader.gif");
+    background-image: url("../img/preloader.gif");
     background-position: center center;
     background-repeat: no-repeat;
     z-index: 1030;

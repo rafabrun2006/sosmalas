@@ -54,10 +54,9 @@ class Admin_Form_Processos extends Zend_Form {
                 ->addErrorMessage(self::erro);
         $this->addElement($servico_realizado);
 
-        $status = new Zend_Form_Element_Select('status_processo_id');
+        $status = new Zend_Form_Element_Text('status_processo_text');
         $status->setLabel('Status Processo: ')
-                ->addErrorMessage(self::erro)
-                ->setRequired(true);
+                ->addErrorMessage(self::erro);
         $this->addElement($status);
 
         $data_entrega = new Zend_Form_Element_text('data_entrega_processo', array('class' => 'date'));
@@ -72,7 +71,7 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($obs);
 
         $this->populaComboEmpresa();
-        $this->populaComboStatus();
+        //$this->populaComboStatus();
 
         $this->setDecorators(array(
             array('ViewScript',

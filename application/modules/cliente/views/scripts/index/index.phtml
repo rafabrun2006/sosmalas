@@ -1,10 +1,11 @@
+<script type="text/javascript"><?php echo $this->js ?></script>
 <?php echo $this->mensagem ?>
 <style type="text/css">
     .form-horizontal{
-        margin: 15% 0 20% 0;
+        margin: 10% 0 20% 0;
     }
 </style>
-<form class="form-horizontal" action="/index/os">
+<form class="form-inline" method="post" action="/cliente/index/os">
     <h4>
         <center>Verifique como se encontra o estado do seu pedido de coleta</center>
     </h4>
@@ -12,9 +13,9 @@
     <br>
     <br>
     <div class="control-group">
-        <label class="control-label">Buscar: </label>
         <div class="controls">
-            <input type="text" name="hashcod" value="<?php echo @$this->params['hashcod'] ?>" name="hashcod" class="input-xxlarge" placeholder="Insira o codigo da sua coleta e então clique em verificar">
+            <label class="control-label">Insira o codigo da sua coleta e então clique em verificar: </label>
+                <input type="text" name="hashcod" value="<?php echo $this->hashcod ?>" name="hashcod" class="input-small" placeholder="">
             <button class="btn btn-primary">Verificar</button>
         </div>
     </div>
@@ -24,31 +25,33 @@
             <caption><h2>Resultado</h2></caption>
             <thead>
             <th>ID</th>
-            <th>Data da Coleta</th>
-            <th>Nome do Passageiro</th>
-            <th>Numero Processo</th>
-            <th>Concerto Realizado</th>
-            <th>Data Entrega</th>
-            <!--<th>ID</th>
-            <th>PCM</th>
-            <th>Data da Pedido</th>
-            <th>Previsão Coleta</th>
-            <th>Tipo Coleta</th>
-            <th>Status Coleta</th>-->
+            <th>ORD/Serviço</th>
+            <th>Coleta</th>
+            <th>Entrega</th>
+            <th>Mod./Marca</th>
+            <th>Ref/Fábrica</th>
+            <th>Status</th>
+            <th>Previsão Entrega</th>
+            <th>Observação</th>
             </thead>
             <tbody>
-                <tr>
-                    <td><?php echo $this->coleta[0]->os_coleta ?></td>
-                    <td><?php echo SOSMalas_Date::dateToView($this->coleta[0]->data_pedido_coleta) ?></td>
-                    <td><?php echo $this->coleta[0]->pcm_coleta ?></td>
-                    <td><?php echo $this->coleta[0]->tipo_coleta ?></td>
-                    <td><?php echo $this->statusColeta[$this->coleta[0]->status_coleta] ?></td>
-                    <td><?php echo SOSMalas_Date::dateToView($this->coleta[0]->previsao_coleta) ?></td>
-                </tr>
+                <?php foreach ($this->coleta as $value): ?>
+                    <tr>
+                        <td><?php echo $value->id_processo ?></td>
+                        <td><?php echo $value->os_processo ?></td>
+                        <td><?php echo SOSMalas_Date::dateToView($value->data_coleta_processo) ?></td>
+                        <td><?php echo SOSMalas_Date::dateToView($value->data_entrega_processo) ?></td>
+                        <td><?php // echo $value->nome_pax_processo  ?></td>
+                        <td><?php //echo $value->qtd_bagagem_processo  ?></td>
+                        <td><?php echo $value->status_processo_text ?></td>
+                        <td><?php //echo $value->obs_processo  ?></td>
+                        <td><?php echo $value->obs_processo ?></td>
+                    </tr>
+                <?php endforeach; ?>
             </tbody>
         </table>
     <?php else: ?>
-    <div class="alert alert-info">Nenhum resultado encontrado para o código informado: 
-        <strong><?php echo @$this->params['hashcod'] ?></strong></div>
+        <div class="alert alert-info">Nenhum resultado encontrado para o código informado: 
+            <strong><?php echo $this->hashcod ?></strong></div>
     <?php endif; ?>
 </form>

@@ -14,21 +14,18 @@ class Cliente_IndexController extends Zend_Controller_Action {
 
     public function indexAction() {
         $this->view->params = $this->_getAllParams();
+        $this->view->js = $this->view->render('index/backbone.js');
     }
 
     public function osAction() {
-        $modelColeta = new Application_Model_Coleta();
-        $modelStasus = new Application_Model_StatusColeta();
+        $modelColeta = new Application_Model_Processo();
 
         if ($this->_getParam('hashcod')) {
-            $this->view->params = $this->_getAllParams();
-            $this->view->statusColeta = array();
-
-            foreach ($modelStasus->fetchAll()->toArray() as $status) {
-                $this->view->statusColeta[$status['id_status_coleta']] = $status['nome_status_coleta'];
-            }
-
-            $this->view->coleta = $modelColeta->find(base64_decode($this->_getParam('hashcod')));
+            $this->view->hashcod = $this->getRequest()->getParam('hashcod');
+            
+            $where = 'id_processo = ' . $this->_getParam('hashcod');
+            
+            $this->view->coleta = $modelColeta->fetchAll($where);
         } else {
             $this->view->mensagem = "<div class='alert alert-danger'>Erro ao processar o codigo</div>";
         }

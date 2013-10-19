@@ -4,70 +4,69 @@
  */
 
 $(document).ready(function() {
-    var visible = false;
+    
+    $('#auto-complete').keyup(function() {
 
-    $('#id_processo').typeahead({
-        source: function(query, process) {
+        clearTimeout();
+        setTimeout(function() {
 
-            $.get('/admin/processos/ajax-search-processo',
-                    {search: query}, function(data) {
-                labels = [];
-                mapped = {};
+            $('#auto-complete').typeahead({
+                source: function(query, process) {
 
-                $.each(data, function(key, value) {
-                    mapped[value.id_processo] = value;
+                    $.ajax({
+                        url: '/admin/processos/ajax-search-processo',
+                        search: query,
+                        success: function(data) {
 
-                    var data_entrega = dateToView(value.data_entrega_processo);
-                    var data_coleta = dateToView(value.data_coleta_processo);
-
-                    labels.push(
-                            value.id_processo + ':' +
-                            value.pessoa_entrada + ' | ' +
-                            value.servico_realizado_processo + ' | ' +
-                            data_coleta + ' | ' +
-                            value.os_processo + ' | ' +
-                            data_entrega + ' | ' +
-                            value.qtd_bagagem_processo + ' | ' +
-                            value.nome_pax_processo
-                            );
-                });
-
-                return process(labels);
+                            labels = [];
+                            mapped = {};
+                            $.each(data, function(key, value) {
+                                mapped[value.id_processo] = value;
+                                var data_entrega = dateToView(value.dt_entrega);
+                                var data_coleta = dateToView(value.dt_coleta);
+                                labels.push(
+                                        value.cod_processo + ':' +
+                                        value.id_empresa + ' | ' +
+                                        value.conserto + ' | ' +
+                                        data_coleta + ' | ' +
+                                        value.nu_processo + ' | ' +
+                                        data_entrega + ' | ' +
+                                        value.quantidade + ' | ' +
+                                        value.nome_cliente
+                                        );
+                            });
+                            return process(labels);
+                        }
+                    });
+                },
+                items: 20,
+                updater: function(item) {
+                    split = item.split(':');
+                    return split[0];
+                }
             });
-        },
-        items: 20,
-        updater: function(item) {
-            split = item.split(':');
-            return split[0];
-        }
+        }, 800);
     });
-
-    $('#search-advanced').click(function() {
-        if (visible == false) {
-            $('.hide').show().removeAttr('disabled');
-            $('.show').attr('disabled', 'disabled');
-            $(this).html('Menos Filtros');
-        } else {
-            $('.hide').hide().attr('disabled', 'disabled');
-            $('.show').removeAttr('disabled');
-            $(this).html('Mais Filtros');
-        }
-        visible = !visible;
-    });
-
     //inicia lista de processos geral
     searchProcessos();
-
     $('.form-search').submit(function() {
         searchProcessos();
         return false;
     });
-
-    $('.form-paginator').live('click', function() {
-        $('#page').val(parseInt($(this).attr('id')));
-        searchProcessos();
+    $('.form-paginator').live('click', function(event) {
+        event.preventDefault();
+        paginationProcessos($(this).attr('id'));
         return false;
     });
+    $('.form-paginator-select').live('change', function(event) {
+        event.preventDefault();
+        paginationProcessos($(this).val());
+        return false;
+    });
+    function paginationProcessos(page) {
+        $('#page').val(parseInt(page));
+        searchProcessos();
+    }
 
     function searchProcessos() {
         loading();

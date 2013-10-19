@@ -1,29 +1,40 @@
 <?php echo $this->paginacao ?>
-<table class="table table-bordered table-striped table-condensed">
+<style>
+    #btn-center{
+        text-align: center;
+    }
+</style>
+<table class="table table-bordered table-striped table-condensed" style="font-size: 12px;">
     <thead>
     <th>ID</th>
-    <th>DPR/AHL</th>
-    <th>Passageiro</th>
+    <th>Processo</th>
+    <th>Empresa</th>
+    <th>Cliente</th>
     <th>Quant.</th>
-    <th>Serviço Realizado</th>
-    <th width="85">Coleta</th>
-    <th width="90">Entrega</th>
+    <th>Prod/Mod/Cor/Marca</th>
+    <th width="180">Concerto</th>
+    <th>Coleta</th>
+    <th>Entrega</th>
     <th>Status</th>
-    <th>Obs.</th>
+    <th>Histórico</th>
     <th></th>
 </thead>
 <tbody class="tbody">
     <?php foreach ($this->processos as $key => $processo): ?>
         <tr>
             <td><?php echo $processo->id_processo ?></td>
-            <td><?php echo $processo->os_processo ?></td>
-            <td><?php echo $processo->nome_pax_processo ?></td>
-            <td><?php echo $processo->qtd_bagagem_processo ?></td>
-            <td><?php echo $processo->servico_realizado_processo ?></td>
-            <td><?php echo SOSMalas_Date::dateToView($processo->data_coleta_processo) ?></td>
-            <td><?php echo SOSMalas_Date::dateToView($processo->data_entrega_processo) ?></td>
-            <td><?php echo $processo->status_processo_text ?></td>
-            <td><?php echo $processo->obs_processo ?></td>
+            <td><?php echo $processo->cod_processo ?></td>
+            <td><?php echo $processo->nome_pessoa ?></td>
+            <td><?php echo $processo->nome_cliente ?></td>
+            <td><?php echo $processo->quantidade ?></td>
+            <td><?php echo $processo->descricao_produto ?></td>
+            <td><?php echo $processo->conserto ?></td>
+            <td><?php echo SOSMalas_Date::dateToView($processo->dt_coleta) ?></td>
+            <td><?php echo SOSMalas_Date::dateToView($processo->dt_entrega) ?></td>
+            <td><?php echo $processo->tx_status ?></td>
+            <td id="btn-center">
+                <button title="Histórico" class="btn"><i class="icon-list"></i></button>
+            </td>
             <td>
                 <div class="btn-group">
                     <?php if ($this->editar): ?>
@@ -43,4 +54,3 @@
 </tbody>
 <input id="page" type="hidden" value="1" name="page">
 </table>
-<?php echo $this->paginacao;

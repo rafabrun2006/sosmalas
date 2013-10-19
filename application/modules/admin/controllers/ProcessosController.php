@@ -50,7 +50,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $txTipoAcesso = Zend_Auth::getInstance()->getIdentity()->tx_tipo_acesso;
 
         $whereAnd = array(
-            'pessoa_entrada' => ($txTipoAcesso == 'member') ? $idPessoa : null
+            'id_empresa' => ($txTipoAcesso == 'member') ? $idPessoa : null
         );
 
         $result = $modelc->searchLikeFields(array(), $this->_getParam('search'), $whereAnd)->toArray();
@@ -65,8 +65,8 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         if ($this->_getParam('id')) {
             $find = $processosModel->find($this->_getParam('id'))->toArray();
-            $find[0]['data_coleta_processo'] = SOSMalas_Date::dateToView($find[0]['data_coleta_processo']);
-            $find[0]['data_entrega_processo'] = SOSMalas_Date::dateToView($find[0]['data_entrega_processo']);
+            $find[0]['dt_coleta'] = SOSMalas_Date::dateToView($find[0]['dt_coleta']);
+            $find[0]['dt_entrega'] = SOSMalas_Date::dateToView($find[0]['dt_entrega']);
             $data = $find[0];
         }
 
@@ -74,12 +74,15 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             $post = $this->_request->getPost();
 
             if ($form->isValid($post)) {
-                if ($processosModel->update($post)) {
-                    $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                    $this->_redirect('/admin/processos/pesquisar');
-                } else {
-                    $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
-                }
+                //if ($processosModel->update($post)) {
+                    
+                    $this->sendMail($post);
+
+                  //  $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
+                  //  $this->_redirect('/admin/processos/pesquisar');
+                //} else {
+                    //$this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
+                //}
             } else {
                 $this->_helper->flashMessenger(array('alert' => SOSMalas_Const::MSG03));
             }
@@ -116,16 +119,19 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         unset($post['page']);
 
         if ($this->_request->isPost()) {
-            $post['data_coleta_processo'] = array_key_exists('data_coleta_processo', $post) ?
-                    SOSMalas_Date::dateToBanco($post['data_coleta_processo']) : null;
-            $post['data_entrega_processo'] = array_key_exists('data_entrega_processo', $post) ?
-                    SOSMalas_Date::dateToBanco($post['data_entrega_processo']) : null;
+            $post['dt_coleta'] = array_key_exists('dt_coleta', $post) ?
+                    SOSMalas_Date::dateToBanco($post['dt_coleta']) : null;
+            $post['dt_entrega'] = array_key_exists('dt_entrega', $post) ?
+                    SOSMalas_Date::dateToBanco($post['dt_entrega']) : null;
+
+            $post['id_empresa'] = $post['nome_cliente'];
+            $post['cod_processo'] = $post['nome_cliente'];
 
             $whereLike = $post;
         }
 
         if ($auth->tx_tipo_acesso != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
-            $where['pessoa_entrada'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
+            $where['id_empresa'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
         }
 
         $modelEntrada = new Application_Model_Processo();
@@ -134,35 +140,43 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $paginator->setItemCountPerPage(20);
         $paginator->setCurrentPageNumber($this->_getParam('page'));
 
-        $i = 1;
-        $page = array();
-
-        while ($i <= $paginator->count()) {
-            $active = $paginator->getCurrentPageNumber() == $i ? 'active' : '';
-            $page[] = array('number' => $i, 'active' => $active);
-            $i++;
-        }
-
         $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ?
                 $paginator->getCurrentPageNumber() - 1 : '#';
         $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ?
                 $paginator->getCurrentPageNumber() + 1 : '#';
-        $this->view->page = $page;
 
         $this->view->editar = $acl->registerRoleResource->isAllowed(
                         $auth->tx_tipo_acesso, 'admin:processos', 'editar') ? true : false;
         $this->view->delete = $acl->registerRoleResource->isAllowed(
                         $auth->tx_tipo_acesso, 'admin:processos', 'delete') ? true : false;
 
-        $this->view->id_processo = $this->_getParam('id_processo');
-        $this->view->data_coleta_processo = $this->_getParam('data_coleta_processo');
-        $this->view->data_entrega_processo = $this->_getParam('data_entrega_processo');
-        $this->view->nome_pax_processo = $this->_getParam('nome_pax_processo');
-        $this->view->qtd_bagagem_processo = $this->_getParam('qtd_bagagem_processo');
-        $this->view->servico_realizado_processo = $this->_getParam('servico_realizado_processo');
         $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->processos = $paginator;
+        $this->view->count = $paginator->count();
         $this->view->paginacao = $this->view->render('processos/paginacao.phtml');
+    }
+
+    public function sendMail($post) {
+        
+        $pessoa = new Application_Model_Pessoa();        
+        $find = $pessoa->find($post['id_empresa']);
+        $statusProcesso = SOSMalas_Const::getStatusProcesso();
+        
+        $htmlEmail = '<h3>Registro de Mala</h3>';
+        $htmlEmail .= '<br><b>Processo:</b> '.$post['cod_processo'];
+        $htmlEmail .= '<br><b>Data Coleta:</b> '.$post['dt_coleta'];
+        $htmlEmail .= '<br><b>Data Entrega:</b> '.$post['dt_entrega'];
+        $htmlEmail .= '<br><b>Cliente:</b> '.$post['nome_cliente'];
+        $htmlEmail .= '<br><b>Status:</b> '.$statusProcesso[$post['status_id']];
+        $htmlEmail .= '<br><b>Quantidade:</b> '.$post['quantidade'];
+        $htmlEmail .= '<br><b>Prod/Mod/Cor/Marca:</b> '.$post['descricao_produto'];
+
+        $mail = new SOSMalas_Mail('UTF8');
+        $mail->setBodyHtml($htmlEmail);
+        $mail->setFrom('naoresponda@sosmalas.com.br', 'Sistema SOS Malas');
+        $mail->addTo($find[0]->email_pessoa, 'Registro');
+        $mail->setSubject('Registro de Mala - SOS Malas');
+        $mail->sendEmail();
     }
 
 }

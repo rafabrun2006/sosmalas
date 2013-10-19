@@ -12,7 +12,7 @@
  */
 class Application_Model_StatusProcesso extends SOSMalas_Db_Mapper{
     
-    protected $_name = 'status_processo';
-    protected $_primary = 'id_status_processo';
+    protected $_name = 'tb_status_processo';
+    protected $_primary = 'id_status';
     
 }

@@ -67,14 +67,22 @@ class SOSMalas_Db_Mapper extends Zend_Db_Table_Abstract {
                 $query->where($key . ' = ?', $value);
             }
         }
-        $query->limit(10);
+        $query->limit(30);
         return $this->fetchAll($query);
     }
 
     private function formateDataByType($value, $format) {
         switch ($format) {
             case 'date':
-                return SOSMalas_Date::dateToBanco($value);
+                $dateFormat = SOSMalas_Date::dateToBanco($value);
+                if ($dateFormat) {
+                    return $dateFormat;
+                } else {
+                    return $value;
+                }
+                break;
+            default:
+                return $value;
         }
     }
 

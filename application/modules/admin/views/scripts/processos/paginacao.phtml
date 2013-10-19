@@ -6,18 +6,23 @@
                 <i class="icon-step-backward"></i>
             </a>
         </li>
-        <?php foreach ($this->page as $next): ?>
-            <li class="<?= $next['active'] ?>">
-                <a class="form-paginator" id="<?= $next['number'] ?>" 
-                   href="<?= $next['number'] ?>"><?= $next['number'] ?>
-                </a>
-            </li>
-        <?php endforeach; ?>
+        <li>
+            <a class="active" href="#" id="<?= $this->current; ?>">
+                <?= $this->current; ?> de <strong><?= $this->count; ?></strong>
+            </a>
+        </li>
         <li>
             <a class="form-paginator" id="<?php echo $this->nextPage ?>" 
                href="/admin/processos/page/<?= $this->nextPage ?>">
                 <i class="icon-step-forward"></i>
             </a>
-        </li>            
+        </li>
+        <li>
+            <select class="input-mini form-paginator-select">
+                <?php for($i=1;$i<=$this->count;$i++): ?>
+                <option <?= $i==$this->current ? 'selected':'' ?> value="<?=$i?>"><?=$i?></option>
+                <?php endfor ?>
+            </select>
+        </li>
     </ul>
 </div>

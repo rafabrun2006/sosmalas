@@ -1,55 +1,54 @@
-<div class="span5">
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->data_coleta_processo; ?>
+<div class="row-fluid">
+    <div class="span5">
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->cod_processo ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->id_empresa ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->nome_cliente ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->quantidade ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->descricao_produto ?>
+            </div>
         </div>
     </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->pessoa_entrada; ?>
+    <div class="span5">
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->conserto ?>
+            </div>
         </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->os_processo; ?>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->dt_coleta ?>
+            </div>
         </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->nome_pax_processo; ?>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->dt_entrega ?>
+            </div>
         </div>
-    </div>
-    
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->qtd_bagagem_processo; ?>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->status_id ?>
+            </div>
         </div>
+        <?php echo $this->element->id_processo ?>
     </div>
-</div>
-<div class="span5">
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->servico_realizado_processo; ?>
-        </div>
-    </div>
-    
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->status_processo_text; ?>
-        </div>
-    </div>
-    
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->data_entrega_processo; ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->obs_processo; ?>
-        </div>
-    </div>
-    <?php echo $this->element->id_processo; ?>
 </div>
 <div class="span12">
     <div class="control-group form-actions">

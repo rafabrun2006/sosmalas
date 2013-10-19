@@ -74,15 +74,15 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             $post = $this->_request->getPost();
 
             if ($form->isValid($post)) {
-                //if ($processosModel->update($post)) {
+                if ($processosModel->update($post)) {
                     
                     $this->sendMail($post);
 
-                  //  $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                  //  $this->_redirect('/admin/processos/pesquisar');
-                //} else {
-                    //$this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
-                //}
+                    $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
+                    $this->_redirect('/admin/processos/pesquisar');
+                } else {
+                    $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
+                }
             } else {
                 $this->_helper->flashMessenger(array('alert' => SOSMalas_Const::MSG03));
             }

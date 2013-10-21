@@ -17,12 +17,20 @@ class SOSMalas_Const {
     const TIPO_USUARIO_ADMIN = 'admin';
     const TIPO_USUARIO_MEMBER = 'member';
     const TIPO_USUARIO_USER = 'user';
+    
     const MSG01 = 'Operação realizada com sucesso';
     const MSG02 = 'Erro ao executar a operação';
     const MSG03 = 'Verifique seu formulário, os campos obrigatórios não foram preenchidos';
-    //Mensagens do sistema
+    const MSG04 = 'E-mail enviado com sucesso';
+    const MSG05 = 'Erro no envio do E-mail';
+    const MSG06 = 'Um e-mail foi enviado para o correspondente';
+    const TEXTO_HISTORICO = 'Status: %s %s %s';
+    
     const MSG_SIS01 = 'Você não tem previlégio o suficiente para acessar esta página';
 
+    const APRESENTACAO_EMAIL_ATUALIZA = 'O registro do processo abaixo foi atualizado!';
+    const APRESENTACAO_EMAIL_NOVO = 'O registro do processo abaixo foi realizado com sucesso!';
+    
     static function getStatusProcesso() {
         return array(
             1 => 'Em concerto',

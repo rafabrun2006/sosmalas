@@ -1,15 +1,17 @@
 <script type="text/javascript" src="/assets/js/processo.js"></script>
 <form action="" method="post" class="form-search" style="font-size: 12px;">
     <fieldset>
-        <legend>Processos</legend>
+        <h3>Processos</h3>
         <div class="control-group">
             <label class="control-label">
                 <input autocomplete="off" id="auto-complete" placeholder="Nome, Data, ID, Serviço" name="nome_cliente" class="show" type="text"/>
             </label>
-            <div class="btn-group">
+            <label class="control-label">
                 <input placeholder="Data Coleta" id="appendInput" name="dt_coleta" type="text" class="date span2">
-            </div>
-            <input placeholder="Data Entrega" name="dt_entrega" type="text" class="date span2">
+            </label>
+            <label class="control-label">
+                <input placeholder="Data Entrega" name="dt_entrega" type="text" class="date span2">
+            </label>
             <button type="reset" class="btn btn-small">Limpar</button>
             <button type="submit" class="btn btn-small btn-primary">Buscar</button>
         </div>

@@ -1,9 +1,9 @@
-<?php echo $this->paginacao ?>
 <style>
     #btn-center{
         text-align: center;
     }
 </style>
+<?php echo $this->paginacao ?>
 <table class="table table-bordered table-striped table-condensed" style="font-size: 12px;">
     <thead>
     <th>ID</th>
@@ -12,12 +12,11 @@
     <th>Cliente</th>
     <th>Quant.</th>
     <th>Prod/Mod/Cor/Marca</th>
-    <th width="180">Concerto</th>
+    <th width="180">Conserto</th>
     <th>Coleta</th>
     <th>Entrega</th>
     <th>Status</th>
-    <th>Histórico</th>
-    <th></th>
+    <th>Ações</th>
 </thead>
 <tbody class="tbody">
     <?php foreach ($this->processos as $key => $processo): ?>
@@ -33,17 +32,17 @@
             <td><?php echo SOSMalas_Date::dateToView($processo->dt_entrega) ?></td>
             <td><?php echo $processo->tx_status ?></td>
             <td id="btn-center">
-                <button title="Histórico" class="btn"><i class="icon-list"></i></button>
-            </td>
-            <td>
                 <div class="btn-group">
+                    <a title="Histórico/Detalhes" href="/admin/processos/detalhes/id/<?php echo $processo->id_processo ?>" 
+                       class="btn"><i class="icon-list"></i>
+                    </a>
                     <?php if ($this->editar): ?>
-                        <a class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
+                        <a title="Editar" class="btn" href="/admin/processos/editar/id/<?php echo $processo->id_processo ?>">
                             <i class="icon-edit"></i>
                         </a>
                     <?php endif; ?>
                     <?php if ($this->delete): ?>
-                        <a class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
+                        <a title="Apagar" class="btn btn-danger" href="/admin/processos/delete/id/<?php echo $processo->id_processo ?>">
                             <i class="icon-trash icon-white"></i>
                         </a>
                     <?php endif; ?>

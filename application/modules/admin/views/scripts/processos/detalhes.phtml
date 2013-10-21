@@ -1,0 +1,40 @@
+<button class="btn pull-right" onclick="print()">
+    <i class="icon-print"></i> Imprimir
+</button>
+<button class="btn btn-inverse pull-right" onclick="history.go(-1)">
+    <i class="icon-backward icon-white"></i> Voltar
+</button>
+<fieldset>
+    <legend>Detalhes do processo [<?php echo $this->processo->cod_processo ?>]</legend>
+    <div class="control-group well-small">
+        <div class="controls span5">
+            <label class="control-label"><strong>Parceiro:</strong>
+                <?php echo $this->nome_parceiro ?>
+            </label>
+            <label class="control-label"><strong>Nome Contato:</strong>
+                <?php echo $this->nome_contato ?>
+            </label>
+            <label class="control-label"><strong>Nome Cliente:</strong>
+                <?php echo $this->processo->nome_cliente ?>
+            </label>
+            <label class="control-label"><strong>Prod/Mod/Cor/Marca:</strong> 
+                <?php echo $this->processo->descricao_produto ?>
+            </label>
+            <label class="control-label"><strong>Data Coleta:</strong>
+                <?php echo $this->processo->dt_coleta ?>
+            </label>
+        </div>
+        <div class="controls span5">
+            <label class="control-label"><strong>Data Entrega:</strong>
+                <?php echo $this->processo->dt_entrega ?>
+            </label>
+            <label class="control-label"><strong>Status:</strong>
+                <?php echo $this->status ?>
+            </label>
+            <label class="control-label"><strong>Quantidade:</strong>
+                <?php echo $this->processo->quantidade ?>
+            </label>
+        </div>
+    </div>
+</fieldset>
+<br>

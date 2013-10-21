@@ -8,14 +8,14 @@
        <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:pessoa')): ?> 
         <li class="span2" alt="Registro de Entradas">
             <div class="thumbnail">
-                <center><h4>Pessoas</h4></center>
+                <center><h4>Parceiro/<br>Funcionário</h4></center>
                 <i class="icon-person"></i>
                 <center>
                     <div class="btn-group">
                         <a href="/admin/pessoa/cadastro" class="btn btn-navbar" title="Cadastrar">
                             <i class="icon-plus"></i>
                         </a>
-                        <a href="/admin/pessoa/pesquisar-pessoa" class="btn btn-navbar btn-info" title="Consultar">
+                        <a href="/admin/pessoa" class="btn btn-navbar btn-info" title="Visualizar">
                             <i class="icon-search icon-white"></i>
                         </a>
                     </div>
@@ -23,43 +23,6 @@
             </div>
         </li>
         <?php endif; ?>
-<!--        <li class="span2" alt="Registro de Entradas">
-            <div class="thumbnail">
-                <center><h4>Entradas</h4></center>
-                <i class="icon-paste-eng"></i>
-                <center>
-                    <div class="btn-group-vertical">
-                        <a href="/admin/entrada/cadastro" class="btn">
-                            <i class="icon-plus"></i>
-                            Cadastrar
-                        </a>
-                        <a href="/admin/entrada/pesquisar-entrada" class="btn btn-navbar btn-info">
-                            <i class="icon-search icon-white"></i>
-                            Consultar
-                        </a>
-                    </div>
-                </center>
-            </div>
-        </li>-->
-
-<!--        <li class="span2" alt="">
-            <div class="thumbnail">
-                <center><h4>Coletas</h4></center>
-                <i class="icon-package"></i>
-                <center>
-                    <div class="btn-group-vertical">
-                        <a href="/admin/coleta/cadastro-coleta" class="btn btn-block">
-                            <i class="icon-plus"></i>
-                            Cadastrar
-                        </a>
-                        <a href="/admin/coleta/pesquisar-coleta" class="btn btn-navbar btn-info">
-                            <i class="icon-search icon-white"></i>
-                            Consultar
-                        </a>
-                    </div>
-                </center>
-            </div>
-        </li>-->
         <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:processos', 'pesquisar')): ?>     
         <li class="span2" alt="">
             <div class="thumbnail">
@@ -90,6 +53,5 @@
                 </a>
             </div>
         </li>
-
     </ul>
 </fieldset>

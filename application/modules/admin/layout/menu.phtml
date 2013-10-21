@@ -15,16 +15,16 @@ $session = new Zend_Session_Namespace();
             <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:pessoa')): ?>
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                        <strong>Pessoas</strong>
+                        <strong>Parceiro/Funcionário</strong>
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="nav-header">Menu de Usuários</li>
+                        <li class="nav-header">Menu de Opções</li>
                         <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:pessoa', 'cadastro')): ?>
-                            <li><a href="/admin/pessoa/cadastro"><i class="icon-plus"></i> Cadastrar Pessoa</a></li>
+                            <li><a href="/admin/pessoa/cadastro"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>
                         <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:pessoa', 'pesquisar-pessoa')): ?>
-                            <li><a href="/admin/pessoa/pesquisar-pessoa"><i class="icon-search"></i> Consultar Pessoa</a></li>
+                            <li><a href="/admin/pessoa/index"><i class="icon-eye-open"></i> Visualizar</a></li>
                         <?php endif ?>
                     </ul>
                 </li>
@@ -36,7 +36,7 @@ $session = new Zend_Session_Namespace();
                         <b class="caret"></b>
                     </a>
                     <ul class="dropdown-menu">
-                        <li class="nav-header">Processos</li>
+                        <li class="nav-header">Menu de Opções</li>
                         <?php if ($session->registerRoleResource->isAllowed($user->tx_tipo_acesso, 'admin:processos', 'cadastrar')): ?>
                             <li><a href="/admin/processos/cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>

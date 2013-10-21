@@ -43,19 +43,29 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
     }
 
     public function update(array $data, $where = null) {
-
+        $historico = new Application_Model_HistoricoProcesso();
+        
         $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
         $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
 
+        //Registrando historico
+        $historico->insert($data);
+        
         return parent::update($data, $where);
     }
 
     public function insert(array $data) {
-
+        $historico = new Application_Model_HistoricoProcesso();
+        
         $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
         $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
 
-        return parent::insert($data);
+        $data['id_processo'] = parent::insert($data);
+
+        //Registrando historico
+        $historico->insert($data);
+        
+        return $data['id_processo'];
     }
 
     public function getProcessosPagination(array $where = null, array $whereLike = null) {
@@ -78,7 +88,7 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
             }
         }
 
-        echo $query->setIntegrityCheck(false);
+        $query->setIntegrityCheck(false);
 
         return Zend_Paginator::factory($query);
     }

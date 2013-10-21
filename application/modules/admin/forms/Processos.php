@@ -75,7 +75,7 @@ class Admin_Form_Processos extends Zend_Form {
         $this->getElement('id_empresa')->addMultiOption(null, '--');
 
         foreach ($model->fetchAll() as $value) {
-            $this->getElement('id_empresa')->addMultiOption($value->id_pessoa, $value->nome_pessoa);
+            $this->getElement('id_empresa')->addMultiOption($value->id_pessoa, $value->nome_empresa);
         }
     }
 

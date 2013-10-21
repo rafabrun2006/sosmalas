@@ -5,7 +5,8 @@ class Admin_PessoaController extends Zend_Controller_Action {
     public function indexAction() {
         $model = new Application_Model_Pessoa();
 
-        $this->view->pessoa = $model->fetchAll();
+        $this->view->listPessoa = $model
+                ->listPessoa($this->_request->getPost());
     }
 
     public function cadastroPessoaAction() {
@@ -33,7 +34,7 @@ class Admin_PessoaController extends Zend_Controller_Action {
 
         if ($model->delete(array('id_pessoa' => $this->_getParam('id_pessoa')))) {
             $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-            $this->_redirect('/admin/pessoa/pesquisar-pessoa');
+            $this->_redirect('/admin/pessoa');
         }else{
             $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG02));
         }
@@ -51,9 +52,9 @@ class Admin_PessoaController extends Zend_Controller_Action {
             if ($form->isValid($post)) {
                 $model->update($post);
                 $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                $this->_redirect('/admin/pessoa/pesquisar-pessoa');
+                $this->_redirect('/admin/pessoa');
             } else {
-                $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG03));
+                $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG03));
             }
 
             $form->populate($post);
@@ -62,13 +63,6 @@ class Admin_PessoaController extends Zend_Controller_Action {
         }
 
         $this->view->form = $form;
-    }
-
-    public function pesquisarPessoaAction() {
-        $model = new Application_Model_Pessoa();
-
-        $this->view->listPessoa = $model
-                ->listPessoa($this->_request->getPost());
     }
 
     public function cadastroAction() {
@@ -81,8 +75,8 @@ class Admin_PessoaController extends Zend_Controller_Action {
 
             if ($form->isValid($post)) {
                 $id = $model->insert($post);
-                $this->_redirect('/admin/pessoa/pesquisar-pessoa');
-                $this->view->texto = 'Usuario ' . $id . ' inserido com sucesso';
+                $this->_redirect('/admin/pessoa');
+                $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
             }
         }
 

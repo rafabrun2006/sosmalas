@@ -11,7 +11,7 @@ create table tb_status_processo(
 insert into tb_status_processo values 
 (1, 'Em concerto'),
 (2, 'Aguardando peça'),
-(3, 'Reprovada p/ concerto'),
+(3, 'Reprovada p/ conserto'),
 (4, 'Em trânsito'),
 (5, 'Finalizado');
 
@@ -42,4 +42,33 @@ SELECT id_processo, os_processo, pessoa_entrada, nome_pax_processo, qtd_bagagem_
 NULL, servico_realizado_processo, data_coleta_processo, data_entrega_processo, 1
 FROM processos;
 
-select * from tb_processo;
+/*CRIACAO TABELA DE HISTORICO DE PROCESSOS*/
+create table tb_historico_processo(
+	id_historico_processo int(11) not null primary key auto_increment,
+	texto_historico text,
+	processo_id int(11),
+	dt_cadastro datetime,
+	constraint fk_processo foreign key (processo_id) references tb_processo (id_processo) 
+	on delete cascade
+	on update cascade
+);
+
+/*ALTERACAO DA TABELA DE TIPO DE ACESSO*/
+update tipo_acesso set descricao_tipo_acesso = 'Funcionário' where id_tipo_acesso = 'user';
+
+/*SUBSTITUICAO DA TABELA DE PESSOA*/
+
+create table tb_pessoa(
+	id_pessoa int(11) not null primary key auto_increment comment 'Chave primaria',
+	nome_empresa varchar(100) comment 'Nome da empresa',
+	nome_contato varchar(100) comment 'Nome do funcionario contato na empresa',
+	fone_empresa varchar(15) comment 'Telefone da empresa / contato',
+	email varchar(100) comment 'E-mail do contato na empresa',
+	senha text comment 'Senha de usuario do sistema',
+	tipo_acesso_id varchar(10) comment 'Codigo em texto do tipo de acesso'
+);
+
+INSERT INTO tb_pessoa (id_pessoa, nome_empresa, nome_contato, fone_empresa, email, senha, tipo_acesso_id)
+SELECT id_pessoa, nome_pessoa, nome_pessoa, tel_res_pessoa, email_pessoa, senha_pessoa, tx_tipo_acesso FROM pessoa;
+
+

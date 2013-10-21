@@ -34,8 +34,8 @@ and open the template in the editor.
         <pessoa class="dropdown">
             <module>admin</module>
             <controller>pessoa</controller>
-            <action>index|cadastro|editar|pesquisar-pessoa|delete|ajax-search-person</action>
-            <role>member|admin|admin|admin|admin|admin</role>
+            <action>index|cadastro|editar|delete|ajax-search-person</action>
+            <role>admin|admin|admin|admin|admin|admin</role>
             <label>Pessoa</label>
         </pessoa>
         
@@ -58,8 +58,8 @@ and open the template in the editor.
         <processos class="dropdown">
             <module>admin</module>
             <controller>processos</controller>
-            <action>index|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete</action>
-            <role>member|member|member|member|admin|admin</role>
+            <action>index|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete|detalhes</action>
+            <role>member|member|member|member|admin|admin|member</role>
             <label>Processo</label>
         </processos>
         

@@ -33,13 +33,13 @@ $(document).ready(function() {
 
     $('#search-pessoa').typeahead({
         source: function(query, process) {
-            $.get('/admin/pessoa/ajax-search-person/nome_pessoa', {query: {nome_pessoa: "like " + "'%" + query + "%'"}}, function(data) {
+            $.get('/admin/pessoa/ajax-search-person/nome_pessoa', {query: {nome_contato: "like " + "'%" + query + "%'"}}, function(data) {
                 labels = [];
                 mapped = {};
 
                 $.each(data, function(key, value) {
                     mapped[value.id_pessoa] = value;
-                    labels.push(value.id_pessoa + '.' + value.nome_pessoa + '-' + value.tel_cel_pessoa);
+                    labels.push(value.id_pessoa + '.' + value.nome_contato + '-' + value.fone_empresa);
                 });
 
                 process(labels);

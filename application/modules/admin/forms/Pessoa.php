@@ -18,43 +18,37 @@ class Admin_Form_Pessoa extends Zend_Form {
         $id = new Zend_Form_Element_Hidden('id_pessoa');
         $this->addElement($id);
 
-        $nome = new Zend_Form_Element_Text('nome_pessoa');
+        $nome = new Zend_Form_Element_Text('nome_contato');
         $nome->setRequired(true)
                 ->addErrorMessage(self::erro)
-                ->setLabel("Nome:");
+                ->setLabel("Nome Contato:");
         $this->addElement($nome);
+        
+        $nome_empresa = new Zend_Form_Element_Text('nome_empresa');
+        $nome_empresa->setRequired(true)
+                ->addErrorMessage(self::erro)
+                ->setLabel("Nome Empresa:");
+        $this->addElement($nome_empresa);
 
-        $email = new Zend_Form_Element_Text('email_pessoa');
+        $email = new Zend_Form_Element_Text('email');
         $email->setRequired(true)
                 ->addErrorMessage(self::erro)
                 ->addValidator(new Zend_Validate_EmailAddress())
                 ->setLabel("Email:");
         $this->addElement($email);
 
-        $tel_res = new Zend_Form_Element_Text('tel_res_pessoa', array('class'=>'fone'));
-        $tel_res->setLabel("Telefone Residencial:");
+        $tel_res = new Zend_Form_Element_Text('fone_empresa', array('class'=>'fone'));
+        $tel_res->setLabel("Telefone:");
         $this->addElement($tel_res);
 
-        $tel_cel = new Zend_Form_Element_Text('tel_cel_pessoa', array('class'=>'fone'));
-        $tel_cel->setLabel('Telefone Celular:');
-        $this->addElement($tel_cel);
-
-        $endereco = new Zend_Form_Element_Text('endereco_pessoa');
-        $endereco->setLabel('Endereço:');
-        $this->addElement($endereco);
-
-        $ponto_ref = new Zend_Form_Element_Text('ponto_ref_pessoa');
-        $ponto_ref->setLabel('Ponto de Referencia:');
-        $this->addElement($ponto_ref);
-
-        $senha = new Zend_Form_Element_Password('senha_pessoa');
+        $senha = new Zend_Form_Element_Password('senha');
         $senha->setRenderPassword(true)
                 ->setRequired(true)
                 ->addErrorMessage(self::erro)
                 ->setLabel("Senha:");
         $this->addElement($senha);
         
-        $tipoAcesso = new Zend_Form_Element_Select('tx_tipo_acesso');
+        $tipoAcesso = new Zend_Form_Element_Select('tipo_acesso_id');
         $tipoAcesso->setLabel('Tipo de Acesso: ');
         $this->addElement($tipoAcesso);
         
@@ -76,7 +70,7 @@ class Admin_Form_Pessoa extends Zend_Form {
         $model = new Application_Model_TipoAcesso();
         
         foreach($model->fetchAll() as $value){
-            $this->getElement('tx_tipo_acesso')->addMultiOption($value->id_tipo_acesso, $value->descricao_tipo_acesso);
+            $this->getElement('tipo_acesso_id')->addMultiOption($value->id_tipo_acesso, $value->descricao_tipo_acesso);
         }
     }
 

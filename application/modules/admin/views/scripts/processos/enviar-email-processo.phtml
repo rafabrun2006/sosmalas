@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style type="text/css">
+            td{
+                border-color: blue;
+            }
+        </style>
+    </head>
+    <body>
+        <?php echo $this->apresentacao ?>
+        <br>
+        <br>
+        <table style='border:1px solid black; border-radius: 3px;'>
+            <thead>
+            <th colspan="7">Registro de Processos <?php echo $this->cod_processo ?></th>
+        </thead>
+        <thead>
+        <th style='border: 1px solid black;'>Processo</th>
+        <th style='border: 1px solid black;'>Data Coleta</th>
+        <th style='border: 1px solid black;'>Data Entrega</th>
+        <th style='border: 1px solid black;'>Cliente</th>
+        <th style='border: 1px solid black;'>Status</th>
+        <th style='border: 1px solid black;'>Quantidade</th>
+        <th style='border: 1px solid black;'>Prod/Mod/Cor/Marca</th>
+    </thead>
+    <tbody>
+        <tr style='border: 1px solid black;'>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->cod_processo ?></td>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->dt_coleta ?></td>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->dt_entrega ?></td>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->nome_cliente ?></td>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->status ?></td>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->quantidade ?></td>
+            <td style='text-align: center; border: 1px solid black;'><?php echo $this->descricao_produto ?></td>
+        </tr>
+        <tr style='border: 1px solid black;'>
+            <td style='text-align: center; border: 1px solid black;' colspan="7">Histórico</td>
+        </tr>
+        <tr style='border: 1px solid black;'>
+            <td colspan="7">
+                <ul>
+                    <?php foreach ($this->historico as $value): ?>
+                    <li><?php echo $value->texto_historico ?></li>
+                    <?php endforeach; ?>
+                </ul>
+            </td>
+        </tr>
+    </tbody>
+</table>
+<br>
+<i>*Esta mensagem foi enviada para <?php echo $this->nome_contato ?> nosso correspondente na empresa <?php echo $this->nome_empresa ?> 
+    se desconhece o email e/ou origem favor desconsiderar.</i>
+<br>
+<br>
+<i>*Esta mensagem de texto gerada automaticamente pelo sistema, favor não responder por este endereço de e-mail.</i>
+</body>

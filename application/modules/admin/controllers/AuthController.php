@@ -34,9 +34,9 @@ class Admin_AuthController extends Zend_Controller_Action {
                 //Invoca classe Zend_Auth responsavel pela autenticação no site
                 $authAdapter = new Zend_Auth_Adapter_DbTable();
                 $authAdapter
-                        ->setTableName('pessoa') //Indicando ao zend qual a tabela para autenticacao
-                        ->setCredentialColumn('senha_pessoa') //Indicando o campo para senha
-                        ->setIdentityColumn('email_pessoa') //Indicando o campo para usuario
+                        ->setTableName('tb_pessoa') //Indicando ao zend qual a tabela para autenticacao
+                        ->setCredentialColumn('senha') //Indicando o campo para senha
+                        ->setIdentityColumn('email') //Indicando o campo para usuario
                         ->setAmbiguityIdentity(true);
 
                 $authAdapter
@@ -47,7 +47,7 @@ class Admin_AuthController extends Zend_Controller_Action {
 
                     //Preenchendo os dados da sessao do usuario autenticado
                     Zend_Auth::getInstance()->getStorage()
-                            ->write($authAdapter->getResultRowObject(null, 'senha_pessoa'));
+                            ->write($authAdapter->getResultRowObject(null, 'senha'));
                     
                     //Se login certo, redireciona para principal
                     $this->_redirect($this->getRequest()->getModuleName() . '/index');

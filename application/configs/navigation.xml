@@ -7,13 +7,13 @@ and open the template in the editor.
 <root>
     <roles>
         <user>
-            <parent></parent>
-            <name>user</name>
+            <parent>user</parent>
+            <name>member</name>
             <level>3</level>
         </user>
         <member>
-            <parent>user</parent>
-            <name>member</name>
+            <parent></parent>
+            <name>user</name>
             <level>2</level>
         </member>
         <admin>
@@ -39,27 +39,11 @@ and open the template in the editor.
             <label>Pessoa</label>
         </pessoa>
         
-        <coleta class="dropdown">
-            <module>admin</module>
-            <controller>coleta</controller>
-            <action>index|cadastro-coleta|editar|pesquisar-coleta|delete|ajax-search-coleta</action>
-            <role>member|admin|admin|member|admin|member</role>
-            <label>Coleta</label>
-        </coleta>
-        
-        <entrada class="dropdown">
-            <module>admin</module>
-            <controller>entrada</controller>
-            <action>index|cadastro|editar|pesquisar-entrada|delete|ajax-search-entrada</action>
-            <role>member|admin|admin|member|admin|member</role>
-            <label>Entrada</label>
-        </entrada>
-        
         <processos class="dropdown">
             <module>admin</module>
             <controller>processos</controller>
             <action>index|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete|detalhes</action>
-            <role>member|member|member|member|admin|admin|member</role>
+            <role>user|user|user|user|member|member|member</role>
             <label>Processo</label>
         </processos>
         
@@ -75,7 +59,7 @@ and open the template in the editor.
             <module>admin</module>
             <controller>auth</controller>
             <action>index|logout|login</action>
-            <role>member|member|member</role>
+            <role>user|user|user</role>
             <label>Login</label>
         </auth>
     </admin>

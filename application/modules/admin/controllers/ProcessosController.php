@@ -132,7 +132,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             $whereLike = $post;
         }
 
-        if ($auth->tipo_acesso_id != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
+        if (!in_array($auth->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
             $where['id_empresa'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
         }
 

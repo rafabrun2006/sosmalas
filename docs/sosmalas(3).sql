@@ -1,4 +1,3 @@
-/* TODO O SCRIPT JA FOI RODADO EM HOMOLOGACAO */
 
 /*CRIACAO DE TABELA STATUS_PROCESSO*/
 
@@ -28,12 +27,11 @@ create table tb_processo(
 	dt_coleta date comment 'Data da coleta',
 	dt_entrega date comment 'Data da entrega',
 	status_id int(1) comment 'Chave estrangeira de tb_status_processo',
-constraint pessoa_fk foreign key (id_empresa) references pessoa (id_pessoa) 
+constraint pessoa_fk foreign key (id_empresa) references tb_pessoa (id_pessoa) 
 on update no action on delete no action,
 constraint status_processo_fk foreign key (status_id) references tb_status_processo (id_status)
 on update no action on delete no action
 );
--- drop table tb_processo;
 
 /*CARGA DE DADOS DE TABELA ANTERIOR*/
 INSERT INTO tb_processo(
@@ -71,5 +69,8 @@ create table tb_pessoa(
 
 INSERT INTO tb_pessoa (id_pessoa, nome_empresa, nome_contato, fone_empresa, email, senha, tipo_acesso_id)
 SELECT id_pessoa, nome_pessoa, nome_pessoa, tel_res_pessoa, email_pessoa, senha_pessoa, tx_tipo_acesso FROM pessoa;
+
+############################### MAIS ALTERAÇÕES DE BANCO ######################################
+
 
 

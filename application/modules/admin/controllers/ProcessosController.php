@@ -47,7 +47,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     public function ajaxSearchProcessoAction() {
         $modelc = new Application_Model_Processo();
         $idPessoa = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
-        $txTipoAcesso = Zend_Auth::getInstance()->getIdentity()->tx_tipo_acesso;
+        $txTipoAcesso = Zend_Auth::getInstance()->getIdentity()->tipo_acesso_id;
 
         $whereAnd = array(
             'id_empresa' => ($txTipoAcesso == 'member') ? $idPessoa : null
@@ -114,7 +114,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->getHelper('layout')->disableLayout();
 
         $auth = Zend_Auth::getInstance()->getIdentity();
-        $acl = new Zend_Session_Namespace();
+        $acl = Zend_Registry::get('acl');
         $whereLike = array();
         $where = array();
         $post = $this->_request->getPost();
@@ -132,7 +132,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             $whereLike = $post;
         }
 
-        if ($auth->tx_tipo_acesso != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
+        if ($auth->tipo_acesso_id != SOSMalas_Const::TIPO_USUARIO_ADMIN) {
             $where['id_empresa'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
         }
 
@@ -147,10 +147,10 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ?
                 $paginator->getCurrentPageNumber() + 1 : '#';
 
-        $this->view->editar = $acl->registerRoleResource->isAllowed(
-                        $auth->tx_tipo_acesso, 'admin:processos', 'editar') ? true : false;
-        $this->view->delete = $acl->registerRoleResource->isAllowed(
-                        $auth->tx_tipo_acesso, 'admin:processos', 'delete') ? true : false;
+        $this->view->editar = $acl->isAllowed(
+                        $auth->tipo_acesso_id, 'admin:processos', 'editar') ? true : false;
+        $this->view->delete = $acl->isAllowed(
+                        $auth->tipo_acesso_id, 'admin:processos', 'delete') ? true : false;
 
         $this->view->current = $paginator->getCurrentPageNumber();
         $this->view->processos = $paginator;

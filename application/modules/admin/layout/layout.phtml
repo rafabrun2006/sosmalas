@@ -33,12 +33,15 @@
         <div class="container">
             <div class="row">
                 <section class="span12">
-                    <?php echo $this->render('flashMessenger.phtml') ?>
+                    <?php echo $this->render('flashMessenger.phtml'); ?>
                     <?php echo $this->layout()->content ?>
                 </section>
             </div>
             <hr>
             <footer>
+                <div class="hide">
+                    <?php Zend_Debug::dump(Zend_Registry::get('acl')); ?>
+                </div>
                 &copy; SOS Malas
             </footer>
         </div>

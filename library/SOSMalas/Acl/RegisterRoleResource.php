@@ -15,6 +15,7 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
     public $roles = array();
     public $admin = array();
     public $request;
+    public $privileges = array();
 
     public function __construct(Zend_Controller_Request_Abstract $request) {
 
@@ -24,11 +25,13 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
         $this->roles = $arrayNav['roles'];
         $this->admin = $arrayNav['admin'];
         $this->request = $request;
-
+        
         $this->initRegisterRoles();
         $this->initRegisterResources();
-
+        
         $this->allow('admin');
+        $this->deny('member');
+        $this->deny('user');
 
         return $this;
     }
@@ -41,20 +44,26 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
     }
 
     public function initRegisterResources() {
-
+        
         foreach ($this->admin as $params) {
             $controller = $params['controller'];
             $module = $params['module'];
             $action = explode('|', $params['action']);
             $role = explode('|', $params['role']);
-
+            
             $resource = $module . ':' . $controller;
             $this->add(new Zend_Acl_Resource($resource));
             
             for($i = 0;$i<count($action);$i++){
                 $this->allow($role[$i], $resource, $action[$i]);
+                $this->privileges[] = '#'.$role[$i].'#'.$resource.'#'.$action[$i];
             }
         }
+        
+    }
+    
+    public function getPrivileges(){
+        return $this->privileges;
     }
 
 }

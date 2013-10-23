@@ -14,7 +14,6 @@ class Application_Model_Pessoa extends SOSMalas_Db_Mapper {
             $query->where(key($where) . " like ?", "%{$where['nome_contato']}%");
         }
 
-        echo $query;
         return $this->fetchAll($query);
     }
 

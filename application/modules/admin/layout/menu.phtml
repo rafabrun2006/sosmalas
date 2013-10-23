@@ -1,6 +1,6 @@
 <?php
 $user = Zend_Auth::getInstance()->getIdentity();
-$session = new Zend_Session_Namespace();
+$acl = Zend_Registry::get('acl');
 ?>
 <div class="container">
     <!--                    <button data-target=".nav-collapse" data-toggle="collapse" class="btn btn-navbar" type="button">
@@ -12,7 +12,7 @@ $session = new Zend_Session_Namespace();
     <div class="nav-collapse collapse">
         <ul class="nav">
             <li class="active"><a href="/admin/index">Área de Trabalho</a></li>
-            <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:pessoa')): ?>
+            <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:pessoa')): ?>
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <strong>Parceiro/Funcionário</strong>
@@ -20,16 +20,16 @@ $session = new Zend_Session_Namespace();
                     </a>
                     <ul class="dropdown-menu">
                         <li class="nav-header">Menu de Opções</li>
-                        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:pessoa', 'cadastro')): ?>
+                        <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:pessoa', 'cadastro')): ?>
                             <li><a href="/admin/pessoa/cadastro"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>
-                        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:pessoa', 'pesquisar-pessoa')): ?>
+                        <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:pessoa', 'pesquisar-pessoa')): ?>
                             <li><a href="/admin/pessoa/index"><i class="icon-eye-open"></i> Visualizar</a></li>
                         <?php endif ?>
                     </ul>
                 </li>
             <?php endif ?>
-            <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
+            <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
                 <li class="dropdown">
                     <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                         <strong>Processos</strong>
@@ -37,10 +37,10 @@ $session = new Zend_Session_Namespace();
                     </a>
                     <ul class="dropdown-menu">
                         <li class="nav-header">Menu de Opções</li>
-                        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:processos', 'cadastrar')): ?>
+                        <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:processos', 'cadastrar')): ?>
                             <li><a href="/admin/processos/cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>
-                        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
+                        <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
                             <li><a href="/admin/processos/pesquisar"><i class="icon-search"></i> Consultar</a></li>
                         <?php endif ?>
                     </ul>
@@ -48,6 +48,6 @@ $session = new Zend_Session_Namespace();
             <?php endif ?>
         </ul>
         <a class="btn btn-danger btn-small pull-right" href="/admin/auth/logout">Sair</a>
-        <div class="btn btn-info btn-small pull-right"><?php echo $user->tipo_acesso_id .':'. Zend_Auth::getInstance()->getIdentity()->nome_contato ?></div>
+        <div class="btn btn-info btn-small pull-right"><?php echo Zend_Auth::getInstance()->getIdentity()->nome_contato ?></div>
     </div>
 </div>

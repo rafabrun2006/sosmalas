@@ -6,28 +6,28 @@ and open the template in the editor.
 
 <root>
     <roles>
-        <user>
-            <parent>user</parent>
-            <name>member</name>
-            <level>3</level>
-        </user>
-        <member>
-            <parent></parent>
-            <name>user</name>
-            <level>2</level>
-        </member>
         <admin>
-            <parent>member</parent>
+            <parent></parent>
             <name>admin</name>
             <level>1</level>
         </admin>
+        <user>
+            <parent>admin</parent>
+            <name>user</name>
+            <level>2</level>
+        </user>
+        <member>
+            <parent>user</parent>
+            <name>member</name>
+            <level>3</level>
+        </member>
     </roles>
     <admin>
         <index class="active">
             <module>admin</module>
             <controller>index</controller>
             <action>index</action>
-            <role>member</role>
+            <role>user</role>
             <label>Index</label>
         </index>
         
@@ -42,8 +42,8 @@ and open the template in the editor.
         <processos class="dropdown">
             <module>admin</module>
             <controller>processos</controller>
-            <action>index|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete|detalhes</action>
-            <role>user|user|user|user|member|member|member</role>
+            <action>index|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete|detalhes|cadastrar</action>
+            <role>user|user|user|user|member|member|user|member</role>
             <label>Processo</label>
         </processos>
         

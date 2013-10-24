@@ -31,7 +31,7 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
     public function getProcessos(array $where = null) {
         $query = $this->select()
                 ->from(array('e' => 'processos'), array('*'))
-                ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = e.id_empresa', array('*'));
+                ->joinLeft(array('p' => 'tb_pessoa'), 'p.id_pessoa = e.id_empresa', array('*'));
 
         foreach ($where as $key => $value) {
             $query->where($key . ' = ?', $value);
@@ -72,7 +72,7 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
 
         $query = $this->select()
                 ->from(array('pro' => 'tb_processo'), array('*'))
-                ->joinLeft(array('p' => 'pessoa'), 'p.id_pessoa = pro.id_empresa', array('p.nome_pessoa', 'p.id_pessoa'))
+                ->joinLeft(array('p' => 'tb_pessoa'), 'p.id_pessoa = pro.id_empresa', array('p.nome_empresa', 'p.id_pessoa'))
                 ->join(array('sp' => 'tb_status_processo'), 'sp.id_status = pro.status_id', array('sp.tx_status'))
         ;
 

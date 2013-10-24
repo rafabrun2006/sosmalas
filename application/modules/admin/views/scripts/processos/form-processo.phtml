@@ -52,6 +52,7 @@
             <textarea name="texto_historico" rows="3" class="span10"></textarea>
         </div>
         <?php echo $this->element->id_processo ?>
+        <?php echo $this->element->pessoa_cadastro_id->setValue(Zend_Auth::getInstance()->getIdentity()->id_pessoa) ?>
     </div>
 </div>
 <div class="span12">

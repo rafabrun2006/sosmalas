@@ -71,6 +71,10 @@ INSERT INTO tb_pessoa (id_pessoa, nome_empresa, nome_contato, fone_empresa, emai
 SELECT id_pessoa, nome_pessoa, nome_pessoa, tel_res_pessoa, email_pessoa, senha_pessoa, tx_tipo_acesso FROM pessoa;
 
 ############################### MAIS ALTERAÇÕES DE BANCO ######################################
+SET FOREIGN_KEY_CHECKS = 0;
 
+UPDATE tb_pessoa SET tipo_acesso_id = 'user' where tipo_acesso_id = 'member';
+
+SET FOREIGN_KEY_CHECKS = 1;
 
 

@@ -33,9 +33,9 @@ class SOSMalas_Const {
     
     static function getStatusProcesso() {
         return array(
-            1 => 'Em concerto',
+            1 => 'Em conserto',
             2 => 'Aguardando peça',
-            3 => 'Reprovada p/ concerto',
+            3 => 'Reprovada p/ conserto',
             4 => 'Em trânsito',
             5 => 'Finalizado');
     }

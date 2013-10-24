@@ -75,14 +75,10 @@ SELECT id_pessoa, nome_pessoa, nome_pessoa, tel_res_pessoa, email_pessoa, senha_
 
 ############################### MAIS ALTERAÇÕES DE BANCO ######################################
 
-set foreign_key_checks = 0;
-drop table tb_pessoa;
--- recriar tabela pessoa
-set foreign_key_checks = 1;
-
-
 SET FOREIGN_KEY_CHECKS = 0;
-UPDATE tb_pessoa SET tipo_acesso_id = 'member' where tipo_acesso_id = 'member';
+UPDATE tb_pessoa SET tipo_acesso_id = 'user' where tipo_acesso_id = 'member';
 SET FOREIGN_KEY_CHECKS = 1;
 
+/*SETAR TODO OS PARCEIROS COMO RECEBEDORES DE NOTIFICAÇÕES*/
+update tb_pessoa set recebe_notificacao = 1 where tipo_acesso_id = 'user'
 

@@ -20,6 +20,9 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         if ($this->_request->isPost()) {
             $post = $this->_request->getPost();
+            $form->getElement('pessoa_cadastro_id')->setValue(
+                    Zend_Auth::getInstance()->getIdentity()->id_pessoa
+            );
 
             if ($form->isValid($post)) {
                 $processo = new Application_Model_Processo();
@@ -72,7 +75,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         if ($this->_request->isPost()) {
             $post = $this->_request->getPost();
-
+            
             if ($form->isValid($post)) {
                 $update = $processosModel->update($post);
                 if ($update) {
@@ -82,7 +85,6 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                     $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
                     $this->_redirect('/admin/processos/pesquisar');
                 } else {
-                    print_r($update);
                     $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
                 }
             } else {

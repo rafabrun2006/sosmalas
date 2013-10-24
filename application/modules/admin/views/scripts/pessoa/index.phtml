@@ -1,3 +1,8 @@
+<style>
+    #td-center{
+        text-align: center;
+    }
+</style>
 <form action="" method="post" class="form-inline">
     <legend>Parceiro/Funcionário</legend>
     <div class="control-group">
@@ -15,6 +20,7 @@
         <th>Contato</th>
         <th>Fone</th>
         <th>Email</th>
+        <th>Rec. Notif.</th>
         <th></th>
         </thead>
         <tbody>
@@ -25,6 +31,7 @@
                     <td><?php echo $pessoa->nome_contato ?></td>
                     <td><?php echo $pessoa->fone_empresa ?></td>
                     <td><?php echo $pessoa->email ?></td>
+                    <td id="td-center"><?php echo SOSMalas_Const::getStringRecebNotif($pessoa->recebe_notificacao) ?></td>
                     <td width="80">
                         <div class="btn-group">
                             <a class="btn" href="/admin/pessoa/editar/id_pessoa/<?php echo $pessoa->id_pessoa ?>"><i class="icon-edit"></i></a>

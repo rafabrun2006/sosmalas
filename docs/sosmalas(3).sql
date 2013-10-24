@@ -64,17 +64,25 @@ create table tb_pessoa(
 	fone_empresa varchar(15) comment 'Telefone da empresa / contato',
 	email varchar(100) comment 'E-mail do contato na empresa',
 	senha text comment 'Senha de usuario do sistema',
-	tipo_acesso_id varchar(10) comment 'Codigo em texto do tipo de acesso'
+	tipo_acesso_id varchar(10) comment 'Codigo em texto do tipo de acesso',
+	recebe_notificacao boolean comment 'Se a empresa recebe notificações de cadastros de alterações de processo'
 );
+
+
 
 INSERT INTO tb_pessoa (id_pessoa, nome_empresa, nome_contato, fone_empresa, email, senha, tipo_acesso_id)
 SELECT id_pessoa, nome_pessoa, nome_pessoa, tel_res_pessoa, email_pessoa, senha_pessoa, tx_tipo_acesso FROM pessoa;
 
 ############################### MAIS ALTERAÇÕES DE BANCO ######################################
+
+set foreign_key_checks = 0;
+drop table tb_pessoa;
+-- recriar tabela pessoa
+set foreign_key_checks = 1;
+
+
 SET FOREIGN_KEY_CHECKS = 0;
-
-UPDATE tb_pessoa SET tipo_acesso_id = 'user' where tipo_acesso_id = 'member';
-
+UPDATE tb_pessoa SET tipo_acesso_id = 'member' where tipo_acesso_id = 'member';
 SET FOREIGN_KEY_CHECKS = 1;
 
 

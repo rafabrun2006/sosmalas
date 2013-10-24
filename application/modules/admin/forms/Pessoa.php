@@ -52,6 +52,10 @@ class Admin_Form_Pessoa extends Zend_Form {
         $tipoAcesso->setLabel('Tipo de Acesso: ');
         $this->addElement($tipoAcesso);
         
+        $recebe_notificacao = new Zend_Form_Element_Checkbox('recebe_notificacao');
+        $recebe_notificacao->setLabel('Este parceiro recebe e-mail de notificação:');
+        $this->addElement($recebe_notificacao);
+        
         $this->comboTipoAcesso();
         
         $this->setDecorators(array(

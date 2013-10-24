@@ -17,6 +17,8 @@ class SOSMalas_Const {
     const TIPO_USUARIO_ADMIN = 'admin';
     const TIPO_USUARIO_MEMBER = 'member';
     const TIPO_USUARIO_USER = 'user';
+    const RECEBE_NOTIFICACOES_SIM = 'Sim';
+    const RECEBE_NOTIFICACOES_NAO = 'Não';
     
     const MSG01 = 'Operação realizada com sucesso';
     const MSG02 = 'Erro ao executar a operação';
@@ -38,6 +40,10 @@ class SOSMalas_Const {
             3 => 'Reprovada p/ conserto',
             4 => 'Em trânsito',
             5 => 'Finalizado');
+    }
+    
+    static function getStringRecebNotif($value = false){
+        return $value ? self::RECEBE_NOTIFICACOES_SIM : self::RECEBE_NOTIFICACOES_NAO;
     }
 
 }

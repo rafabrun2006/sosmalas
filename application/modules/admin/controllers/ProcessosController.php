@@ -161,36 +161,38 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     public function enviarEmailProcessoAction($post = array(), $insertId = false) {
         if ($post) {
             $pessoa = new Application_Model_Pessoa();
-            $modelHistProc = new Application_Model_HistoricoProcesso();
-            
             $find = $pessoa->find($post['id_empresa']);
-            $statusProcesso = SOSMalas_Const::getStatusProcesso();
-            $historico = $modelHistProc->findByProcesso($post['id_processo']);
 
-            $this->view->apresentacao = $insertId ?
-                    SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA :
-                    SOSMalas_Const::APRESENTACAO_EMAIL_NOVO;
+            if ($find[0]->recebe_notificacao) {
+                $modelHistProc = new Application_Model_HistoricoProcesso();
+                $statusProcesso = SOSMalas_Const::getStatusProcesso();
+                $historico = $modelHistProc->findByProcesso($post['id_processo']);
 
-            $this->view->cod_processo = $post['cod_processo'];
-            $this->view->dt_coleta = $post['dt_coleta'];
-            $this->view->dt_entrega = $post['dt_entrega'];
-            $this->view->nome_cliente = $post['nome_cliente'];
-            $this->view->status = $statusProcesso[$post['status_id']];
-            $this->view->quantidade = $post['quantidade'];
-            $this->view->descricao_produto = $post['descricao_produto'];
-            $this->view->nome_contato = $find[0]->nome_contato;
-            $this->view->nome_empresa = $find[0]->nome_empresa;
-            $this->view->historico = $historico;
+                $this->view->apresentacao = $insertId ?
+                        SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA :
+                        SOSMalas_Const::APRESENTACAO_EMAIL_NOVO;
 
-            $mail = new SOSMalas_Mail('UTF8');
-            $mail->setBodyHtml($this->view->render('/processos/enviar-email-processo.phtml'));
-            $mail->setFrom('naoresponda@sosmalas.com.br', 'Sistema SOS Malas');
-            $mail->addTo($find[0]->email, 'Registro');
-            $mail->setSubject('Registro de Processo - SOS Malas');
-            if (!$mail->sendEmail()) {
-                $this->_helper->_flashMessenger(array('error' => SOSMalas_Const::MSG05));
-            } else {
-                $this->_helper->_flashMessenger(array('success' => SOSMalas_Const::MSG06));
+                $this->view->cod_processo = $post['cod_processo'];
+                $this->view->dt_coleta = $post['dt_coleta'];
+                $this->view->dt_entrega = $post['dt_entrega'];
+                $this->view->nome_cliente = $post['nome_cliente'];
+                $this->view->status = $statusProcesso[$post['status_id']];
+                $this->view->quantidade = $post['quantidade'];
+                $this->view->descricao_produto = $post['descricao_produto'];
+                $this->view->nome_contato = $find[0]->nome_contato;
+                $this->view->nome_empresa = $find[0]->nome_empresa;
+                $this->view->historico = $historico;
+
+                $mail = new SOSMalas_Mail('UTF8');
+                $mail->setBodyHtml($this->view->render('/processos/enviar-email-processo.phtml'));
+                $mail->setFrom('naoresponda@sosmalas.com.br', 'Sistema SOS Malas');
+                $mail->addTo($find[0]->email, 'Registro');
+                $mail->setSubject('Registro de Processo - SOS Malas');
+                if (!$mail->sendEmail()) {
+                    $this->_helper->_flashMessenger(array('error' => SOSMalas_Const::MSG05));
+                } else {
+                    $this->_helper->_flashMessenger(array('success' => SOSMalas_Const::MSG06));
+                }
             }
         }
     }
@@ -199,12 +201,12 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $model = new Application_Model_Processo();
         $modelPessoa = new Application_Model_Pessoa();
         $modelHistProc = new Application_Model_HistoricoProcesso();
-        
+
         $processo = $model->find($this->_getParam('id'));
         $status = SOSMalas_Const::getStatusProcesso();
         $pessoa = $modelPessoa->find($processo[0]->id_empresa);
         $historico = $modelHistProc->findByProcesso($processo[0]->id_processo);
-        
+
         $this->view->processo = $processo[0];
         $this->view->processo->dt_coleta = SOSMalas_Date::dateToView($processo[0]->dt_coleta);
         $this->view->processo->dt_entrega = SOSMalas_Date::dateToView($processo[0]->dt_entrega);
@@ -212,7 +214,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->view->nome_parceiro = $pessoa[0]->nome_empresa;
         $this->view->nome_contato = $pessoa[0]->nome_contato;
         $this->view->historico = $historico;
-        
+
         $this->render('detalhes');
         $this->render('historico-processo');
     }

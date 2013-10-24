@@ -9,7 +9,7 @@ create table tb_status_processo(
 
 /*INSERT DADOS EM STATUS PROCESSO*/
 insert into tb_status_processo values 
-(1, 'Em concerto'),
+(1, 'Em conserto'),
 (2, 'Aguardando peça'),
 (3, 'Reprovada p/ conserto'),
 (4, 'Em trânsito'),

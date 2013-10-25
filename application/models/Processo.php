@@ -20,8 +20,8 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
     public function getArrayById($processo) {
 
         $query = $this->select()
-                ->from(array('p' => 'processo'), array('*'))
-                ->where('p.processo = ?', $processo)
+                ->from(array('p' => 'tb_processo'), array('*'))
+                ->where('p.cod_processo = ?', $processo)
                 ->setIntegrityCheck(false)
         ;
 
@@ -30,8 +30,8 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
 
     public function getProcessos(array $where = null) {
         $query = $this->select()
-                ->from(array('e' => 'processos'), array('*'))
-                ->joinLeft(array('p' => 'tb_pessoa'), 'p.id_pessoa = e.id_empresa', array('*'));
+                ->from(array('pro' => 'tb_processo'), array('*'))
+                ->joinLeft(array('p' => 'tb_pessoa'), 'p.id_pessoa = pro.id_empresa', array('*'));
 
         foreach ($where as $key => $value) {
             $query->where($key . ' = ?', $value);

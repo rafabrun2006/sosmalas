@@ -30,8 +30,8 @@ class SOSMalas_Const {
     
     const MSG_SIS01 = 'Você não tem previlégio o suficiente para acessar esta página';
 
-    const APRESENTACAO_EMAIL_ATUALIZA = 'O registro do processo abaixo foi atualizado!';
-    const APRESENTACAO_EMAIL_NOVO = 'O registro do processo abaixo foi realizado com sucesso!';
+    const APRESENTACAO_EMAIL_ATUALIZA = 'Atualização!';
+    const APRESENTACAO_EMAIL_NOVO = 'Novo Registro';
     
     static function getStatusProcesso() {
         return array(

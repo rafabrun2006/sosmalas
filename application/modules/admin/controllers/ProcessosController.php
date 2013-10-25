@@ -167,9 +167,9 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 $statusProcesso = SOSMalas_Const::getStatusProcesso();
                 $historico = $modelHistProc->findByProcesso($post['id_processo']);
 
-                $this->view->apresentacao = $insertId ?
-                        SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA :
-                        SOSMalas_Const::APRESENTACAO_EMAIL_NOVO;
+                $texto_apresentacao = $insertId ?
+                        SOSMalas_Const::APRESENTACAO_EMAIL_NOVO:
+                        SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA ;
 
                 $this->view->cod_processo = $post['cod_processo'];
                 $this->view->dt_coleta = $post['dt_coleta'];
@@ -184,9 +184,10 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
                 $mail = new SOSMalas_Mail('UTF8');
                 $mail->setBodyHtml($this->view->render('/processos/enviar-email-processo.phtml'));
-                $mail->setFrom('naoresponda@sosmalas.com.br', 'Sistema SOS Malas');
-                $mail->addTo($find[0]->email, 'Registro');
-                $mail->setSubject('Registro de Processo - SOS Malas');
+                $mail->setFrom('naoresponda@sosmalas.com.br', 'Processo '.$post['cod_processo'].' - '.$texto_apresentacao);
+                $mail->addTo($find[0]->email, $find[0]->nome_contato);
+                $mail->setSubject('Processo '.$post['cod_processo'].' - SOS Malas');
+                
                 if (!$mail->sendEmail()) {
                     $this->_helper->_flashMessenger(array('error' => SOSMalas_Const::MSG05));
                 } else {

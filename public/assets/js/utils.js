@@ -25,7 +25,7 @@ $(document).ready(function() {
 
     $('.money').maskMoney({symbol: 'R$ ', decimal: ".", thousands: "."});
 
-    $('.btn-danger').click(function() {
+    $('.btn-danger').live('click', function() {
         if (!confirm('Tem certeza que deseja continuar esta operação?')) {
             return false;
         }

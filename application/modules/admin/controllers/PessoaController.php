@@ -35,7 +35,7 @@ class Admin_PessoaController extends Zend_Controller_Action {
         if ($model->delete(array('id_pessoa' => $this->_getParam('id_pessoa')))) {
             $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
             $this->_redirect('/admin/pessoa');
-        }else{
+        } else {
             $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG02));
         }
     }
@@ -87,6 +87,43 @@ class Admin_PessoaController extends Zend_Controller_Action {
         $model = new Application_Model_Pessoa();
 
         return $this->_helper->json($model->searchPerson($this->_request->getPost()));
+    }
+
+    public function jsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        echo $this->view->render('pessoa/pessoa.js');
+    }
+
+    public function getAction() {
+        $model = new Application_Model_Pessoa();
+
+        $result = $model->listPessoa($this->_request->getPost());
+
+        $this->_helper->json($result->toArray());
+    }
+
+    public function datagridAction() {
+        ;
+    }
+
+    public function dataJsAction() {
+        $model = new Application_Model_Pessoa();
+        $post = array();
+
+        if ($this->getRequest()->isPost()) {
+            $request = $this->getRequest()->getRawBody();
+            $post = Zend_Json_Decoder::decode($request);
+        }
+        
+        $array = $model->listPessoa($post)->toArray();
+        $this->_helper->json($array);
+    }
+
+    public function datagridjsAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender(true);
+        echo $this->view->render('/pessoa/datagrid.js');
     }
 
 }

@@ -1,4 +1,4 @@
-<title>SOS Malas - Login</title>
+<title>SOS Malas - Login <?php echo Zend_Registry::get('layoutTitle'); ?></title>
 <meta charset="utf-8">
 <link rel="stylesheet" href="/assets/css/bootstrap.css">
 <link rel="stylesheet" href="/assets/css/bootstrap-min.css">
@@ -47,6 +47,13 @@
     }
 </style>
 <div class="container">
+    <?php
+        if ($this->msgSistema):
+            ?>
+            <div class="alert alert-danger"><?php echo $this->msgSistema ?></div>
+            <?php
+        endif;
+        ?>
     <form class="form-signin" method="POST" action="">
         <center>
             <h4 class="form-signin-heading">SOS Malas - Painel Administrativo</h4>

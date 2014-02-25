@@ -1,51 +1,53 @@
-<div class="span5">
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->nome_contato; ?>
+<div ng-controller="AppPessoaController">
+    <div class="span5">
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->nome_contato; ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->nome_empresa; ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->email; ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->fone_empresa; ?>
+            </div>
         </div>
     </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->nome_empresa; ?>
+    <div class="span3">
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->tipo_acesso_id; ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <?php echo $this->element->senha; ?>
+            </div>
+        </div>
+        <div class="control-group">
+            <div class="controls">
+                <br>
+                <?php echo $this->element->recebe_notificacao; ?>
+            </div>
         </div>
     </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->email; ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->fone_empresa; ?>
-        </div>
-    </div>
-</div>
-<div class="span3">
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->tipo_acesso_id; ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <?php echo $this->element->senha; ?>
-        </div>
-    </div>
-    <div class="control-group">
-        <div class="controls">
-            <br>
-            <?php echo $this->element->recebe_notificacao; ?>
-        </div>
-    </div>
-</div>
 
-<?php echo $this->element->id_pessoa; ?>
+    <?php echo $this->element->id_pessoa; ?>
 
-<div class="span12">
-    <div class="control-group form-actions">
-        <div class="controls">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="reset" class="btn">Limpar</button>
+    <div class="span12">
+        <div class="control-group form-actions">
+            <div class="controls">
+                <button ng-click="submitForm()" type="submit" class="btn btn-primary">Salvar</button>
+                <button type="reset" class="btn">Limpar</button>
+            </div>
         </div>
     </div>
 </div>

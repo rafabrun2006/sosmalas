@@ -1,0 +1,71 @@
+<link rel="stylesheet" type="text/css" href="/angular/ng-grid/ng-grid.css">
+<script type="text/javascript" src="/angular/ng-grid/ng-grid-2.0.7.min.js"></script>
+<script type="text/javascript" src="/angular/ui-utils/modules/mask/mask.js"></script>
+<script type="text/javascript" src="/pessoa/datagridjs"></script>
+
+<div ng-app="App">
+    <div ng-controller="UserController">
+        <input type="text" class="search-query input-xxlarge" name="nome_contato" ng-model="filterOptions.filterText">
+        <br />
+        <br />
+        <div style="height: {{(pagingOptions.pageSize * 35) +'px'}}" class="table table-bordered" ng-grid="gridOptions"></div>
+    </div>
+</div>
+
+<!--script type="text/javascript">
+    var Pagination = function(data) {
+        var tbody = data.data;
+        var el = data.el;
+        var columns = data.columns;
+        var pageSize = data.pageSize;
+
+        //Mount data
+        for (var i = 0; i < tbody.length; i++) {
+            var td = '';
+            for (var j = 0; j < columns.length; j++) {
+                td += '<td>{{value.' + columns[j].name + '}}</td>';
+            }
+        }
+
+        el.html('<table class="' + data.className + '"><thead></thead><tbody ng-repeat="value in '+tbody+'"><tr><td>{{value.name}}</td></tr></tbody></tbody></table>');
+
+        //Mount columns
+        for (var i = 0; i < columns.length; i++) {
+            el.find('thead').append('<th>' + columns[i].label + '</th>');
+        }
+
+        var ul = '';
+        for (var i = 0; i < tbody.length; i++) {
+            if (i % pageSize === 0) {
+                ul += '<li><a href="#">' + (i + 1) + '</a></li>';
+            }
+        }
+
+        el.append('<div class="pagination pagination-centered"><ul>' + ul + '</ul></div>');
+
+    };
+
+    app.controller('Table', function($scope) {
+        $scope.data = [{
+                name: 'Rafael Bruno',
+                email: 'email@email.com.br',
+                sexo: true
+            }, {
+                name: 'Ariana Viana Oliveira',
+                email: 'email@email.com.br',
+                sexo: false
+            }, {
+                name: 'Maria Eduarda Viana Oliveira',
+                email: 'email@email.com.br',
+                sexo: false
+            }];
+
+        Pagination({
+            pageSize: 3,
+            columns: [{label: 'Nome', name: 'name'}, {label: 'Email', name: 'email'}, {label: 'Sexo', name: 'sexo'}],
+            el: $('#tableData'),
+            data: $scope.data,
+            className: 'table table-bordered table-condensed table-striped',
+        });
+    });
+</script-->

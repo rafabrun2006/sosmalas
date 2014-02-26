@@ -21,7 +21,7 @@ class SOSMalas_Plugins_Navigation extends Zend_Controller_Plugin_Abstract {
                 $session->registerRoleResource = new SOSMalas_Acl_RegisterRoleResource($request);
                 $session->privileges = $session->registerRoleResource->getPrivileges();
             }
-            
+
             Zend_Registry::set('acl', $session->registerRoleResource);
             
             $role = Zend_Auth::getInstance()->getIdentity()->tipo_acesso_id;

@@ -29,9 +29,9 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
         $this->initRegisterRoles();
         $this->initRegisterResources();
         
-        $this->allow('admin');
-        $this->deny('member');
         $this->deny('user');
+        $this->deny('member');
+        $this->allow('admin');
 
         return $this;
     }
@@ -39,7 +39,11 @@ class SOSMalas_Acl_RegisterRoleResource extends Zend_Acl {
     public function initRegisterRoles() {
         foreach ($this->roles as $role => $value) {
             //adicionando as regras
-            $this->addRole(new Zend_Acl_Role($role), $value['parent'] ? $value['parent'] : null);
+            if (!empty($value['parent'])) {
+                $this->addRole(new Zend_Acl_Role($role), $value['parent']);
+            }else{
+                $this->addRole(new Zend_Acl_Role($role));
+            }
         }
     }
 

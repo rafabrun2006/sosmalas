@@ -12,7 +12,7 @@
  */
 class SOSMalas_Plugins_Navigation extends Zend_Controller_Plugin_Abstract {
 
-    public function dispatchLoopStartup(\Zend_Controller_Request_Abstract $request) {
+    public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
         $session = new Zend_Session_Namespace();
         
         if (Zend_Auth::getInstance()->hasIdentity()) {

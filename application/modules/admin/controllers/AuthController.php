@@ -13,7 +13,7 @@ class Admin_AuthController extends Zend_Controller_Action {
      * Metodo construtor da classe
      */
     public function indexAction() {
-        $this->redirect($this->getRequest()->getModuleName() . '/auth/login');
+        $this->_forward('login');
     }
 
     /**
@@ -38,7 +38,7 @@ class Admin_AuthController extends Zend_Controller_Action {
                         ->setCredentialColumn('senha') //Indicando o campo para senha
                         ->setIdentityColumn('email') //Indicando o campo para usuario
                         ->setAmbiguityIdentity(true);
-
+                
                 $authAdapter
                         ->setIdentity($post['email']) //Preenchendo o usuario
                         ->setCredential($post['password']); //Preenchendo a senha
@@ -50,10 +50,11 @@ class Admin_AuthController extends Zend_Controller_Action {
                             ->write($authAdapter->getResultRowObject(null, 'senha'));
                     
                     //Se login certo, redireciona para principal
-                    $this->_redirect($this->getRequest()->getModuleName() . '/index');
+                    $this->_forward('index');
                 } else {
                     //Se login errado, apresenta mensagem de erro
-                    $this->view->mensagem = '<b>Usuário</b> e/ou <b>Senha</b> inválidos! ';
+                    $this->view->msgSistema = implode(', ', $authAdapter->authenticate()->getMessages());
+                    $this->view->mensagem = '<b>Usuário</b> e/ou <b>Senha</b> inválido! ';
                 }
             } else {
 

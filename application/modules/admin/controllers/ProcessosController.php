@@ -14,6 +14,12 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     public function pesquisarAction() {
         //Conteudo correspondente em HTML e Ajax
     }
+    
+    public function processosJsAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->getHelper('layout')->disableLayout();
+        echo $this->view->render('/processos/processos.js');
+    }
 
     public function cadastrarAction() {
         $form = new Admin_Form_Processos();
@@ -54,7 +60,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         );
 
         $result = $modelc->searchLikeFields(array(), $this->_getParam('search'), $whereAnd)->toArray();
-
+        
         $this->_helper->json($result);
     }
 
@@ -217,6 +223,14 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->render('detalhes');
         $this->render('historico-processo');
+    }
+    
+    public function findVwProcessosAction(){
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->getHelper('layout')->disableLayout();
+        
+        $model = new Application_Model_VwProcessos();
+        $this->_helper->json($model->findVwProcessos()->toArray());
     }
 
 }

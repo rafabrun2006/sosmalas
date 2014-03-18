@@ -22,6 +22,18 @@
                 </label>
             </div>
         </fieldset>
+        <div class="well well-small">
+            Numero de Registros: 
+            <select class="input-small" name="limit" ng-model="limitData">
+                <option selected>30</option>
+                <option>50</option>
+                <option>70</option>
+                <option>200</option>
+                <option>500</option>
+                <option>1000</option>
+            </select>
+            <label class="label label-success pull-right">{{count}} Resultado(s) para: <strong>{{search}}</strong></label>
+        </div>
         <table class="table table-bordered table-striped table-condensed">
             <thead>
             <th>ID</th>
@@ -36,8 +48,7 @@
             <th>Status</th>
             <th>Ações</th>
             </thead>
-            <caption>Resultados para o filtro: {{(collection | filter:search).length}}</caption>
-            <tbody ng-repeat="processo in collection | filter:search" ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)">
+            <tbody ng-repeat="processo in collection | filter:search | limitTo:limitData" ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)">
                 <tr>
                     <td>{{processo.id_processo}}</td>
                     <td>{{processo.cod_processo}}</td>

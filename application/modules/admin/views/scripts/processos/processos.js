@@ -5,7 +5,7 @@
  */
 app = angular.module('App', ['ui.mask', 'ui.bootstrap.pagination']);
 
-app.controller('ProcessosController', function($scope, $http) {
+app.controller('ProcessosController', function($scope, $http, $filter) {
     $scope.collection = [];
     $scope.dtEntrega = null;
     $scope.dtColeta = null;
@@ -14,6 +14,8 @@ app.controller('ProcessosController', function($scope, $http) {
     $http.post('/admin/processos/find-vw-processos')
             .success(function(result) {
                 $scope.collection = result;
+                $scope.count = result.length;
+                $scope.limitData = 30;
                 loaded();
             })
             .error(function() {
@@ -67,7 +69,13 @@ app.controller('ProcessosController', function($scope, $http) {
 
     $scope.resetForm = function() {
         $scope.dtColeta = null;
+        $scope.dtEntrada = null;
+        $scope.search = null;
     };
+    
+    $scope.$watch("search", function(query){
+        $scope.count = $filter('filter')($scope.collection, query).length;
+    });
 
 });
 

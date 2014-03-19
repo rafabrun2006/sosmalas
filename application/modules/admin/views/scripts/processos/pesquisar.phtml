@@ -1,3 +1,6 @@
+<script type="text/javascript">
+    processos = <?php echo $this->processos ?>;
+</script>
 <script type="text/javascript" src="/processos/processos-js"></script>
 <script type="text/javascript" src="/angular/ui-utils/modules/mask/mask.js"></script>
 <script type="text/javascript" src="/angular/bootstrap/src/pagination/pagination.js"></script>
@@ -23,7 +26,7 @@
             </div>
         </fieldset>
         <div class="well well-small">
-            Numero de Registros: 
+            Ver somente   
             <select class="input-small" name="limit" ng-model="limitData">
                 <option selected>30</option>
                 <option>50</option>
@@ -48,7 +51,8 @@
             <th>Status</th>
             <th>Ações</th>
             </thead>
-            <tbody ng-repeat="processo in collection | filter:search | limitTo:limitData" ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)">
+            <tbody ng-repeat="processo in collection| filter:search | limitTo:limitData" 
+                   ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)">
                 <tr>
                     <td>{{processo.id_processo}}</td>
                     <td>{{processo.cod_processo}}</td>

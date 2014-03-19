@@ -13,6 +13,8 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
     public function pesquisarAction() {
         //Conteudo correspondente em HTML e Ajax
+        $model = new Application_Model_VwProcessos();
+        $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos()->toArray());
     }
     
     public function processosJsAction(){

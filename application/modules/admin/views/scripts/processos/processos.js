@@ -9,18 +9,18 @@ app.controller('ProcessosController', function($scope, $http, $filter) {
     $scope.collection = [];
     $scope.dtEntrega = null;
     $scope.dtColeta = null;
-
+    
     loading();
-    $http.post('/admin/processos/find-vw-processos')
-            .success(function(result) {
-                $scope.collection = result;
-                $scope.count = result.length;
+//    $http.post('/admin/processos/find-vw-processos')
+//            .success(function(result) {
+                $scope.collection = processos;
+                $scope.count = processos.length;
                 $scope.limitData = 30;
                 loaded();
-            })
-            .error(function() {
-                console.log('Error');
-            });
+//            })
+//            .error(function() {
+//                console.log('Error');
+//            });
 
     $scope.filterDateInverse = function() {
         if ($scope.dtColeta !== null) {

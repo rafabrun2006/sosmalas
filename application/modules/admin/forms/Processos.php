@@ -71,6 +71,7 @@ class Admin_Form_Processos extends Zend_Form {
         foreach ($this->getElements() as $element) {
             $element->removeDecorator('HtmlTag');
             $element->removeDecorator('DtDdWrapper');
+            $element->setAttrib('ng-model', 'model.' . $element->getName());
         }
     }
 

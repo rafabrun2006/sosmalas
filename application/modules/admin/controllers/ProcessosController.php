@@ -11,45 +11,24 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         ;
     }
 
-    public function pesquisarAction() {
+    /**
+     * @uses AngularJS
+     * Metodo que carrega pagina de processos e lista de processos existentes
+     */
+    public function indexAction(){
         //Conteudo correspondente em HTML e Ajax
         $model = new Application_Model_VwProcessos();
+        $this->view->form = new Admin_Form_Processos();
+        
         $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos()->toArray());
+        $this->view->editarTemplate = $this->view->render('processos/editar-template.phtml');
+        $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
     }
     
     public function processosJsAction(){
         $this->_helper->viewRenderer->setNoRender(true);
         $this->getHelper('layout')->disableLayout();
         echo $this->view->render('/processos/processos.js');
-    }
-
-    public function cadastrarAction() {
-        $form = new Admin_Form_Processos();
-
-        if ($this->_request->isPost()) {
-            $post = $this->_request->getPost();
-
-            if ($form->isValid($post)) {
-                $processo = new Application_Model_Processo();
-                $insert = $processo->insert($post);
-                if ($insert) {
-                    //Chamando o processo de envio de email
-                    $post['id_processo'] = $insert;
-                    $this->enviarEmailProcessoAction($post, true);
-
-                    $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                    $this->_redirect('/admin/processos/pesquisar');
-                } else {
-                    $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
-                }
-            } else {
-                $this->_helper->flashMessenger(array('warning' => SOSMalas_Const::MSG03));
-                $this->_redirect('/admin/processos/pesquisar');
-            }
-            $form->populate($post);
-        }
-
-        $this->view->form = $form;
     }
 
     public function ajaxSearchProcessoAction() {
@@ -66,53 +45,46 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->_helper->json($result);
     }
 
-    public function editarAction() {
+    public function saveAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+        
         $form = new Admin_Form_Processos();
         $processosModel = new Application_Model_Processo();
-        $data = array();
-
-        if ($this->_getParam('id')) {
-            $find = $processosModel->find($this->_getParam('id'))->toArray();
-            $find[0]['dt_coleta'] = SOSMalas_Date::dateToView($find[0]['dt_coleta']);
-            $find[0]['dt_entrega'] = SOSMalas_Date::dateToView($find[0]['dt_entrega']);
-            $data = $find[0];
-        }
-
+        
+        $post = Zend_Json::decode($this->getRequest()->getRawBody());
+        $post['pessoa_cadastro_id'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
+        
         if ($this->_request->isPost()) {
-            $post = $this->_request->getPost();
             
             if ($form->isValid($post)) {
                 $update = $processosModel->update($post);
                 if ($update) {
                     //Chamando o processo de envio de email
+                    $model = new Application_Model_VwProcessos();
+                    
                     $this->enviarEmailProcessoAction($post);
-
-                    $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                    $this->_redirect('/admin/processos/pesquisar');
+                    $result = $model->find($post['id_processo'])->toArray();
+                    
+                    $this->_helper->json($result[0]);
                 } else {
-                    $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
+                    $this->_helper->json(array('result'=>false));
                 }
             } else {
-                $this->_helper->flashMessenger(array('alert' => SOSMalas_Const::MSG03));
+                $this->_helper->json($form->getMessages());
             }
-
-            $data = $post;
         }
-
-        $form->populate($data);
-        $this->view->form = $form;
     }
 
     public function deleteAction() {
 
-        if ($this->_getParam('id')) {
+        if ($this->_getParam('id_processo')) {
             $processoModel = new Application_Model_Processo();
 
-            if ($processoModel->delete(array('id_processo' => $this->_getParam('id')))) {
-                $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                $this->_redirect('/admin/processos/pesquisar');
+            if ($processoModel->delete(array('id_processo' => $this->_getParam('id_processo')))) {
+                $this->_helper->json(array('result'=>'success'));
             } else {
-                $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
+                $this->_helper->json(array('result'=>'error'));
             }
         }
     }
@@ -227,12 +199,25 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->render('historico-processo');
     }
     
+    /**
+     * @uses AngularJS
+     * Metodo que retorna json de processos
+     */
     public function findVwProcessosAction(){
         $this->_helper->viewRenderer->setNoRender(true);
         $this->getHelper('layout')->disableLayout();
         
         $model = new Application_Model_VwProcessos();
         $this->_helper->json($model->findVwProcessos()->toArray());
+    }
+    
+    /**
+     * @uses AngularJS
+     * Metodo que retorna json de historico de um processo
+     */
+    public function findHistoricoProcessoAction(){
+        $modelHistProc = new Application_Model_HistoricoProcesso();
+        $this->_helper->json($modelHistProc->findByProcesso($this->_getParam('id'))->toArray());
     }
 
 }

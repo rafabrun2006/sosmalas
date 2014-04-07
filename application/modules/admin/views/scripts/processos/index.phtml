@@ -1,0 +1,38 @@
+<script type="text/javascript">
+    processos = <?php echo $this->processos ?>;
+</script>
+<script src="/angular/angular-resource.min.js"></script>
+<script src="/angular/angular-route.min.js"></script>
+<script type="text/javascript" src="/processos/processos-js"></script>
+<script type="text/javascript" src="/angular/ui-utils/modules/mask/mask.js"></script>
+
+<div ng-app="App">
+    <div ng-view></div>
+    <script type="text/ng-template" id="index.html">
+        <form action="" method="post" class="form-search" style="font-size: 12px;">
+            <fieldset>
+                <h3>Processos</h3>
+                <div class="control-group">
+                    <label class="control-label">
+                        <input ng-model="search" autocomplete="off" id="auto-complete" 
+                               placeholder="ID, Nome Empresa, Cliente ou Serviço" name="nome_cliente" class="search-query input-xlarge" type="text"/>
+                    </label>
+                    <label class="control-label">
+                        <input ng-model="dtColeta" ui-mask="99-99-9999" id="appendInput" name="dt_coleta" type="text" class="date input-small">
+                    </label>
+                    <label class="control-label">
+                        <input ng-model="dtEntrega" ui-mask="99-99-9999" name="dt_entrega" type="text" class="date input-small">
+                        <button ng-click="resetForm()" type="reset" class="btn">Limpar</button>
+                    </label>
+                    <label class="control-label pull-right">
+                        <a href="#/cadastrar" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Adicionar Processo</a>
+                    </label>
+                </div>
+            </fieldset>
+        </form>
+        <?php echo $this->listarTemplate ?>
+    </script>
+    <script type="text/ng-template" id="editar.html">
+        <?php echo $this->editarTemplate ?>
+    </script>
+</div>

@@ -49,18 +49,18 @@
         </div>
         <div class="control-group">
             <div class="controls">Observação [Gravado em Historico]</div>
-            <textarea name="texto_historico" rows="3" class="span10"></textarea>
+            <textarea ng-model="model.txt_historico" name="texto_historico" rows="3" class="span10"></textarea>
         </div>
         <?php echo $this->element->id_processo ?>
-        <?php echo $this->element->pessoa_cadastro_id->setValue(Zend_Auth::getInstance()->getIdentity()->id_pessoa) ?>
     </div>
 </div>
 <div class="span12">
     <div class="control-group form-actions">
         <div class="controls">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="reset" class="btn">Limpar</button>
-            <a class="btn btn-inverse" onclick="history.go(-1)">Cancelar</a>
+            <button type="submit" ng-click="save()" class="btn btn-success"><i class="icon-ok icon-white"></i> Salvar</button>
+            <a class="btn btn" ng-click="back()"><i class="icon-backward"></i> Voltar</a>
+            <button type="reset" class="btn btn-danger"><i class="icon-trash icon-white"></i> Limpar</button>
+            <a class="btn btn-inverse" ng-click="back()"><i class="icon-remove icon-white"></i> Cancelar</a>
         </div>
     </div>
 </div>

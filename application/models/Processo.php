@@ -41,6 +41,14 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
 
         return $this->fetchAll($query);
     }
+    
+    public function save($data){
+        if(array_key_exists('id_processo', $data)){
+            return $this->update($data, array('id_processo' => $data['id_processo']));
+        }else{
+            return $this->insert($data);
+        }
+    }
 
     public function update(array $data, $where = null) {
         $historico = new Application_Model_HistoricoProcesso();
@@ -51,7 +59,8 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         //Registrando historico
         $historico->insert($data);
         
-        return parent::update($data, $where);
+        parent::update($data, $where);
+        return $data['id_processo'];
     }
 
     public function insert(array $data) {

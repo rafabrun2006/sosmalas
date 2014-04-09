@@ -7,8 +7,9 @@ collection = {
     init: function(col) {
         if (!this.length()) {
             var arrayObj = [];
+            var i=0;
             $.each(col, function(index, val) {
-                val.cid = index;
+                val.cid = i++;
                 arrayObj[val.cid] = val;
             });
             this.collection = arrayObj;
@@ -31,6 +32,7 @@ collection = {
 
     },
     add: function(model) {
+        model.cid = this.length();
         this.collection.push(model);
     },
     set: function(id, model) {
@@ -181,7 +183,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     };
     
     $scope.deleteModel = function(id){
-        
+        $log.info('Remove model: ' + id);
         if(id && confirm('Deseja realmente executar esta operação?')){
             $scope.model = collection.get(id);
             ModelFactory.remove({id_processo: $scope.model.id_processo}, $scope.model);
@@ -211,6 +213,14 @@ app.controller('ProcessosEditController', function($scope, $log, $filter, $route
 });
 
 app.controller('ProcessosAddController', function($scope, $log, $location, ModelFactory){
+    
+    $scope.collection = collection.init(processos);
+    
+    $scope.save = function(){
+        $scope.model = ModelFactory.save(null, $scope.model);
+        collection.add($scope.model);
+        $location.path('/');
+    };
     
     $scope.back = function() {
         $location.path('/');

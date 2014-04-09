@@ -14,7 +14,7 @@
                 <h3>Processos</h3>
                 <div class="control-group">
                     <label class="control-label">
-                        <input ng-model="search" autocomplete="off" id="auto-complete" 
+                        <strong>Buscar: </strong><input ng-model="search" autocomplete="off" id="auto-complete" 
                                placeholder="ID, Nome Empresa, Cliente ou Serviço" name="nome_cliente" class="search-query input-xlarge" type="text"/>
                     </label>
                     <label class="control-label">
@@ -22,6 +22,14 @@
                     </label>
                     <label class="control-label">
                         <input ng-model="dtEntrega" ui-mask="99-99-9999" name="dt_entrega" type="text" class="date input-small">
+                    </label>
+                    <label class="control-label">
+                        <select ng-model="search.id_empresa">
+                            <option value="">--</option>
+                            <?php foreach($this->parceiros as $value): ?>
+                                <option value="<?=$value->id_pessoa ?>"><?=$value->nome_empresa ?></option>
+                            <?php endforeach; ?>
+                        </select>
                         <button ng-click="resetForm()" type="reset" class="btn">Limpar</button>
                     </label>
                     <label class="control-label pull-right">

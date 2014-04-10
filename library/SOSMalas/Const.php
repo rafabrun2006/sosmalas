@@ -26,20 +26,26 @@ class SOSMalas_Const {
     const MSG04 = 'E-mail enviado com sucesso';
     const MSG05 = 'Erro no envio do E-mail';
     const MSG06 = 'Um e-mail foi enviado para o correspondente';
-    const TEXTO_HISTORICO = 'Status: %s %s %s';
+    const TEXTO_HISTORICO = 'Última atualização: %s %s';
     
     const MSG_SIS01 = 'Você não tem previlégio o suficiente para acessar esta página';
 
     const APRESENTACAO_EMAIL_ATUALIZA = 'Atualização!';
     const APRESENTACAO_EMAIL_NOVO = 'Novo Registro';
     
+    const STATUS_PROCESSO_EM_CONSERTO = 1;
+    const STATUS_PROCESSO_AGUARDANDO_PECA = 2;
+    const STATUS_PROCESSO_REPROVADA_CONSERTO = 3;
+    const STATUS_PROCESSO_EM_TRANSITO = 4;
+    const STATUS_PROCESSO_FINALIZADO = 5;
+    
     static function getStatusProcesso() {
         return array(
-            1 => 'Em conserto',
-            2 => 'Aguardando peça',
-            3 => 'Reprovada p/ conserto',
-            4 => 'Em trânsito',
-            5 => 'Finalizado');
+            SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO => 'Em conserto',
+            SOSMalas_Const::STATUS_PROCESSO_AGUARDANDO_PECA => 'Aguardando peça',
+            SOSMalas_Const::STATUS_PROCESSO_REPROVADA_CONSERTO => 'Reprovada p/ conserto',
+            SOSMalas_Const::STATUS_PROCESSO_EM_TRANSITO => 'Em trânsito',
+            SOSMalas_Const::STATUS_PROCESSO_FINALIZADO => 'Finalizado');
     }
     
     static function getStringRecebNotif($value = false){

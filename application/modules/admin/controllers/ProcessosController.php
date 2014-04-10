@@ -19,7 +19,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         //Conteudo correspondente em HTML e Ajax
         $model = new Application_Model_VwProcessos();
         $pessoa = new Application_Model_Pessoa();
-        
+
         $this->view->form = new Admin_Form_Processos();
         $this->view->parceiros = $pessoa->fetchAll();
 
@@ -63,13 +63,21 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             if ($form->isValid($post)) {
 
                 $post['id_processo'] = $processosModel->save($post);
-                
+
                 //Chamando o processo de envio de email
                 $model = new Application_Model_VwProcessos();
 
-                $this->enviarEmailProcessoAction($post);
+                $statusPodeEnviarEmail = array(
+                    SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO,
+                    SOSMalas_Const::STATUS_PROCESSO_FINALIZADO
+                );
+
+                if (in_array($post['status_id'], $statusPodeEnviarEmail)) {
+                    $this->enviarEmailProcessoAction($post);
+                }
+
                 $result = $model->find($post['id_processo'])->toArray();
-                
+
                 $this->_helper->json($result[0]);
             } else {
                 $this->_helper->json($form->getMessages());

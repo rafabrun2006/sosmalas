@@ -145,7 +145,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
             return true;
         }
     };
-
+    
     //Metodo para resetar dados do formulario de pesquisa
     $scope.resetForm = function() {
         $scope.dtColeta = null;
@@ -154,6 +154,11 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     };
 
     $scope.$watch("search", function(query) {
+        $scope.count = $filter('filter')($scope.collection, query).length;
+    });
+    
+    $scope.$watch("cmb_empresa", function(query) {
+        $scope.search = query;
         $scope.count = $filter('filter')($scope.collection, query).length;
     });
 
@@ -185,6 +190,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     $scope.deleteModel = function(id){
         $log.info('Remove model: ' + id);
         if(id && confirm('Deseja realmente executar esta operação?')){
+            $log.info('Model removed');
             $scope.model = collection.get(id);
             ModelFactory.remove({id_processo: $scope.model.id_processo}, $scope.model);
             collection.remove($scope.model.cid);

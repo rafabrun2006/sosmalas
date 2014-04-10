@@ -20,7 +20,7 @@
     <th width="75">Entrega</th>
     <th>Status</th>
     <th>Ações</th>
-</thead>
+    </thead>
 <tbody>
     <tr ng-repeat="processo in collection| filter:search | limitTo:limitData | orderBy:'cid'" 
         ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)" 

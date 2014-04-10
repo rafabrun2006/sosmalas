@@ -32,7 +32,7 @@ class SOSMalas_Mail extends Zend_Mail {
     }
 
     public function sendEmail() {
-        $transport = new Zend_Mail_Transport_Smtp('mail.sosmalas.com', $this->config);
+        $transport = new Zend_Mail_Transport_Smtp('mail.sosmalas.com.br', $this->config);
         return $this->send($transport);
     }
 

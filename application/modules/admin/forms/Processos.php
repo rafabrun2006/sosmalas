@@ -20,11 +20,11 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($id_processo);
 
         $cod_processo = new Zend_Form_Element_Text('cod_processo');
-        $cod_processo->setLabel('Processo: ');
+        $cod_processo->setLabel('Processo');
         $this->addElement($cod_processo);
 
         $id_empresa = new Zend_Form_Element_Select('id_empresa');
-        $id_empresa->setLabel('Parceiro: ');
+        $id_empresa->setLabel('Parceiro');
         $this->addElement($id_empresa);
 
         $nome_cliente = new Zend_Form_Element_Text('nome_cliente');
@@ -36,19 +36,19 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($quantidade);
 
         $descricao_produto = new Zend_Form_Element_Text('descricao_produto');
-        $descricao_produto->setLabel('Produto/Marca/Modelo/Cor: ');
+        $descricao_produto->setLabel('Produto/Marca/Modelo/Cor');
         $this->addElement($descricao_produto);
 
         $conserto = new Zend_Form_Element_Text('conserto');
-        $conserto->setLabel('Conserto: ');
+        $conserto->setLabel('Conserto');
         $this->addElement($conserto);
 
-        $dt_coleta = new Zend_Form_Element_Text('dt_coleta', array('class' => 'date'));
-        $dt_coleta->setLabel('Data Coleta: ');
+        $dt_coleta = new Zend_Form_Element_Text('dt_coleta');
+        $dt_coleta->setLabel('Data Coleta');
         $this->addElement($dt_coleta);
 
-        $dt_entrega = new Zend_Form_Element_Text('dt_entrega', array('class' => 'date'));
-        $dt_entrega->setLabel('Data Entrega: ');
+        $dt_entrega = new Zend_Form_Element_Text('dt_entrega');
+        $dt_entrega->setLabel('Data Entrega');
         $this->addElement($dt_entrega);
 
         $status_id = new Zend_Form_Element_Select('status_id');
@@ -58,9 +58,25 @@ class Admin_Form_Processos extends Zend_Form {
         $pessoa_cadastro_id = new Zend_Form_Element_Hidden('pessoa_cadastro_id');
         $pessoa_cadastro_id->setRequired(true);
         $this->addElement($pessoa_cadastro_id);
+        
+        $local_entrega_id = new Zend_Form_Element_Select('local_entrega_id');
+        $local_entrega_id->setRequired(true)->setLabel('Local Entrega');
+        $this->addElement($local_entrega_id);
 
+        $local_coleta_id = new Zend_Form_Element_Select('local_coleta_id');
+        $local_coleta_id->setRequired(true)->setLabel('Local Coleta');
+        $this->addElement($local_coleta_id);
+        
+        $valor = new Zend_Form_Element_Text('valor');
+        $valor->setLabel('Valor');
+        $this->addElement($valor);
+        
+        $forma_faturamento_id = new Zend_Form_Element_Hidden('forma_faturamento_id');
+        $this->addElement($forma_faturamento_id);
+        
         $this->populaComboEmpresa();
         $this->populaComboStatus();
+        $this->populaComboLocalEntregaColeta();
 
         $this->setDecorators(array(
             array('ViewScript',
@@ -90,6 +106,17 @@ class Admin_Form_Processos extends Zend_Form {
 
         foreach ($model->fetchAll() as $value) {
             $this->getElement('status_id')->addMultiOption($value->id_status, $value->tx_status);
+        }
+    }
+    
+    public function populaComboLocalEntregaColeta() {
+        $model = new Application_Model_LocalEntregaColeta();
+        $this->getElement('local_entrega_id')->addMultiOption(null, '--');
+        $this->getElement('local_coleta_id')->addMultiOption(null, '--');
+
+        foreach ($model->fetchAll() as $value) {
+            $this->getElement('local_entrega_id')->addMultiOption($value->id_local_entrega_coleta, $value->tx_local);
+            $this->getElement('local_coleta_id')->addMultiOption($value->id_local_entrega_coleta, $value->tx_local);
         }
     }
 

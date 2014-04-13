@@ -20,7 +20,7 @@
     <th width="75">Entrega</th>
     <th>Status</th>
     <th>Ações</th>
-    </thead>
+</thead>
 <tbody>
     <tr ng-repeat="processo in collection| filter:search | limitTo:limitData | orderBy:'cid'" 
         ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)" 
@@ -70,8 +70,12 @@
                 </tr>
             </tbody>
         </table>
+        <div class="row-fluid">
+            <textarea ng-model="texto_historico" rows="3" class="span12" placeholder="Complementar historico..."></textarea>
+        </div>
     </div>
     <div class="modal-footer">
+        <button ng-click="addHistorico()" class="btn btn-primary">Adicionar</button>
         <button ng-click="imprimirHistorico(model.id_processo)" class="btn">Imprimir</button>
         <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
     </div>

@@ -7,14 +7,14 @@ collection = {
     init: function(col) {
         if (!this.length()) {
             var arrayObj = [];
-            var i=0;
+            var i = 0;
             $.each(col, function(index, val) {
                 val.cid = i++;
                 arrayObj[val.cid] = val;
             });
             this.collection = arrayObj;
             return this.collection;
-        }else{
+        } else {
             return this.collection;
         }
     },
@@ -39,7 +39,7 @@ collection = {
         model.cid = id;
         this.collection[id] = model;
     },
-    remove: function(id){
+    remove: function(id) {
         this.collection.splice(id, 1);
     }
 };
@@ -60,10 +60,19 @@ app.factory('ModelFactory', ['$resource', function($resource) {
             remove: {
                 url: '/admin/processos/delete/:id',
                 method: 'DELETE',
-                params: {id_processo:'@id_processo'}
+                params: {id_processo: '@id_processo'}
             }
         });
     }]);
+
+app.factory('ModelHistoricoFactory', ['$resource', function($resource){
+        return $resource('/admin/processos/save-historico-processo/:id', {id_historico_processo:'@id_historico_processo'}, {
+            save: {
+                method: 'POST',
+                params: {id_historico_processo:'@id_historico_processo'}
+            }
+        });
+}]);
 
 app.config(function($routeProvider) {
     $routeProvider.when('/', {
@@ -75,15 +84,15 @@ app.config(function($routeProvider) {
         templateUrl: 'editar.html'
     });
     $routeProvider.when('/cadastrar', {
-       controller: 'ProcessosAddController',
-       templateUrl: 'editar.html'
+        controller: 'ProcessosAddController',
+        templateUrl: 'cadastrar.html'
     });
     $routeProvider.otherwise({
         redirectTo: '/'
     });
 });
 
-app.controller('ProcessosController', function($scope, $http, $filter, $log, ModelFactory) {
+app.controller('ProcessosController', function($scope, $http, $filter, $log, ModelFactory, ModelHistoricoFactory) {
 
     $scope.dtEntrega = null;
     $scope.dtColeta = null;
@@ -92,7 +101,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     $scope.collection = collection.init(processos);
     $scope.count = collection.length();
     $scope.limitData = 10;
-    
+
     $scope.updateModel = function(model, $event) {
         $log.info('Atualizando model');
 
@@ -145,7 +154,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
             return true;
         }
     };
-    
+
     //Metodo para resetar dados do formulario de pesquisa
     $scope.resetForm = function() {
         $scope.dtColeta = null;
@@ -156,7 +165,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     $scope.$watch("search", function(query) {
         $scope.count = $filter('filter')($scope.collection, query).length;
     });
-    
+
     $scope.$watch("cmb_empresa", function(query) {
         $scope.search = query;
         $scope.count = $filter('filter')($scope.collection, query).length;
@@ -186,10 +195,10 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
             window.open('/admin/processos/detalhes/id/' + id);
         }
     };
-    
-    $scope.deleteModel = function(id){
+
+    $scope.deleteModel = function(id) {
         $log.info('Remove model: ' + id);
-        if(id && confirm('Deseja realmente executar esta operação?')){
+        if (id && confirm('Deseja realmente executar esta operação?')) {
             $log.info('Model removed');
             $scope.model = collection.get(id);
             ModelFactory.remove({id_processo: $scope.model.id_processo}, $scope.model);
@@ -197,14 +206,27 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
             $scope.count = collection.length() - 1;
         }
     };
+    
+    $scope.addHistorico = function(){
+        
+        $scope.historicoModel = ModelHistoricoFactory.save({id_processo:$scope.model.id_processo}, 
+            {texto_historico:$scope.texto_historico, id_processo:$scope.model.id_processo});
+        
+        $log.info($scope.historicoModel);
+        
+        $scope.historicoCollection.push($scope.historicoModel);
+    };
 
 });
 
 app.controller('ProcessosEditController', function($scope, $log, $filter, $routeParams, $location, ModelFactory) {
+    collection.init(processos);
     $scope.model = $filter('filter')(collection.getAll(), {id_processo: $routeParams.id}, true)[0];
     $scope.model.dt_coleta = $scope.model.dt_coleta_br;
     $scope.model.dt_entrega = $scope.model.dt_entrega_br;
     $scope.model.status_id = $scope.model.id_status;
+
+    $('#div-quantidade').popover({show: 500, hide: 100});
 
     $scope.save = function() {
         $scope.model = ModelFactory.save({id_processo: $scope.model.id_processo}, $scope.model);
@@ -216,20 +238,58 @@ app.controller('ProcessosEditController', function($scope, $log, $filter, $route
         $location.path('/');
     };
 
+    $scope.inputNumberUp = function() {
+        $scope.model.quantidade++;
+    };
+
+    $scope.inputNumberDown = function() {
+        if ($scope.model.quantidade > 0) {
+            $scope.model.quantidade--;
+        }
+    };
+    
+    $scope.checkFormaFaturamento = function(idFormaFaturamento){
+        $scope.model.forma_faturamento_id = idFormaFaturamento;
+    };
+    
+    $scope.clear = function(el, val){
+        $scope.model[el] = val;
+    };
+    
 });
 
-app.controller('ProcessosAddController', function($scope, $log, $location, ModelFactory){
-    
+app.controller('ProcessosAddController', function($scope, $log, $location, ModelFactory) {
+    $scope.model = {quantidade: 1, forma_faturamento_id:3};
     $scope.collection = collection.init(processos);
-    
-    $scope.save = function(){
+
+    $('#div-quantidade').popover({show: 500, hide: 100});
+
+    $scope.save = function() {
         $scope.model = ModelFactory.save(null, $scope.model);
         collection.add($scope.model);
         $location.path('/');
     };
-    
+
     $scope.back = function() {
         $location.path('/');
     };
+
+    $scope.inputNumberUp = function() {
+        $scope.model.quantidade++;
+    };
+
+    $scope.inputNumberDown = function() {
+        if ($scope.model.quantidade > 0) {
+            $scope.model.quantidade--;
+        }
+    };
     
+    $scope.checkFormaFaturamento = function(idFormaFaturamento){
+        $scope.model.forma_faturamento_id = idFormaFaturamento;
+    };
+    
+    $scope.clear = function(el){
+        $scope.model[el] = null;
+    };
+
 });

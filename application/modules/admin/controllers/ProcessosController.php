@@ -24,7 +24,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->view->parceiros = $pessoa->fetchAll();
 
         $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos()->toArray());
-        $this->view->editarTemplate = $this->view->render('processos/editar-template.phtml');
+        $this->view->formTemplate = $this->view->render('processos/form-template.phtml');
         $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
     }
 
@@ -227,6 +227,20 @@ class Admin_ProcessosController extends Zend_Controller_Action {
     public function findHistoricoProcessoAction() {
         $modelHistProc = new Application_Model_HistoricoProcesso();
         $this->_helper->json($modelHistProc->findByProcesso($this->_getParam('id'))->toArray());
+    }
+    
+    /**
+     * Metodo responsavel por inserir historico em um processo
+     * @uses AngularJS
+     */
+    public function saveHistoricoProcessoAction(){
+        $modelHistProc = new Application_Model_HistoricoProcesso();
+        $json = $this->getRequest()->getRawBody();
+        $data = Zend_Json_Decoder::decode($json);
+        $processo_id = $modelHistProc->insert($data);
+        
+        $result = $modelHistProc->find($processo_id)->toArray();
+        $this->_helper->json($result);
     }
 
 }

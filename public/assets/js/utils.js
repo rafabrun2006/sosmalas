@@ -39,7 +39,7 @@ $(document).ready(function() {
 
                 $.each(data, function(key, value) {
                     mapped[value.id_pessoa] = value;
-                    labels.push(value.id_pessoa + '.' + value.nome_contato + '-' + value.fone_empresa);
+                    labels.push(value.id_pessoa + '.' + value.nome_contato);
                 });
 
                 process(labels);

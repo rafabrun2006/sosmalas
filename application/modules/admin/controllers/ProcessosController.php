@@ -166,12 +166,12 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                         SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA;
 
                 $this->view->cod_processo = $post['cod_processo'];
-                $this->view->dt_coleta = array_key_exists('dt_coleta', $post) ? : NULL;
-                $this->view->dt_entrega = array_key_exists('dt_entrega', $post) ? : NULL;
-                $this->view->nome_cliente = array_key_exists('nome_cliente', $post) ? : NULL;
+                $this->view->dt_coleta = array_key_exists('dt_coleta', $post) ? $post['dt_coleta'] : NULL;
+                $this->view->dt_entrega = array_key_exists('dt_entrega', $post) ? $post['dt_entrega'] : NULL;
+                $this->view->nome_cliente = array_key_exists('nome_cliente', $post) ? $post['nome_cliente'] : NULL;
                 $this->view->status = $statusProcesso[$post['status_id']];
                 $this->view->quantidade = $post['quantidade'];
-                $this->view->descricao_produto = array_key_exists('descricao_produto', $post) ? : NULL;
+                $this->view->descricao_produto = array_key_exists('descricao_produto', $post) ? $post['descricao_produto'] : NULL;
                 $this->view->nome_contato = $find[0]->nome_contato;
                 $this->view->nome_empresa = $find[0]->nome_empresa;
                 $this->view->historico = $historico;

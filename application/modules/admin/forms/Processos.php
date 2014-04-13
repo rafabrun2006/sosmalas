@@ -19,8 +19,8 @@ class Admin_Form_Processos extends Zend_Form {
         $id_processo = new Zend_Form_Element_Hidden('id_processo');
         $this->addElement($id_processo);
 
-        $cod_processo = new Zend_Form_Element_Text('cod_processo');
-        $cod_processo->setLabel('Processo');
+        $cod_processo = new Zend_Form_Element_Text('cod_processo', array('required'=>'required'));
+        $cod_processo->setLabel('Processo')->setRequired(TRUE)->setAttrib('required', 'required');
         $this->addElement($cod_processo);
 
         $id_empresa = new Zend_Form_Element_Select('id_empresa');
@@ -52,19 +52,19 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($dt_entrega);
 
         $status_id = new Zend_Form_Element_Select('status_id');
-        $status_id->setLabel('Status');
+        $status_id->setLabel('Status')->setRequired(TRUE)->setAttrib('required', 'required');
         $this->addElement($status_id);
 
         $pessoa_cadastro_id = new Zend_Form_Element_Hidden('pessoa_cadastro_id');
-        $pessoa_cadastro_id->setRequired(true);
+        $pessoa_cadastro_id->setRequired(TRUE);
         $this->addElement($pessoa_cadastro_id);
         
         $local_entrega_id = new Zend_Form_Element_Select('local_entrega_id');
-        $local_entrega_id->setRequired(true)->setLabel('Local Entrega');
+        $local_entrega_id->setLabel('Local Entrega');
         $this->addElement($local_entrega_id);
 
         $local_coleta_id = new Zend_Form_Element_Select('local_coleta_id');
-        $local_coleta_id->setRequired(true)->setLabel('Local Coleta');
+        $local_coleta_id->setLabel('Local Coleta');
         $this->addElement($local_coleta_id);
         
         $valor = new Zend_Form_Element_Text('valor');
@@ -102,10 +102,13 @@ class Admin_Form_Processos extends Zend_Form {
 
     public function populaComboStatus() {
         $model = new Application_Model_StatusProcesso();
-        $this->getElement('status_id')->addMultiOption(null, '--');
-
+        $this->getElement('status_id')->addMultiOption(NULL, '--');
+        $arrayEnableOptions = array(1, 5);
+        
         foreach ($model->fetchAll() as $value) {
-            $this->getElement('status_id')->addMultiOption($value->id_status, $value->tx_status);
+            if(in_array($value->id_status, $arrayEnableOptions)){
+                $this->getElement('status_id')->addMultiOption($value->id_status, $value->tx_status);
+            }
         }
     }
     

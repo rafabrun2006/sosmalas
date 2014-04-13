@@ -173,18 +173,17 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
 
     $scope.historico = function(model) {
         $('.modal').modal('show');
-        $('.modal #modal-alert').html('<span>Aguarde carregando...</span>').removeClass('alert-error').show();
+        $scope.message = {text:'Aguarde carregando...', type:'success'};
 
         $scope.historicoCollection = [];
         $scope.historicoProcessoId = model.cod_processo;
 
         $http.get('/admin/processos/find-historico-processo/id/' + model.id_processo).success(function(response) {
             $scope.historicoCollection = response;
-
-            if ($scope.historicoCollection.length) {
-                $('.modal #modal-alert').hide();
-            } else {
-                $('.modal #modal-alert').html('<span>Nenhum histórico encontrado</span>').addClass('alert-error');
+            
+            if(!$scope.historicoCollection.length){
+                $scope.message.text = 'Nenhum historico encontrado';
+                $scope.message.type = 'error';
             }
         });
         return false;
@@ -209,33 +208,42 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     
     $scope.addHistorico = function(){
         
-        $scope.historicoModel = ModelHistoricoFactory.save({id_processo:$scope.model.id_processo}, 
-            {texto_historico:$scope.texto_historico, id_processo:$scope.model.id_processo});
+        $scope.historicoModel = {
+            texto_historico:$scope.texto_historico,
+            processo_id:$scope.model.id_processo
+        };
         
-        $log.info($scope.historicoModel);
+        var model = ModelHistoricoFactory.save(null, $scope.historicoModel);
         
-        $scope.historicoCollection.push($scope.historicoModel);
+        $scope.historicoCollection.push(model);
     };
 
 });
 
-app.controller('ProcessosEditController', function($scope, $log, $filter, $routeParams, $location, ModelFactory) {
+app.controller('ProcessosEditController', function($scope, $log, $filter, $routeParams, $location, ModelFactory, $window) {
     collection.init(processos);
     $scope.model = $filter('filter')(collection.getAll(), {id_processo: $routeParams.id}, true)[0];
     $scope.model.dt_coleta = $scope.model.dt_coleta_br;
     $scope.model.dt_entrega = $scope.model.dt_entrega_br;
     $scope.model.status_id = $scope.model.id_status;
 
-    $('#div-quantidade').popover({show: 500, hide: 100});
+    $('.add-popover').popover({show: 500, hide: 100});
 
-    $scope.save = function() {
+    $scope.save = function(saveNew) {
         $scope.model = ModelFactory.save({id_processo: $scope.model.id_processo}, $scope.model);
         collection.set($scope.model.cid, $scope.model);
-        $location.path('/');
+        
+        if(saveNew){
+            $scope.model = {};
+            $location.path('/cadastrar');
+        }else{
+            $location.path('/');
+        }
+        
     };
 
     $scope.back = function() {
-        $location.path('/');
+        $window.history.back();
     };
 
     $scope.inputNumberUp = function() {
@@ -258,20 +266,26 @@ app.controller('ProcessosEditController', function($scope, $log, $filter, $route
     
 });
 
-app.controller('ProcessosAddController', function($scope, $log, $location, ModelFactory) {
+app.controller('ProcessosAddController', function($scope, $log, $location, ModelFactory, $window) {
     $scope.model = {quantidade: 1, forma_faturamento_id:3};
     $scope.collection = collection.init(processos);
 
     $('#div-quantidade').popover({show: 500, hide: 100});
 
-    $scope.save = function() {
+    $scope.save = function(saveNew) {
         $scope.model = ModelFactory.save(null, $scope.model);
         collection.add($scope.model);
-        $location.path('/');
+        
+        if(saveNew){
+            $scope.model = {};
+            $location.path('/cadastrar');
+        }else{
+            $location.path('/');
+        }
     };
 
     $scope.back = function() {
-        $location.path('/');
+        $window.history.back();
     };
 
     $scope.inputNumberUp = function() {

@@ -78,9 +78,14 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
                 $result = $model->find($post['id_processo'])->toArray();
 
-                $this->_helper->json($result[0]);
+                $this->_helper->json(array(
+                    'model' => $result[0],
+                    'result' => TRUE,
+                    'messages' => SOSMalas_Const::MSG01)
+                );
             } else {
-                $this->_helper->json($form->getMessages());
+                $result = array('result' => FALSE, 'messages' => $form->getMessages(), 'model' => $post);
+                $this->_helper->json($result);
             }
         }
     }
@@ -161,12 +166,12 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                         SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA;
 
                 $this->view->cod_processo = $post['cod_processo'];
-                $this->view->dt_coleta = $post['dt_coleta'];
-                $this->view->dt_entrega = $post['dt_entrega'];
-                $this->view->nome_cliente = $post['nome_cliente'];
+                $this->view->dt_coleta = array_key_exists('dt_coleta', $post) ? : NULL;
+                $this->view->dt_entrega = array_key_exists('dt_entrega', $post) ? : NULL;
+                $this->view->nome_cliente = array_key_exists('nome_cliente', $post) ? : NULL;
                 $this->view->status = $statusProcesso[$post['status_id']];
                 $this->view->quantidade = $post['quantidade'];
-                $this->view->descricao_produto = $post['descricao_produto'];
+                $this->view->descricao_produto = array_key_exists('descricao_produto', $post) ? : NULL;
                 $this->view->nome_contato = $find[0]->nome_contato;
                 $this->view->nome_empresa = $find[0]->nome_empresa;
                 $this->view->historico = $historico;
@@ -228,19 +233,20 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $modelHistProc = new Application_Model_HistoricoProcesso();
         $this->_helper->json($modelHistProc->findByProcesso($this->_getParam('id'))->toArray());
     }
-    
+
     /**
      * Metodo responsavel por inserir historico em um processo
      * @uses AngularJS
      */
-    public function saveHistoricoProcessoAction(){
+    public function saveHistoricoProcessoAction() {
         $modelHistProc = new Application_Model_HistoricoProcesso();
         $json = $this->getRequest()->getRawBody();
         $data = Zend_Json_Decoder::decode($json);
         $processo_id = $modelHistProc->insert($data);
-        
+
         $result = $modelHistProc->find($processo_id)->toArray();
-        $this->_helper->json($result);
+
+        $this->_helper->json($result[0]);
     }
 
 }

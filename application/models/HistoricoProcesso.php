@@ -12,7 +12,6 @@ class Application_Model_HistoricoProcesso extends SOSMalas_Db_Mapper {
                 $data['texto_historico'].',' : null;
         
         $data['dt_cadastro'] = $date->get('Y-MM-dd H:m:s');
-        $data['processo_id'] = $data['id_processo'];
         $data['texto_historico'] = sprintf(
                 SOSMalas_Const::TEXTO_HISTORICO, $textoHistorico, $date->toString()
         );

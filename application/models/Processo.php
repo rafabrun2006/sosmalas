@@ -69,12 +69,13 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
         $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
 
-        $data['id_processo'] = parent::insert($data);
+        //Preenchendo atributo referencia na tabela historico de processo
+        $data['processo_id'] = parent::insert($data);
 
         //Registrando historico
         $historico->insert($data);
         
-        return $data['id_processo'];
+        return $data['processo_id'];
     }
 
     public function getProcessosPagination(array $where = null, array $whereLike = null) {

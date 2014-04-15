@@ -24,17 +24,21 @@
                         <input ng-model="dtEntrega" ui-mask="99-99-9999" name="dt_entrega" type="text" class="date input-small">
                     </label>
                     <label class="control-label">
-                        <select ng-model="cmb_empresa">
-                            <option value="">--</option>
-                            <?php foreach($this->parceiros as $value): ?>
-                                <option><?=$value->nome_empresa ?></option>
-                            <?php endforeach; ?>
-                        </select>
+                        <?php if($this->acl->isAllowed($this->user->tipo_acesso_id, 'admin:processos', 'combo-filter')): ?>
+                            <select ng-model="cmb_empresa">
+                                <option value="">--</option>
+                                <?php foreach($this->parceiros as $value): ?>
+                                    <option><?=$value->nome_empresa ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        <?php endif; ?>
                         <button ng-click="resetForm()" type="reset" class="btn">Limpar</button>
                     </label>
-                    <label class="control-label pull-right">
-                        <a href="#/cadastrar" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Cadastrar</a>
-                    </label>
+                    <?php if($this->acl->isAllowed($this->user->tipo_acesso_id, 'admin:processos', 'cadastrar')): ?>
+                        <label class="control-label pull-right">
+                            <a href="#/cadastrar" class="btn btn-primary"><i class="icon-plus-sign icon-white"></i> Cadastrar</a>
+                        </label>
+                    <?php endif; ?>
                 </div>
             </fieldset>
         </form>

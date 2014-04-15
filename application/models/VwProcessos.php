@@ -16,12 +16,15 @@ class Application_Model_VwProcessos extends SOSMalas_Db_Mapper {
     protected $_name = 'vw_processos';
     protected $_primary = 'id_processo';
     
-    public function findVwProcessos(){
+    public function findVwProcessos(array $whereAnd = null){
         
         $select = $this->select()
                 ->from(array('vw' => 'vw_processos'))
-                //->limit(200)
                 ->setIntegrityCheck(FALSE);
+        
+        foreach($whereAnd as $key => $value){
+            $select->where($key . ' = ?', $value);
+        }
         
         return $this->fetchAll($select);
     }

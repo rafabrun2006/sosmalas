@@ -40,12 +40,14 @@
                 <button class="btn" ng-click="historico(processo)" title="Histórico/Detalhes">
                     <i class="icon-list"></i>
                 </button>
-                <a class="btn" href="#/editar/{{processo.id_processo}}" title="Editar">
-                    <i class="icon-edit"></i>
-                </a>
-                <a class="btn btn-inverse" ng-click="deleteModel(processo.cid)" title="Apagar">
-                    <i class="icon-trash icon-white"></i>
-                </a>
+                <?php if ($this->acl->isAllowed($this->user->tipo_acesso_id, 'admin:processos', 'editar')): ?>
+                    <a class="btn" href="#/editar/{{processo.id_processo}}" title="Editar">
+                        <i class="icon-edit"></i>
+                    </a>
+                    <a class="btn btn-inverse" ng-click="deleteModel(processo.cid)" title="Apagar">
+                        <i class="icon-trash icon-white"></i>
+                    </a>
+                <?php endif; ?>
             </div>
         </td>
     </tr>
@@ -64,18 +66,22 @@
             <th>Data Cadastro</th>
             </thead>
             <tbody>
-                <tr ng-repeat="dataHistorico in historicoCollection | orderBy:id_historico_processo:reverse">
+                <tr ng-repeat="dataHistorico in historicoCollection| orderBy:id_historico_processo:reverse">
                     <td>{{dataHistorico.texto_historico}}</td>
                     <td>{{dataHistorico.dt_cadastro}}</td>
                 </tr>
             </tbody>
         </table>
-        <div class="row-fluid">
-            <textarea ng-model="texto_historico" rows="3" class="span12" placeholder="Complementar historico..."></textarea>
-        </div>
+        <?php if ($this->acl->isAllowed($this->tipo_acesso_id, 'admin:processos', 'save-historico-processo')): ?>
+            <div class="row-fluid">
+                <textarea ng-model="texto_historico" rows="3" class="span12" placeholder="Complementar historico..."></textarea>
+            </div>
+        <?php endif; ?>
     </div>
     <div class="modal-footer">
-        <button ng-click="addHistorico()" class="btn btn-primary">Adicionar</button>
+        <?php if ($this->acl->isAllowed($this->tipo_acesso_id, 'admin:processos', 'save-historico-processo')): ?>
+            <button ng-click="addHistorico()" class="btn btn-primary">Adicionar</button>
+        <?php endif; ?>
         <button ng-click="imprimirHistorico(model.id_processo)" class="btn">Imprimir</button>
         <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
     </div>

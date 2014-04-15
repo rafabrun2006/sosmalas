@@ -19,11 +19,19 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         //Conteudo correspondente em HTML e Ajax
         $model = new Application_Model_VwProcessos();
         $pessoa = new Application_Model_Pessoa();
+        $where = array();
 
         $this->view->form = new Admin_Form_Processos();
         $this->view->parceiros = $pessoa->fetchAll();
 
-        $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos()->toArray());
+        $this->view->user = Zend_Auth::getInstance()->getIdentity();
+        $this->view->acl = Zend_Registry::get('acl');
+        
+        if (!in_array($this->view->user->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
+            $where['id_empresa'] = $this->view->user->id_pessoa;
+        }
+        
+        $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos($where)->toArray());
         $this->view->formTemplate = $this->view->render('processos/form-template.phtml');
         $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
     }

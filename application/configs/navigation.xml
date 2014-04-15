@@ -42,8 +42,8 @@ and open the template in the editor.
         <processos class="dropdown">
             <module>admin</module>
             <controller>processos</controller>
-            <action>processos-js|cadastrar|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete|detalhes|index</action>
-            <role>user|admin|user|user|user|admin|admin|user|user</role>
+            <action>processos-js|cadastrar|pesquisar|ajax-search-processo|ajax-pesquisar|editar|delete|detalhes|index|save-historico-processo|find-historico-processo|combo-filtro</action>
+            <role>user|admin|user|user|user|admin|admin|user|user|member|user|member</role>
             <label>Processo</label>
         </processos>
         

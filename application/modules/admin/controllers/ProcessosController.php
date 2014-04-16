@@ -190,11 +190,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 $mail->addTo($find[0]->email, $find[0]->nome_contato);
                 $mail->setSubject('Processo ' . $post['cod_processo'] . ' - SOS Malas');
 
-                if (!$mail->sendEmail()) {
-                    $this->_helper->_flashMessenger(array('error' => SOSMalas_Const::MSG05));
-                } else {
-                    $this->_helper->_flashMessenger(array('success' => SOSMalas_Const::MSG06));
-                }
+                $mail->sendEmail();
             }
         }
     }

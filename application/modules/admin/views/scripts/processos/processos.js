@@ -233,6 +233,11 @@ app.controller('ProcessosEditController', function($scope, $log, $filter, $route
         $scope.model = ModelFactory.save({id_processo: $scope.model.id_processo}, $scope.model);
         collection.set($scope.model.cid, $scope.model);
         
+        new PNotify({
+            type:'success', 
+            text:'Processo alterado com sucesso, um email foi enviado para o parceiro caso esteja habilitado para recebimento', 
+            title:'Sucesso'});
+        
         if(saveNew){
             $scope.model = {};
             $location.path('/cadastrar');
@@ -275,6 +280,11 @@ app.controller('ProcessosAddController', function($scope, $log, $location, Model
     $scope.save = function(saveNew) {
         $scope.model = ModelFactory.save(null, $scope.model);
         collection.add($scope.model);
+        
+        new PNotify({
+            type:'success', 
+            text:'Novo processo cadastrado com sucesso, um email foi enviado para o parceiro caso esteja habilitado para recebimento', 
+            title:'Sucesso'});
         
         if(saveNew){
             $scope.model = {};

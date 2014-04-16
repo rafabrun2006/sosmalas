@@ -18,7 +18,7 @@
                                placeholder="ID, Nome Empresa, Cliente ou Serviço" name="nome_cliente" class="search-query input-xlarge" type="text"/>
                     </label>
                     <label class="control-label">
-                        <input ng-model="dtColeta" ui-mask="99-99-9999" id="appendInput" name="dt_coleta" type="text" class="date input-small">
+                        <input ng-model="dtColeta" ng-controller="DatePicker" ui-mask="99-99-9999" id="appendInput" name="dt_coleta" type="text" class="date input-small">
                     </label>
                     <label class="control-label">
                         <input ng-model="dtEntrega" ui-mask="99-99-9999" name="dt_entrega" type="text" class="date input-small">

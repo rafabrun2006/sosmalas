@@ -44,11 +44,11 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($conserto);
 
         $dt_coleta = new Zend_Form_Element_Text('dt_coleta');
-        $dt_coleta->setLabel('Data Coleta');
+        $dt_coleta->setLabel('Data Coleta')->setAttrib('ng-controller', 'DatePicker');
         $this->addElement($dt_coleta);
 
         $dt_entrega = new Zend_Form_Element_Text('dt_entrega');
-        $dt_entrega->setLabel('Data Entrega');
+        $dt_entrega->setLabel('Data Entrega')->setAttrib('ng-controller', 'DatePicker');
         $this->addElement($dt_entrega);
 
         $status_id = new Zend_Form_Element_Select('status_id');
@@ -68,7 +68,7 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($local_coleta_id);
         
         $valor = new Zend_Form_Element_Text('valor');
-        $valor->setLabel('Valor');
+        $valor->setLabel('Valor')->setAttrib('ng-controller', 'MaskMoney');
         $this->addElement($valor);
         
         $forma_faturamento_id = new Zend_Form_Element_Hidden('forma_faturamento_id');

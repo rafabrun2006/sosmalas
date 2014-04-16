@@ -44,7 +44,7 @@ collection = {
     }
 };
 
-app = angular.module('App', ['ui.mask', 'ngRoute', 'ngResource']);
+app = angular.module('App', ['ui.mask', 'ngRoute', 'ngResource', 'utils']);
 
 app.factory('ModelFactory', ['$resource', function($resource) {
         return $resource('/admin/processos/get/:id', {id_processo: '@id_processo'}, {

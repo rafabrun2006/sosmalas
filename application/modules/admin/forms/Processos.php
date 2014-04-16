@@ -44,11 +44,11 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($conserto);
 
         $dt_coleta = new Zend_Form_Element_Text('dt_coleta');
-        $dt_coleta->setLabel('Data Coleta')->setAttrib('ui-mask', '99-99-9999');
+        $dt_coleta->setLabel('Data Coleta');
         $this->addElement($dt_coleta);
 
         $dt_entrega = new Zend_Form_Element_Text('dt_entrega');
-        $dt_entrega->setLabel('Data Entrega')->setAttrib('ui-mask', '99-99-9999');
+        $dt_entrega->setLabel('Data Entrega');
         $this->addElement($dt_entrega);
 
         $status_id = new Zend_Form_Element_Select('status_id');

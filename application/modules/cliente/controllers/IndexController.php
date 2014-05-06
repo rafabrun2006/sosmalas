@@ -1,10 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 /**
  * Description of IndexController
  *
@@ -31,6 +26,21 @@ class Cliente_IndexController extends Zend_Controller_Action {
         }
 
         $this->render('/index');
+    }
+    
+    public function listaAction(){
+        $model = new Application_Model_Pessoas();
+        $this->view->dados = $model->fetch();
+    }
+    
+    public function cadastroAction(){
+        $model = new Application_Model_Pessoas();
+        $request = $this->getRequest()->getPost();
+        //print_r($request);
+        
+        if($this->getRequest()->isPost()){
+            $model->insert($request);
+        }
     }
 
 }

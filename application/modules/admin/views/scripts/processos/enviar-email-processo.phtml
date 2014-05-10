@@ -1,7 +1,11 @@
 <br>
 Processo: <?php echo $this->cod_processo ?>
 <br>
+<?php echo $this->local_coleta ? 'Local Coleta: ' . $this->local_coleta : '' ?>
+<br>
 Data Coleta: <?php echo $this->dt_coleta ?>
+<br>
+<?php echo $this->local_entrega ? 'Local Entrega: ' . $this->local_entrega : '' ?>
 <br>
 Data Entrega: <?php echo $this->dt_entrega ?>
 <br>

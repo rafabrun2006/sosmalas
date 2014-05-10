@@ -26,11 +26,11 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->view->user = Zend_Auth::getInstance()->getIdentity();
         $this->view->acl = Zend_Registry::get('acl');
-        
+
         if (!in_array($this->view->user->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
             $where['id_empresa'] = $this->view->user->id_pessoa;
         }
-        
+
         $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos($where)->toArray());
         $this->view->formTemplate = $this->view->render('processos/form-template.phtml');
         $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
@@ -69,19 +69,19 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         if ($this->_request->isPost()) {
 
             if ($form->isValid($post)) {
+                $isUpdate = array_key_exists('id_processo', $post) ? TRUE : FALSE;
 
                 $post['id_processo'] = $processosModel->save($post);
 
                 //Chamando o processo de envio de email
                 $model = new Application_Model_VwProcessos();
 
-                $statusPodeEnviarEmail = array(
-                    SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO,
-                    SOSMalas_Const::STATUS_PROCESSO_FINALIZADO
-                );
-
-                if (in_array($post['status_id'], $statusPodeEnviarEmail)) {
+                if ($isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_FINALIZADO) {
                     $this->enviarEmailProcessoAction($post);
+                }
+                
+                if (!$isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO) {
+                    $this->enviarEmailProcessoAction($post, TRUE);
                 }
 
                 $result = $model->find($post['id_processo'])->toArray();
@@ -167,12 +167,20 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             if ($find[0]->recebe_notificacao) {
                 $modelHistProc = new Application_Model_HistoricoProcesso();
                 $statusProcesso = SOSMalas_Const::getStatusProcesso();
+                $localColEnt = SOSMalas_Const::getLocalEntregaColeta();
                 $historico = $modelHistProc->findByProcesso($post['id_processo']);
 
                 $texto_apresentacao = $insertId ?
                         SOSMalas_Const::APRESENTACAO_EMAIL_NOVO :
                         SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA;
 
+                if(array_key_exists('local_coleta_id', $post)){
+                    $this->view->local_coleta = $localColEnt[$post['local_coleta_id']];
+                }
+                if(array_key_exists('local_entrega_id', $post)){
+                    $this->view->local_entrega = $localColEnt[$post['local_entrega_id']];
+                }
+                
                 $this->view->cod_processo = $post['cod_processo'];
                 $this->view->dt_coleta = array_key_exists('dt_coleta', $post) ? $post['dt_coleta'] : NULL;
                 $this->view->dt_entrega = array_key_exists('dt_entrega', $post) ? $post['dt_entrega'] : NULL;
@@ -186,7 +194,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
                 $mail = new SOSMalas_Mail('UTF8');
                 $mail->setBodyHtml($this->view->render('/processos/enviar-email-processo.phtml'));
-                $mail->setFrom('naoresponda@sosmalas.com.br', 'Processo ' . $post['cod_processo'] . ' - ' . $texto_apresentacao);
+                $mail->setFrom('naoresponda@sosmalas.com.br', sprintf($texto_apresentacao, $post['cod_processo']));
                 $mail->addTo($find[0]->email, $find[0]->nome_contato);
                 $mail->setSubject('Processo ' . $post['cod_processo'] . ' - SOS Malas');
 

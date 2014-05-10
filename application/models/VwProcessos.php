@@ -20,6 +20,7 @@ class Application_Model_VwProcessos extends SOSMalas_Db_Mapper {
         
         $select = $this->select()
                 ->from(array('vw' => 'vw_processos'))
+                //->where('dt_cadastro >= 2014-01-01')
                 ->setIntegrityCheck(FALSE);
         
         foreach($whereAnd as $key => $value){

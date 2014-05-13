@@ -41,6 +41,14 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
 
         return $this->fetchAll($query);
     }
+    
+    public function save($data){
+        if(array_key_exists('id_processo', $data)){
+            return $this->update($data, array('id_processo' => $data['id_processo']));
+        }else{
+            return $this->insert($data);
+        }
+    }
 
     public function update(array $data, $where = null) {
         $historico = new Application_Model_HistoricoProcesso();
@@ -51,7 +59,8 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         //Registrando historico
         $historico->insert($data);
         
-        return parent::update($data, $where);
+        parent::update($data, $where);
+        return $data['id_processo'];
     }
 
     public function insert(array $data) {
@@ -60,12 +69,13 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
         $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
 
-        $data['id_processo'] = parent::insert($data);
+        //Preenchendo atributo referencia na tabela historico de processo
+        $data['processo_id'] = parent::insert($data);
 
         //Registrando historico
         $historico->insert($data);
         
-        return $data['id_processo'];
+        return $data['processo_id'];
     }
 
     public function getProcessosPagination(array $where = null, array $whereLike = null) {

@@ -29,6 +29,7 @@ class Application_Model_Pessoa extends SOSMalas_Db_Mapper {
     }
 
     public function update(array $array, $where = null) {
+        $this->_primary = 'id_pessoa';
         return parent::update($array, $where);
     }
 

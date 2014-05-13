@@ -12,11 +12,11 @@ $(document).ready(function() {
     $('.dropdown-toggle').dropdown();
 
     $('.date').datepicker({
-            format: 'dd-mm-yyyy',
-            language: 'pt-BR',
-            autoclose: true,
-            todayHighlight: true,
-            clearBtn: true,
+        format: 'dd-mm-yyyy',
+        language: 'pt-BR',
+        autoclose: true,
+        todayHighlight: true,
+        clearBtn: true
     });
 
     $('.date').mask('99-99-9999');
@@ -39,7 +39,7 @@ $(document).ready(function() {
 
                 $.each(data, function(key, value) {
                     mapped[value.id_pessoa] = value;
-                    labels.push(value.id_pessoa + '.' + value.nome_contato + '-' + value.fone_empresa);
+                    labels.push(value.id_pessoa + '.' + value.nome_contato);
                 });
 
                 process(labels);
@@ -88,3 +88,20 @@ function dateToView(dateString) {
     var data = dateString.split('-');
     return data[2] + '-' + data[1] + '-' + data[0];
 }
+
+angular.module('utils', [])
+        .controller('MaskMoney', function($log, $scope) {
+            $('.money').maskMoney({symbol: 'R$ ', decimal: ".", thousands: "."});
+            $log.info('Aplicando mascara valor');
+        })
+        .controller('DatePicker', function($log, $scope) {
+            $('.date').datepicker({
+                format: 'dd-mm-yyyy',
+                language: 'pt-BR',
+                autoclose: true,
+                todayHighlight: true,
+                clearBtn: true
+            }).mask('99-99-9999');
+            $log.info('Aplicando mascara e date');
+        });
+        

@@ -1,66 +1,120 @@
 <div class="row-fluid">
-    <div class="span5">
+    <div class="span4">
         <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->cod_processo ?>
+            <label class="controls input-append">
+                <?= $this->element->cod_processo ?>
+                <span ng-click="clear('cod_processo', null)" class="add-on"><i class="icon-remove"></i></span>
+            </label>
+            <span class="label label-important" ng-show="myForm.cod_processo.$error.required">* Campo Processo obrigatório</span>
+        </div>
+        <div class="control-group">
+            <label class="controls input-append">
+                <?= $this->element->id_empresa ?>
+                <span ng-click="clear('id_empresa', '')" class="add-on"><i class="icon-remove"></i></span>
+            </label>
+        </div>
+        <div class="control-group">
+            <label class="controls input-append">
+                <?= $this->element->nome_cliente ?>
+                <span ng-click="clear('nome_cliente', null)" class="add-on"><i class="icon-remove"></i></span>
+            </label>
+        </div>
+        <div class="control-group">
+            <div class="controls input-append add-popover" 
+                 data-content="Click + ou - para aumentar ou diminuir o valor." 
+                 data-trigger="hover"
+                 data-title="<i class='icon-gift'></i> Dicas">
+                     <?= $this->element->quantidade ?>
+                <span class="add-on">
+                    <i ng-click="inputNumberDown()" class="icon-minus-sign"></i>
+                    <i ng-click="inputNumberUp()" class="icon-plus-sign"></i>
+                    <i ng-click="clear('quantidade', 0)" class="icon-remove"></i>
+                </span>
             </div>
         </div>
         <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->id_empresa ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->nome_cliente ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->quantidade ?>
-            </div>
-        </div>
-        <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->descricao_produto ?>
-            </div>
+            <label class="controls input-append">
+                <?= $this->element->descricao_produto ?>
+                <span ng-click="clear('descricao_produto', null)" class="add-on"><i class="icon-remove"></i></span>
+            </label>
         </div>
     </div>
-    <div class="span5">
+    <div class="span4">
         <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->conserto ?>
-            </div>
+            <label class="controls date input-append">
+                <?= $this->element->dt_coleta ?>
+                <span ng-click="clear('dt_coleta', null)" class="add-on"><i class="icon-remove"></i></span>
+            </label>
         </div>
         <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->dt_coleta ?>
-            </div>
+            <label class="controls input-append">
+                <?= $this->element->local_coleta_id ?>
+                <span ng-click="clear('local_coleta_id', '')" class="add-on"><i class="icon-remove"></i></span>
+            </label>
         </div>
         <div class="control-group">
-            <div class="controls">
-                <?php echo $this->element->dt_entrega ?>
-            </div>
+            <label class="controls date input-append">
+                <?= $this->element->dt_entrega ?>
+                <span ng-click="clear('dt_entrega', null)" class="add-on"><i class="icon-remove"></i></span>
+            </label>
         </div>
         <div class="control-group">
+            <label class="controls input-append">
+                <?= $this->element->local_entrega_id ?>
+                <span ng-click="clear('local_entrega_id', '')" class="add-on"><i class="icon-remove"></i></span>
+            </label>
+        </div>
+        <div class="control-group">
+            <label class="controls input-append">
+                <?= $this->element->status_id ?>
+                <span ng-click="clear('status_id', '')" class="add-on"><i class="icon-remove"></i></span>
+            </label>
+            <span class="label label-important" ng-show="myForm.status_id.$error.required">* Campo Status obrigatório</span>
+        </div>
+    </div>
+    <div class="span3">
+        <div class="control-group span12">
+            <label class="controls input-append">
+                <?= $this->element->conserto ?>
+                <span ng-click="clear('conserto', null)" class="add-on"><i class="icon-remove"></i></span>
+            </label>
+        </div>
+        <div class="control-group">
+            <label class="control-label">Forma de Faturamento</label>
             <div class="controls">
-                <?php echo $this->element->status_id ?>
+                <div class="btn-group" data-toggle="buttons-radio">
+                    <button ng-click="checkFormaFaturamento(1)" type="button" 
+                            class="btn {{model.forma_faturamento_id == 1 ? 'active' : ''}}">Garantia</button>
+                    <button ng-click="checkFormaFaturamento(2)" type="button"
+                            class="btn {{model.forma_faturamento_id == 2 ? 'active' : ''}}">Particular</button>
+                    <button ng-click="checkFormaFaturamento(3)" type="button"
+                            class="btn {{model.forma_faturamento_id == 3 ? 'active' : ''}}">Faturado</button>
+                </div>
+            </div>
+        </div>
+        <div ng-if="model.forma_faturamento_id == 2" class="control-group">
+            <div class="input-append">
+                <?= $this->element->valor ?>
+                <span class="add-on">R$</span>
             </div>
         </div>
         <div class="control-group">
             <div class="controls">Observação [Gravado em Historico]</div>
-            <textarea name="texto_historico" rows="3" class="span10"></textarea>
+            <textarea ng-model="model.txt_historico" name="texto_historico" rows="3" class="span12"></textarea>
         </div>
-        <?php echo $this->element->id_processo ?>
-        <?php echo $this->element->pessoa_cadastro_id->setValue(Zend_Auth::getInstance()->getIdentity()->id_pessoa) ?>
     </div>
+    <?= $this->element->id_processo ?>
+    <?= $this->element->forma_faturamento_id ?>
 </div>
 <div class="span12">
     <div class="control-group form-actions">
         <div class="controls">
-            <button type="submit" class="btn btn-primary">Salvar</button>
-            <button type="reset" class="btn">Limpar</button>
-            <a class="btn btn-inverse" onclick="history.go(-1)">Cancelar</a>
+            <button type="submit" ng-disabled="myForm.$invalid" ng-click="save()" class="btn btn-success"><i class="icon-ok icon-white"></i> Salvar</button>
+            <button type="submit" ng-disabled="myForm.$invalid" ng-click="save(true)" class="btn btn-success"><i class="icon-ok-circle icon-white"></i> Salvar e Novo</button>
+            <button ng-disabled="model.cid" type="reset" class="btn btn-danger"><i class="icon-trash icon-white"></i> Limpar</button>
+            <button type="button" class="btn" ng-click="back()"><i class="icon-backward"></i> Voltar</button>
+            <a ng-disabled="!model.cid" class="btn btn-primary" href="#/cadastrar"><i class="icon-plus-sign icon-white"></i> Novo</a>
+            <button type="button" class="btn btn-inverse" ng-click="back()"><i class="icon-remove icon-white"></i> Cancelar</button>
         </div>
     </div>
 </div>

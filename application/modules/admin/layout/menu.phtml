@@ -38,10 +38,10 @@ $acl = Zend_Registry::get('acl');
                     <ul class="dropdown-menu">
                         <li class="nav-header">Menu de Opções</li>
                         <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:processos', 'cadastrar')): ?>
-                            <li><a href="/admin/processos/cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
+                            <li><a href="/admin/processos/#cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>
                         <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
-                            <li><a href="/admin/processos/pesquisar"><i class="icon-search"></i> Consultar</a></li>
+                            <li><a href="/admin/processos"><i class="icon-search"></i> Consultar</a></li>
                         <?php endif ?>
                     </ul>
                 </li>

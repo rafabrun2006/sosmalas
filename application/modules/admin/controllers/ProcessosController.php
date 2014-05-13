@@ -11,37 +11,35 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         ;
     }
 
-    public function pesquisarAction() {
+    /**
+     * @uses AngularJS
+     * Metodo que carrega pagina de processos e lista de processos existentes
+     */
+    public function indexAction() {
         //Conteudo correspondente em HTML e Ajax
-    }
+        $model = new Application_Model_VwProcessos();
+        $pessoa = new Application_Model_Pessoa();
+        $where = array();
 
-    public function cadastrarAction() {
-        $form = new Admin_Form_Processos();
+        $this->view->form = new Admin_Form_Processos();
+        $this->view->parceiros = $pessoa->fetchAll();
 
-        if ($this->_request->isPost()) {
-            $post = $this->_request->getPost();
+        $this->view->user = Zend_Auth::getInstance()->getIdentity();
+        $this->view->acl = Zend_Registry::get('acl');
 
-            if ($form->isValid($post)) {
-                $processo = new Application_Model_Processo();
-                $insert = $processo->insert($post);
-                if ($insert) {
-                    //Chamando o processo de envio de email
-                    $post['id_processo'] = $insert;
-                    $this->enviarEmailProcessoAction($post, true);
-
-                    $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                    $this->_redirect('/admin/processos/pesquisar');
-                } else {
-                    $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
-                }
-            } else {
-                $this->_helper->flashMessenger(array('warning' => SOSMalas_Const::MSG03));
-                $this->_redirect('/admin/processos/pesquisar');
-            }
-            $form->populate($post);
+        if (!in_array($this->view->user->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
+            $where['id_empresa'] = $this->view->user->id_pessoa;
         }
 
-        $this->view->form = $form;
+        $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos($where)->toArray());
+        $this->view->formTemplate = $this->view->render('processos/form-template.phtml');
+        $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
+    }
+
+    public function processosJsAction() {
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->getHelper('layout')->disableLayout();
+        echo $this->view->render('/processos/processos.js');
     }
 
     public function ajaxSearchProcessoAction() {
@@ -58,53 +56,57 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->_helper->json($result);
     }
 
-    public function editarAction() {
+    public function saveAction() {
+        $this->_helper->layout()->disableLayout();
+        $this->_helper->viewRenderer->setNoRender();
+
         $form = new Admin_Form_Processos();
         $processosModel = new Application_Model_Processo();
-        $data = array();
 
-        if ($this->_getParam('id')) {
-            $find = $processosModel->find($this->_getParam('id'))->toArray();
-            $find[0]['dt_coleta'] = SOSMalas_Date::dateToView($find[0]['dt_coleta']);
-            $find[0]['dt_entrega'] = SOSMalas_Date::dateToView($find[0]['dt_entrega']);
-            $data = $find[0];
-        }
+        $post = Zend_Json::decode($this->getRequest()->getRawBody());
+        $post['pessoa_cadastro_id'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
 
         if ($this->_request->isPost()) {
-            $post = $this->_request->getPost();
-            
+
             if ($form->isValid($post)) {
-                $update = $processosModel->update($post);
-                if ($update) {
-                    //Chamando o processo de envio de email
+                $isUpdate = array_key_exists('id_processo', $post) ? TRUE : FALSE;
+
+                $post['id_processo'] = $processosModel->save($post);
+
+                //Chamando o processo de envio de email
+                $model = new Application_Model_VwProcessos();
+
+                if ($isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_FINALIZADO) {
                     $this->enviarEmailProcessoAction($post);
-
-                    $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                    $this->_redirect('/admin/processos/pesquisar');
-                } else {
-                    $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
                 }
+                
+                if (!$isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO) {
+                    $this->enviarEmailProcessoAction($post, TRUE);
+                }
+
+                $result = $model->find($post['id_processo'])->toArray();
+
+                $this->_helper->json(array(
+                    'model' => $result[0],
+                    'result' => TRUE,
+                    'messages' => SOSMalas_Const::MSG01)
+                );
             } else {
-                $this->_helper->flashMessenger(array('alert' => SOSMalas_Const::MSG03));
+                $result = array('result' => FALSE, 'messages' => $form->getMessages(), 'model' => $post);
+                $this->_helper->json($result);
             }
-
-            $data = $post;
         }
-
-        $form->populate($data);
-        $this->view->form = $form;
     }
 
     public function deleteAction() {
 
-        if ($this->_getParam('id')) {
+        if ($this->_getParam('id_processo')) {
             $processoModel = new Application_Model_Processo();
 
-            if ($processoModel->delete(array('id_processo' => $this->_getParam('id')))) {
-                $this->_helper->flashMessenger(array('success' => SOSMalas_Const::MSG01));
-                $this->_redirect('/admin/processos/pesquisar');
+            if ($processoModel->delete(array('id_processo' => $this->_getParam('id_processo')))) {
+                $this->_helper->json(array('result' => 'success'));
             } else {
-                $this->_helper->flashMessenger(array('danger' => SOSMalas_Const::MSG02));
+                $this->_helper->json(array('result' => 'error'));
             }
         }
     }
@@ -165,34 +167,38 @@ class Admin_ProcessosController extends Zend_Controller_Action {
             if ($find[0]->recebe_notificacao) {
                 $modelHistProc = new Application_Model_HistoricoProcesso();
                 $statusProcesso = SOSMalas_Const::getStatusProcesso();
+                $localColEnt = SOSMalas_Const::getLocalEntregaColeta();
                 $historico = $modelHistProc->findByProcesso($post['id_processo']);
 
                 $texto_apresentacao = $insertId ?
-                        SOSMalas_Const::APRESENTACAO_EMAIL_NOVO:
-                        SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA ;
+                        SOSMalas_Const::APRESENTACAO_EMAIL_NOVO :
+                        SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA;
 
+                if(array_key_exists('local_coleta_id', $post)){
+                    $this->view->local_coleta = $localColEnt[$post['local_coleta_id']];
+                }
+                if(array_key_exists('local_entrega_id', $post)){
+                    $this->view->local_entrega = $localColEnt[$post['local_entrega_id']];
+                }
+                
                 $this->view->cod_processo = $post['cod_processo'];
-                $this->view->dt_coleta = $post['dt_coleta'];
-                $this->view->dt_entrega = $post['dt_entrega'];
-                $this->view->nome_cliente = $post['nome_cliente'];
+                $this->view->dt_coleta = array_key_exists('dt_coleta', $post) ? $post['dt_coleta'] : NULL;
+                $this->view->dt_entrega = array_key_exists('dt_entrega', $post) ? $post['dt_entrega'] : NULL;
+                $this->view->nome_cliente = array_key_exists('nome_cliente', $post) ? $post['nome_cliente'] : NULL;
                 $this->view->status = $statusProcesso[$post['status_id']];
                 $this->view->quantidade = $post['quantidade'];
-                $this->view->descricao_produto = $post['descricao_produto'];
+                $this->view->descricao_produto = array_key_exists('descricao_produto', $post) ? $post['descricao_produto'] : NULL;
                 $this->view->nome_contato = $find[0]->nome_contato;
                 $this->view->nome_empresa = $find[0]->nome_empresa;
                 $this->view->historico = $historico;
 
                 $mail = new SOSMalas_Mail('UTF8');
                 $mail->setBodyHtml($this->view->render('/processos/enviar-email-processo.phtml'));
-                $mail->setFrom('naoresponda@sosmalas.com.br', 'Processo '.$post['cod_processo'].' - '.$texto_apresentacao);
+                $mail->setFrom('naoresponda@sosmalas.com.br', sprintf($texto_apresentacao, $post['cod_processo']));
                 $mail->addTo($find[0]->email, $find[0]->nome_contato);
-                $mail->setSubject('Processo '.$post['cod_processo'].' - SOS Malas');
-                
-                if (!$mail->sendEmail()) {
-                    $this->_helper->_flashMessenger(array('error' => SOSMalas_Const::MSG05));
-                } else {
-                    $this->_helper->_flashMessenger(array('success' => SOSMalas_Const::MSG06));
-                }
+                $mail->setSubject('Processo ' . $post['cod_processo'] . ' - SOS Malas');
+
+                $mail->sendEmail();
             }
         }
     }
@@ -217,6 +223,42 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->render('detalhes');
         $this->render('historico-processo');
+    }
+
+    /**
+     * @uses AngularJS
+     * Metodo que retorna json de processos
+     */
+    public function findVwProcessosAction() {
+        $this->_helper->viewRenderer->setNoRender(true);
+        $this->getHelper('layout')->disableLayout();
+
+        $model = new Application_Model_VwProcessos();
+        $this->_helper->json($model->findVwProcessos()->toArray());
+    }
+
+    /**
+     * @uses AngularJS
+     * Metodo que retorna json de historico de um processo
+     */
+    public function findHistoricoProcessoAction() {
+        $modelHistProc = new Application_Model_HistoricoProcesso();
+        $this->_helper->json($modelHistProc->findByProcesso($this->_getParam('id'))->toArray());
+    }
+
+    /**
+     * Metodo responsavel por inserir historico em um processo
+     * @uses AngularJS
+     */
+    public function saveHistoricoProcessoAction() {
+        $modelHistProc = new Application_Model_HistoricoProcesso();
+        $json = $this->getRequest()->getRawBody();
+        $data = Zend_Json_Decoder::decode($json);
+        $processo_id = $modelHistProc->insert($data);
+
+        $result = $modelHistProc->find($processo_id)->toArray();
+
+        $this->_helper->json($result[0]);
     }
 
 }

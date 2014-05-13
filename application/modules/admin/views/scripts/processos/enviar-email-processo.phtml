@@ -1,7 +1,11 @@
 <br>
 Processo: <?php echo $this->cod_processo ?>
 <br>
+<?php echo $this->local_coleta ? 'Local Coleta: ' . $this->local_coleta : '' ?>
+<br>
 Data Coleta: <?php echo $this->dt_coleta ?>
+<br>
+<?php echo $this->local_entrega ? 'Local Entrega: ' . $this->local_entrega : '' ?>
 <br>
 Data Entrega: <?php echo $this->dt_entrega ?>
 <br>
@@ -20,7 +24,7 @@ Histórico:
         <li><?php echo $value->texto_historico ?>, </li>
     <?php endforeach; ?>
 </ul>
-<i>*Esta mensagem foi enviada para <?php echo $this->nome_contato ?> nosso correspondente na empresa <?php echo $this->nome_empresa ?> 
+<i>*Esta mensagem de texto foi enviada para <?php echo $this->nome_contato ?> nosso correspondente na empresa <?php echo $this->nome_empresa ?> 
     se desconhece o email e/ou origem favor desconsiderar.</i>
 <br>
 <i>*Esta mensagem de texto gerada automaticamente pelo sistema, favor não responder por este endereço de e-mail.</i>

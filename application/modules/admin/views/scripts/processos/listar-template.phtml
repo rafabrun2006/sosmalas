@@ -1,0 +1,88 @@
+<div class="well">
+    <div class="control-group span5 form-inline">
+        <label class="control-label">Ver somente</label>
+        <select class="input-small" name="limit" ng-model="limitData">
+            <option ng-repeat="list in collection" ng-if="($index % 30) == 0 && $index > 0">{{$index}}</option>
+        </select>
+    </div>
+    <div class="label label-success pull-right">{{count}} Resultado(s) para: <strong>{{search}}</strong></div>
+</div>
+<table class="table table-bordered table-striped table-condensed">
+    <thead>
+    <th>ID</th>
+    <th>Processo</th>
+    <th>Empresa</th>
+    <th>Cliente</th>
+    <th>Quant.</th>
+    <th>Prod/Mod/Cor/Marca</th>
+    <th width="100">Conserto</th>
+    <th width="75">Coleta</th>
+    <th width="75">Entrega</th>
+    <th>Status</th>
+    <th>Ações</th>
+</thead>
+<tbody>
+    <tr ng-repeat="processo in collection| filter:search | limitTo:limitData | orderBy:'cid'" 
+        ng-if="filterDataColeta(processo.dt_coleta) && filterDataEntrega(processo.dt_entrega)" 
+        ng-click="updateModel(processo, $event)" style="cursor: pointer;">
+        <td>{{processo.id_processo}}</td>
+        <td>{{processo.cod_processo}}</td>
+        <td>{{processo.nome_empresa}}</td>
+        <td>{{processo.nome_cliente}}</td>
+        <td>{{processo.quantidade}}</td>
+        <td>{{processo.descricao_produto}}</td>
+        <td>{{processo.conserto}}</td>
+        <td>{{processo.dt_coleta_br}}</td>
+        <td>{{processo.dt_entrega_br}}</td>
+        <td>{{processo.tx_status}}</td>
+        <td>
+            <div class="btn-group">
+                <button class="btn" ng-click="historico(processo)" title="Histórico/Detalhes">
+                    <i class="icon-list"></i>
+                </button>
+                <?php if ($this->acl->isAllowed($this->user->tipo_acesso_id, 'admin:processos', 'editar')): ?>
+                    <a class="btn" href="#/editar/{{processo.id_processo}}" title="Editar">
+                        <i class="icon-edit"></i>
+                    </a>
+                    <a class="btn btn-inverse" ng-click="deleteModel(processo.cid)" title="Apagar">
+                        <i class="icon-trash icon-white"></i>
+                    </a>
+                <?php endif; ?>
+            </div>
+        </td>
+    </tr>
+</tbody>
+</table>
+<div id="modal-historico" class="modal fade hide">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h3>Historico do processo [{{historicoProcessoId}}]</h3>
+    </div>
+    <div class="modal-body">
+        <div class="alert alert-{{message.type}}" ng-show="!historicoCollection.length">{{message.text}}</div>
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+            <th>Texto Historico</th>
+            <th>Data Cadastro</th>
+            </thead>
+            <tbody>
+                <tr ng-repeat="dataHistorico in historicoCollection| orderBy:id_historico_processo:reverse">
+                    <td>{{dataHistorico.texto_historico}}</td>
+                    <td>{{dataHistorico.dt_cadastro}}</td>
+                </tr>
+            </tbody>
+        </table>
+        <?php if ($this->acl->isAllowed($this->tipo_acesso_id, 'admin:processos', 'save-historico-processo')): ?>
+            <div class="row-fluid">
+                <textarea ng-model="texto_historico" rows="3" class="span12" placeholder="Complementar historico..."></textarea>
+            </div>
+        <?php endif; ?>
+    </div>
+    <div class="modal-footer">
+        <?php if ($this->acl->isAllowed($this->tipo_acesso_id, 'admin:processos', 'save-historico-processo')): ?>
+            <button ng-click="addHistorico()" class="btn btn-primary">Adicionar</button>
+        <?php endif; ?>
+        <button ng-click="imprimirHistorico(model.id_processo)" class="btn">Imprimir</button>
+        <button href="#" class="btn" data-dismiss="modal" aria-hidden="true">Fechar</button>
+    </div>
+</div>

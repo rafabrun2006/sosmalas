@@ -1,0 +1,51 @@
+<div class="row-fluid">
+    <h3>Processos - Consultas de DPR's e/ou AHL's</h3>
+    <ul class="thumbnails">
+        <li class="thumbnail span4">
+            <h3 align="center">Empresa</h3>
+            <form method="POST" class="offset1 form-signin" action="/admin/auth/login">
+                <p>Empresas podem acessar e visualizar como estão os processos diretamente ligados a própria empresa.</p>
+                <label><strong>Email:</strong> </label>
+                <input type="text" name="email">
+                <br />
+                <label><strong>Senha:</strong> </label>
+                <input type="password" name="password">
+                <br />
+                <button class="btn btn-primary">Acessar</button>
+            </form>
+        </li>
+        <li class="thumbnail span4">
+            <h3 align="center">Parceiro</h3>
+            <form method="POST" class="offset1 form-signin" action="/admin/auth/login">
+                <p>Parceiros podem acessar e visualizar como estão os processos diretamente ligados a próprio parceiro.</p>
+                <label><strong>Email:</strong> </label>
+                <input type="text" name="email">
+                <br />
+                <label><strong>Senha:</strong> </label>
+                <input type="password" name="password">
+                <br />
+                <button class="btn btn-primary">Acessar</button>
+            </form>
+        </li>
+        <li class="thumbnail span4">
+            <h3 align="center">Cliente</h3>
+            <form class="offset1 form-signin">
+                <p>Clíentes podem acessar e visualizar o andamento dos processos diretamente informando apenas o numero do mesmo.</p>
+                <label><strong>Numero do processo:</strong> </label>
+                <input type="text" name="nu_processo">
+                <br />
+                [Modelo 1]
+                <div class="row-fluid">
+                    <button class="btn btn-primary">Acessar</button>
+                    <button class="btn btn-warning">Esqueci o Nº do processo</button>
+                </div>
+                <br />
+                [Modelo 2]
+                <div class="row-fluid">
+                    <button class="btn btn-primary">Acessar</button>
+                    <button class="btn btn-link">Esqueci o Nº do processo</button>
+                </div>
+            </form>
+        </li>
+    </ul>
+</div>

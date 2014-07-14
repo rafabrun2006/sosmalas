@@ -11,5 +11,9 @@
  * @author bruno
  */
 class Site_Bootstrap extends Zend_Application_Module_Bootstrap {
-    //put your code here
+    
+    public function _initBreadcrumb(){
+        
+    }
+    
 }

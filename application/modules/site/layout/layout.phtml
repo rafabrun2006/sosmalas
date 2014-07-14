@@ -1,81 +1,152 @@
 <!DOCTYPE html>
-<html>
-<head>
-    <title>SOS Malas</title>
-    <meta charset="utf-8">
-    <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
-    <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
-    <script type="text/javascript">
-        setInterval(function () {
-            window.location.reload();
-        }, 3000);
-    </script>
-    <style type="text/css">
-        div {
-            /*border: 1px solid #000;*/
-        }
+<html xmlns="http://www.w3.org/1999/html">
+    <head>
+        <title>SOS Malas</title>
+        <meta charset="utf-8">
+        <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+        <script type="text/javascript" src="/assets/js/jquery.js"></script>
+        <script type="text/javascript" src="/assets/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/assets/js/dropdown-bootstrap.js"></script>
+        <script type="text/javascript">
+            setInterval(function() {
+                // window.location.reload();
+            }, 3000);
 
-        .topo-1 {
-            background-image: url('/assets/img/background-site-1.png');
-            background-repeat: repeat-x;
-        }
-
-        .menu-principal {
-            margin: -6% 0 0 25%;
-            border-radius: 5px;
-            padding: 9px;
-        }
-
-        .menu-principal .nav {
-            background-color: #fff;
-            border-radius: 5px;
-        }
-
-        .menu-principal li {
-            padding-right: 5px;
-        }
-    </style>
-</head>
-<body>
-<div class="row">
-    <div class="row-fluid">
-        <div class="topo-1">
-            <img src="/assets/img/background-site-2.png">
-        </div>
-        <div class="navbar menu-principal">
-            <div class="nav-collapse collapse">
+            $(document).ready(function() {
+                $('.popover-element').popover();
+            });
+        </script>
+        <style type="text/css">
+            div {
+                /*border: 1px solid #000;*/
+            }
+            .topo-1 {
+                background-image: url('/assets/img/background-site-1.png');
+                background-repeat: repeat-x;
+                height: min-content;
+            }
+            .menu-principal {
+                margin: -6% 0 0 25%;
+                border-radius: 3px;
+                padding: 9px;
+            }
+            .menu-principal .nav {
+                background-color: #fff;
+                border-radius: 10px;
+            }
+            .menu-principal li {
+                padding-right: 5px;
+            }
+            .menu-principal li:hover {
+                background-color: #CCC;
+                border-radius: 5px; 
+                border-bottom: 1px solid #FC2933;
+            }
+            section {
+                margin-top: 30px;
+                margin-bottom: 15px;
+            }
+            footer {
+                text-shadow: initial;
+                background-color: #D10C2C;
+                padding: 5px;
+                color: #fff;
+                /*background-image: linear-gradient(to bottom,#FC403B,#9C0F08);*/
+                background-image: linear-gradient(to bottom,#9C0F08,#FC403B);
+            }
+            footer a:hover {
+                color: #fff;
+            }
+            footer a {
+                color: #fff;
+            }
+            .carousel {
+                height: 270px;
+                background-color: #EBEBEC;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="row">
+            <div class="topo-1">
+                <a href="<?php echo $this->url(array('controller' => 'index', 'action' => NULL)) ?>">
+                    <img src="/assets/img/background-site-2.png">
+                </a>
+            </div>
+            <div class="navbar nav-collapse menu-principal">
                 <ul class="nav">
-                    <li>
-                        <a href="#"><i class="icon-home"></i> Menu</a>
+                    <li class="">
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => '')) ?>"><i class="icon-home"></i> Início</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-question-sign"></i> Sobre</a>
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'sobre')) ?>"><i class="icon-question-sign"></i> Sobre</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-th-large"></i> Serviços</a>
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'servicos')) ?>"><i class="icon-th-large"></i> Serviços</a>
                     </li>
                     <li>
                         <a href="#"><i class="icon-cog"></i> Assistencia Técnica</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-user"></i> Parceiros</a>
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'parceiros')) ?>"><i class="icon-user"></i> Parceiros</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-globe"></i> Sustentabilidade</a>
+                        <a href="<?php echo $this->url(array('controller' => 'index', 'action' => 'sustentabilidade')) ?>"><i class="icon-globe"></i> Sustentabilidade</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-list-alt"></i> Processos</a>
+                        <a href="<?php echo $this->url(array('controller' => 'processos', 'action' => NULL)) ?>"><i class="icon-list-alt"></i> Processos</a>
                     </li>
                     <li>
-                        <a href="#"><i class="icon-envelope"></i> Contato</a>
+                        <a href="<?php echo $this->url(array('controller' => 'contato', 'action' => NULL)) ?>"><i class="icon-envelope"></i> Contato</a>
                     </li>
                 </ul>
             </div>
         </div>
-    </div>
-    <div class="row-fluid">
-        <h1>Content</h1>
-    </div>
-</div>
-</body>
+        <div class="container">
+            <br />
+            <br />
+            <div class="row">
+                <section class="row-fluid">
+                    <?php echo $this->layout()->content ?>
+                </section>
+            </div>
+        </div>
+        <footer class="row footer">
+            <div class="row-fluid">
+                <div class="span3">
+                    <p class="offset1" style="text-align: left;">
+                        <strong>Endereço:</strong>
+                        <br />
+                        AC 419 - CONJ D - LOTE 11 - SANTA MARIA NORTE <br />BRASÍLIA/DF CEP: 72.549-420
+                    </p>
+                </div>
+                <div class="span3">
+                    <p class="pull-left" style="text-align: justify;">
+                        <strong>Horários de Atendimento:</strong>
+                        <br />
+                        Atendemos de 2ª à 6ª feira das 8h às 12h e das 14h às <br />18h e aos sábados das 8h às 12h.
+                    </p>
+                </div>
+                <div class="span3">
+                    <p class="pull-left" style="text-align: justify;">
+                        <strong>Nas Redes Socíais:</strong>
+                        <br />
+                        <a href="https://www.facebook.com/SosMalasDf"><img width="30" src="/images/facebook.png" alt=""> Facebook</a>
+                        <br />
+                        <a href="https://www.twitter.com/SosMalasDf"><img width="30" src="/images/twitter.png" alt=""> Twitter</a>
+                    </p>
+                </div>
+                <div class="span3">
+                    <p class="pull-left" style="text-align: justify;">
+                        <strong>Trabalhe Conosco:</strong>
+                        <br />
+                        <i class="icon-envelope icon-white"></i><a href="mailto:trabalheconosco@sosmalas.com.br"> trabalheconosco@sosmalas.com.br</a>
+                    </p>
+                </div>
+                <div class="span6">
+                    <strong class="pull-right">SOS Malas © 2013</strong>
+                </div>
+            </div>
+        </footer>
+    </body>
 </html>

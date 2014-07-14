@@ -43,5 +43,10 @@ class Admin_UtilsController extends Zend_Controller_Action {
 
         $this->_helper->json(array('version' => $result));
     }
+    
+    public function checkoutAlteracaoAction(){
+        $shell = exec('ls -la');
+        print_r($shell);
+    }
 
 }

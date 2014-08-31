@@ -15,13 +15,15 @@ class Application_Model_VwProcessos extends SOSMalas_Db_Mapper {
     
     protected $_name = 'vw_processos';
     protected $_primary = 'id_processo';
-    
+
+
     public function findVwProcessos(array $whereAnd = null){
         
         $select = $this->select()
                 ->from(array('vw' => 'vw_processos'))
-                //->where('dt_cadastro >= 2014-01-01')
-                ->setIntegrityCheck(FALSE);
+                //->where("dt_cadastro >= '2014-05-01'")
+                //->limit(100)
+                ;
         
         foreach($whereAnd as $key => $value){
             $select->where($key . ' = ?', $value);
@@ -29,5 +31,9 @@ class Application_Model_VwProcessos extends SOSMalas_Db_Mapper {
         
         return $this->fetchAll($select);
     }
-    
+
+    public function findVwProcessosById($id) {
+        return $this->find($id);
+    }
+
 }

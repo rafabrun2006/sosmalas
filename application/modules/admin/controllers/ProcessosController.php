@@ -17,9 +17,8 @@ class Admin_ProcessosController extends Zend_Controller_Action {
      */
     public function indexAction() {
         //Conteudo correspondente em HTML e Ajax
-        $model = new Application_Model_VwProcessos();
+
         $pessoa = new Application_Model_Pessoa();
-        $where = array();
 
         $this->view->form = new Admin_Form_Processos();
         $this->view->parceiros = $pessoa->fetchAll();
@@ -27,33 +26,27 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $this->view->user = Zend_Auth::getInstance()->getIdentity();
         $this->view->acl = Zend_Registry::get('acl');
 
-        if (!in_array($this->view->user->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
-            $where['id_empresa'] = $this->view->user->id_pessoa;
-        }
-
-        $this->view->processos = Zend_Json_Encoder::encode($model->findVwProcessos($where)->toArray());
         $this->view->formTemplate = $this->view->render('processos/form-template.phtml');
         $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
     }
 
-    public function processosJsAction() {
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->getHelper('layout')->disableLayout();
-        echo $this->view->render('/processos/processos.js');
+    public function ajaxProcessosAction() {
+        $model = new Application_Model_VwProcessos();
+        $where = array();
+        $logged = Zend_Auth::getInstance()->getIdentity();
+
+        if (!in_array($logged->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
+            $where['id_empresa'] = $logged->id_pessoa;
+        }
+
+        $this->_helper->json($model->findVwProcessos($where)->toArray());
     }
 
-    public function ajaxSearchProcessoAction() {
-        $modelc = new Application_Model_Processo();
-        $idPessoa = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
-        $txTipoAcesso = Zend_Auth::getInstance()->getIdentity()->tipo_acesso_id;
-
-        $whereAnd = array(
-            'id_empresa' => ($txTipoAcesso == 'member') ? $idPessoa : null
-        );
-
-        $result = $modelc->searchLikeFields(array(), $this->_getParam('search'), $whereAnd)->toArray();
-
-        $this->_helper->json($result);
+    public function ajaxGetProcessoByIdAction() {
+        $model = new Application_Model_VwProcessos();
+        $result = $model->findVwProcessosById($this->getRequest()->getParam('id'));
+        $toArray = $result->toArray();
+        $this->_helper->json($toArray[0]);
     }
 
     public function saveAction() {
@@ -79,7 +72,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 if ($isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_FINALIZADO) {
                     $this->enviarEmailProcessoAction($post);
                 }
-                
+
                 if (!$isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO) {
                     $this->enviarEmailProcessoAction($post, TRUE);
                 }
@@ -111,54 +104,6 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         }
     }
 
-    public function ajaxPesquisarAction() {
-        $this->getHelper('layout')->disableLayout();
-
-        $auth = Zend_Auth::getInstance()->getIdentity();
-        $acl = Zend_Registry::get('acl');
-        $whereLike = array();
-        $where = array();
-        $post = $this->_request->getPost();
-        unset($post['page']);
-
-        if ($this->_request->isPost()) {
-            $post['dt_coleta'] = array_key_exists('dt_coleta', $post) ?
-                    SOSMalas_Date::dateToBanco($post['dt_coleta']) : null;
-            $post['dt_entrega'] = array_key_exists('dt_entrega', $post) ?
-                    SOSMalas_Date::dateToBanco($post['dt_entrega']) : null;
-
-            $post['id_empresa'] = $post['nome_cliente'];
-            $post['cod_processo'] = $post['nome_cliente'];
-
-            $whereLike = $post;
-        }
-
-        if (!in_array($auth->tipo_acesso_id, array(SOSMalas_Const::TIPO_USUARIO_ADMIN, SOSMalas_Const::TIPO_USUARIO_MEMBER))) {
-            $where['id_empresa'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
-        }
-
-        $modelEntrada = new Application_Model_Processo();
-
-        $paginator = $modelEntrada->getProcessosPagination($where, $whereLike);
-        $paginator->setItemCountPerPage(20);
-        $paginator->setCurrentPageNumber($this->_getParam('page'));
-
-        $this->view->lastPage = ($paginator->getCurrentPageNumber() > 1) ?
-                $paginator->getCurrentPageNumber() - 1 : '#';
-        $this->view->nextPage = ($paginator->getCurrentPageNumber() < $paginator->count()) ?
-                $paginator->getCurrentPageNumber() + 1 : '#';
-
-        $this->view->editar = $acl->isAllowed(
-                        $auth->tipo_acesso_id, 'admin:processos', 'editar') ? true : false;
-        $this->view->delete = $acl->isAllowed(
-                        $auth->tipo_acesso_id, 'admin:processos', 'delete') ? true : false;
-
-        $this->view->current = $paginator->getCurrentPageNumber();
-        $this->view->processos = $paginator;
-        $this->view->count = $paginator->count();
-        $this->view->paginacao = $this->view->render('processos/paginacao.phtml');
-    }
-
     public function enviarEmailProcessoAction($post = array(), $insertId = false) {
         if ($post) {
             $pessoa = new Application_Model_Pessoa();
@@ -174,13 +119,13 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                         SOSMalas_Const::APRESENTACAO_EMAIL_NOVO :
                         SOSMalas_Const::APRESENTACAO_EMAIL_ATUALIZA;
 
-                if(array_key_exists('local_coleta_id', $post)){
+                if (array_key_exists('local_coleta_id', $post)) {
                     $this->view->local_coleta = $localColEnt[$post['local_coleta_id']];
                 }
-                if(array_key_exists('local_entrega_id', $post)){
+                if (array_key_exists('local_entrega_id', $post)) {
                     $this->view->local_entrega = $localColEnt[$post['local_entrega_id']];
                 }
-                
+
                 $this->view->cod_processo = $post['cod_processo'];
                 $this->view->dt_coleta = array_key_exists('dt_coleta', $post) ? $post['dt_coleta'] : NULL;
                 $this->view->dt_entrega = array_key_exists('dt_entrega', $post) ? $post['dt_entrega'] : NULL;
@@ -223,18 +168,6 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->render('detalhes');
         $this->render('historico-processo');
-    }
-
-    /**
-     * @uses AngularJS
-     * Metodo que retorna json de processos
-     */
-    public function findVwProcessosAction() {
-        $this->_helper->viewRenderer->setNoRender(true);
-        $this->getHelper('layout')->disableLayout();
-
-        $model = new Application_Model_VwProcessos();
-        $this->_helper->json($model->findVwProcessos()->toArray());
     }
 
     /**

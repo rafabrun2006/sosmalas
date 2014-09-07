@@ -33,7 +33,6 @@ class Admin_UtilsController extends Zend_Controller_Action {
             $post = $this->getRequest()->getPost();
 
             try {
-                echo 'git pull origin ' . $post['branch'];
                 $shell = shell_exec('git pull origin ' . $post['branch']);
 
                 echo 'result exec: ' . $shell;

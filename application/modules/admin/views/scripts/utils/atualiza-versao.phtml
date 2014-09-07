@@ -15,6 +15,15 @@
 </div>
 <form method='post'>
     <div class="control-group">
+        <div class="controls well well-small">
+            <strong>Fazer pull local ( <?php echo $this->currentBranch ?> ) recebendo o branch: </strong>
+            <?php foreach ($this->branchs as $key => $value): ?>
+                <label class="control-label">
+                    <input class="radio" type="radio" name="branch" value="<?php echo $value ?>">
+                    <?php echo $value ?>
+                </label>
+            <?php endforeach; ?>
+        </div>
         <button disabled="" id="btn-atualiza" class="btn btn-danger" onclick="return confirma()" type='submit'>
             Atualizar Versão do Sistema <?php echo $this->version ?>
         </button>

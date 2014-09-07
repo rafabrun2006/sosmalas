@@ -13,16 +13,31 @@
 class Admin_UtilsController extends Zend_Controller_Action {
 
     public function atualizaVersaoAction() {
-
-        $this->view->version = exec("echo (git version)");
+        
+        $this->view->version = shell_exec("git --version");
+        
+        $arrayBranchNames = array();
+        $branchs = explode('  ', shell_exec('git branch -l'));
+        
+        foreach ($branchs as $value) {
+            if(strstr($value, '*')){
+                $this->view->currentBranch = strstr($value, '*');
+            }
+            
+            array_push($arrayBranchNames, trim(str_replace('*', '', $value)));
+        }
+        
+        $this->view->branchs = $arrayBranchNames;
 
         if ($this->_request->isPost()) {
-            try {
-                $shell = exec('git pull origin master', $output, $return);
+            $post = $this->getRequest()->getPost();
 
-                echo 'result exec: ' . $shell . '<br><br>';
-                echo 'result out: ' . print_r($output, true) . '<br><br>';
-                echo 'result retu: ' . $return . '<br><br>';
+            try {
+                echo 'git pull origin ' . $post['branch'];
+                $shell = shell_exec('git pull origin ' . $post['branch']);
+
+                echo 'result exec: ' . $shell;
+                
             } catch (Zend_Exception $e) {
                 echo 'ZendException: ' . $e;
             } catch (ErrorException $error) {
@@ -38,12 +53,6 @@ class Admin_UtilsController extends Zend_Controller_Action {
         $this->_helper->viewRenderer->setNoRender(true);
     }
 
-    public function verificaVersaoAction() {
-        $result[] = shell_exec('git-sh; pull origin master;');
-
-        $this->_helper->json(array('version' => $result));
-    }
-
     public function checkoutAlteracaoAction() {
         if ($this->getRequest()->getParam('cmd')) {
             echo '<pre>';
@@ -52,7 +61,7 @@ class Admin_UtilsController extends Zend_Controller_Action {
             print_r($shell);
             echo '</pre>';
         }
-        
+
         exit('the end...');
     }
 

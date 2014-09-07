@@ -15,16 +15,13 @@ class Admin_UtilsController extends Zend_Controller_Action {
     public function atualizaVersaoAction() {
 
         $this->view->version = shell_exec("git --version");
+        $this->view->currentBranch = shell_exec("git branch | sed -n '/\* /s///p'");
 
         $arrayBranchNames = array();
         $shellBranchs = shell_exec('git branch -l');
-        $branchs = explode(' ', str_replace('* ', '*', preg_replace('/  /', ' ', $shellBranchs)));
+        $branchs = explode(' ', preg_replace('/  /', ' ', $shellBranchs));
         
         foreach ($branchs as $value) {
-            if (strstr($value, '*')) {
-                $this->view->currentBranch = strstr($value, '*');
-            }
-
             if ($value) {
                 array_push($arrayBranchNames, trim(str_replace('*', '', $value)));
             }

@@ -13,20 +13,23 @@
 class Admin_UtilsController extends Zend_Controller_Action {
 
     public function atualizaVersaoAction() {
-        
+
         $this->view->version = shell_exec("git --version");
-        
+
         $arrayBranchNames = array();
-        $branchs = explode('  ', shell_exec('git branch -l'));
+        $shellBranchs = shell_exec('git branch -l');
+        $branchs = explode(' ', str_replace('* ', '*', preg_replace('/  /', ' ', $shellBranchs)));
         
         foreach ($branchs as $value) {
-            if(strstr($value, '*')){
+            if (strstr($value, '*')) {
                 $this->view->currentBranch = strstr($value, '*');
             }
-            
-            array_push($arrayBranchNames, trim(str_replace('*', '', $value)));
+
+            if ($value) {
+                array_push($arrayBranchNames, trim(str_replace('*', '', $value)));
+            }
         }
-        
+
         $this->view->branchs = $arrayBranchNames;
 
         if ($this->_request->isPost()) {
@@ -37,7 +40,6 @@ class Admin_UtilsController extends Zend_Controller_Action {
                 $shell = shell_exec('git pull origin ' . $post['branch']);
 
                 echo 'result exec: ' . $shell;
-                
             } catch (Zend_Exception $e) {
                 echo 'ZendException: ' . $e;
             } catch (ErrorException $error) {

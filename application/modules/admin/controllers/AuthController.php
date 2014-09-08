@@ -50,7 +50,7 @@ class Admin_AuthController extends Zend_Controller_Action {
                             ->write($authAdapter->getResultRowObject(null, 'senha'));
                     
                     //Se login certo, redireciona para principal
-                    $this->_redirect('/index');
+                    $this->_redirect('/admin/index');
                 } else {
                     //Se login errado, apresenta mensagem de erro
                     $this->view->msgSistema = implode(', ', $authAdapter->authenticate()->getMessages());

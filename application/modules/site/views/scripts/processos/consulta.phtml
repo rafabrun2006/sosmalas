@@ -1,0 +1,59 @@
+<div class="row-fluid">
+    <legend>Processo</legend>
+    <form method="post">
+        <?php if (!$this->processo): ?>
+            <?php echo $this->flashMessenger() ?>
+            <strong>Pesquisar:</strong> 
+            <input placeholder="Leve em conta maiusculas e minusculas" type="search" name="nu_processo" value="<?php echo $this->idProcesso ?>" class="search-query span5">
+            <button class="btn btn-primary"><i class="icon-search icon-white"></i></button>
+        <?php else: ?>
+            <div class="row-fluid">
+                <strong>Pesquisar:</strong> <input placeholder="Leve em conta maiusculas e minusculas" type="search" name="nu_processo" value="<?php echo $this->idProcesso ?>" class="search-query span5">
+                <button class="btn btn-primary"><i class="icon-search icon-white"></i></button>
+                <a href="<?php echo $this->url(array('controller' => 'processos', 'action' => 'index')) ?>" class="btn"><i class="icon-backward"></i> Voltar</a>
+            </div>
+            <hr>
+            <table class="table table-striped table-condensed table-bordered">
+                <caption><h3>Dados do Processo</h3></caption>
+                <thead>
+                <th class="span3">--</th>
+                <th>--</th>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Id Processo:</strong></td>
+                        <td><?php echo $this->processo->id_processo ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Codigo Processo:</strong></td>
+                        <td><?php echo $this->processo->cod_processo ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Quantidade:</strong></td>
+                        <td><?php echo $this->processo->quantidade ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Coleta:</strong></td>
+                        <td><?php echo $this->processo->dt_coleta_br ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Data Entrega:</strong></td>
+                        <td><?php echo $this->processo->dt_entrega_br ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Status:</strong></td>
+                        <td ><label class="badge badge-success"><?php echo $this->processo->tx_status ?></label></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Empresa:</strong></td>
+                        <td><?php echo $this->processo->nome_empresa ?></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Conserto:</strong></td>
+                        <td><?php echo $this->processo->conserto ?></td>
+                    </tr>
+                </tbody>
+            </table>
+        <?php endif; ?>
+    </form>
+</div>

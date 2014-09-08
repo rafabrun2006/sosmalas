@@ -13,7 +13,7 @@ function AppPessoaController($scope, $http) {
     $http({
         async: false,
         method: 'GET',
-        url: '/pessoa/get'
+        url: '/admin/pessoa/get'
     }).success(function(response) {
         $scope.pessoaCollection = response;
         loaded();

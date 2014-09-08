@@ -29,21 +29,14 @@
         </li>
         <li class="thumbnail span4">
             <h3 align="center">Cliente</h3>
-            <form class="offset1 form-signin">
+            <form method="post" action="<?php echo $this->url(array('controller'=>'processos', 'action' => 'consulta')) ?>" class="offset1 form-signin">
                 <p>Clíentes podem acessar e visualizar o andamento dos processos diretamente informando apenas o numero do mesmo.</p>
-                <label><strong>Numero do processo:</strong> </label>
-                <input type="text" name="nu_processo">
+                <label><strong>Codigo recebido por e-mail ou telefone:</strong> </label>
+                <input class="span10" placeholder="Leve em conta maiusculas e minusculas" type="text" name="nu_processo">
                 <br />
-                [Modelo 1]
                 <div class="row-fluid">
                     <button class="btn btn-primary">Acessar</button>
-                    <button class="btn btn-warning">Esqueci o Nº do processo</button>
-                </div>
-                <br />
-                [Modelo 2]
-                <div class="row-fluid">
-                    <button class="btn btn-primary">Acessar</button>
-                    <button class="btn btn-link">Esqueci o Nº do processo</button>
+                    <a href="<?php echo $this->url(array('controller' => 'contato', 'action' => 'index')) ?>" class="btn btn-warning">Esqueci o Nº do processo</a>
                 </div>
             </form>
         </li>

@@ -15,7 +15,7 @@ class SOSMalas_Plugins_Navigation extends Zend_Controller_Plugin_Abstract {
     public function dispatchLoopStartup(Zend_Controller_Request_Abstract $request) {
         $session = new Zend_Session_Namespace();
         
-        if (Zend_Auth::getInstance()->hasIdentity()) {
+        if (Zend_Auth::getInstance()->hasIdentity() and $request->getModuleName() == 'admin') {
 
             if (!$session->registerRoleResource) {
                 $session->registerRoleResource = new SOSMalas_Acl_RegisterRoleResource($request);

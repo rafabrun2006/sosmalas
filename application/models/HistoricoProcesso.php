@@ -8,8 +8,8 @@ class Application_Model_HistoricoProcesso extends SOSMalas_Db_Mapper {
     public function insert(array $data) {
         $date = new Zend_Date();
         
-        $textoHistorico = !empty($data['texto_historico'])  ? 
-                $data['texto_historico'].',' : null;
+        $textoHistorico = !empty($data['txt_historico'])  ? 
+                $data['txt_historico'].',' : null;
         
         $data['dt_cadastro'] = $date->get('Y-MM-dd H:m:s');
         $data['texto_historico'] = sprintf(

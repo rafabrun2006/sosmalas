@@ -56,6 +56,9 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
         $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
         $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
 
+        //Preenchendo atributo referencia na tabela historico de processo
+        $data['processo_id'] = $data['id_processo'];
+        
         //Registrando historico
         $historico->insert($data);
         

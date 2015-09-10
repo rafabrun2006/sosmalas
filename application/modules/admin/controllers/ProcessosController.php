@@ -140,6 +140,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 $mail = new SOSMalas_Mail('UTF8');
                 $mail->setBodyHtml($this->view->render('/processos/enviar-email-processo.phtml'));
                 $mail->setFrom('naoresponda@sosmalas.com.br', sprintf($texto_apresentacao, $post['cod_processo']));
+                $mail->addCc('naoresponda@sosmalas.com.br', 'Cópia Envio');
                 $mail->addTo($find[0]->email, $find[0]->nome_contato);
                 $mail->setSubject('Processo ' . $post['cod_processo'] . ' - SOS Malas');
 

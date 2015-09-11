@@ -22,7 +22,7 @@ class Application_Model_VwProcessos extends SOSMalas_Db_Mapper {
         $select = $this->select()
                 ->from(array('vw' => 'vw_processos'))
                 ->order('dt_cadastro DESC')
-                ->limit(1000)
+                ->where('dt_cadastro >= DATE_SUB(CURDATE(), INTERVAL 90 DAY)')
                 ;
         
         foreach($whereAnd as $key => $value){

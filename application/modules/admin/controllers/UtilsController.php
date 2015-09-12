@@ -14,7 +14,7 @@ class Admin_UtilsController extends Zend_Controller_Action {
 
     public function atualizaVersaoAction() {
 
-        $this->view->version = shell_exec("echo (git version)");
+        $this->view->version = shell_exec("git log -1");
 
         if ($this->_request->isPost()) {
             try {

@@ -14,21 +14,19 @@ class Admin_UtilsController extends Zend_Controller_Action {
 
     public function atualizaVersaoAction() {
 
-        $this->view->version = exec("echo (git version)");
+        $this->view->version = shell_exec("echo (git version)");
 
         if ($this->_request->isPost()) {
             try {
-                $shell = exec('git pull origin master', $output, $return);
+                $shell = shell_exec('git pull origin master');
 
                 echo 'result exec: ' . $shell . '<br><br>';
-                echo 'result out: ' . print_r($output, true) . '<br><br>';
-                echo 'result retu: ' . $return . '<br><br>';
             } catch (Zend_Exception $e) {
-                echo 'ZendException: ' . $e;
+                echo 'ZendException: ' . $e->getMessage();
             } catch (ErrorException $error) {
-                echo 'Error: ' . $error;
+                echo 'Error: ' . $error->getMessage();
             } catch (Exception $ex) {
-                echo 'Exception: ' . $ex;
+                echo 'Exception: ' . $ex->getMessage();
             }
         }
     }

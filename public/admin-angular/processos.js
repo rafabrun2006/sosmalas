@@ -46,7 +46,7 @@
 
 app = angular.module('App', ['ui.mask', 'ngRoute', 'ngResource', 'utils']);
 
-app.factory('ModelFactory', ['$resource', function($resource) {
+app.factory('ModelFactory', ['$resource', function ($resource) {
         return $resource('/admin/processos/get/:id', {id_processo: '@id_processo'}, {
             save: {
                 url: '/admin/processos/save/:id',
@@ -65,7 +65,7 @@ app.factory('ModelFactory', ['$resource', function($resource) {
         });
     }]);
 
-app.factory('ModelHistoricoFactory', ['$resource', function($resource) {
+app.factory('ModelHistoricoFactory', ['$resource', function ($resource) {
         return $resource('/admin/processos/save-historico-processo/:id', {id_historico_processo: '@id_historico_processo'}, {
             save: {
                 method: 'POST',
@@ -74,7 +74,7 @@ app.factory('ModelHistoricoFactory', ['$resource', function($resource) {
         });
     }]);
 
-app.config(function($routeProvider) {
+app.config(function ($routeProvider) {
     $routeProvider.when('/', {
         controller: 'ProcessosController',
         templateUrl: 'index.html'
@@ -92,7 +92,7 @@ app.config(function($routeProvider) {
     });
 });
 
-app.controller('ProcessosController', function($scope, $http, $filter, $log, ModelFactory, ModelHistoricoFactory, $window) {
+app.controller('ProcessosController', function ($scope, $http, $filter, $log, ModelFactory, ModelHistoricoFactory, $window) {
 
     $scope.dtEntrega = null;
     $scope.dtColeta = null;
@@ -100,21 +100,61 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     $scope.collection = [];
     $scope.count = 0;
     $scope.limitData = 10;
+    $scope.statusProcesso = [];
 
-    $http.get('/admin/processos/ajax-processos', loading()).success(function(response) {
+    $scope.search = {};
+    $scope.filterLabels = '';
+
+    $scope.filterGrid = function (object) {
+        
+        var res = true;
+        var arr = [];
+        var labels = [];
+
+        if ($scope.search.nome_empresa) {
+            res = $scope.search.nome_empresa === object.nome_empresa ? true : false;
+            labels.push($scope.search.nome_empresa);
+        }
+
+        if ($scope.search.id_status) {
+            res = $scope.search.id_status.id_status === parseInt(object.id_status) ? true : false;
+            labels.push($scope.search.id_status.tx_status);
+        }
+
+        if ($scope.search.input) {
+            angular.forEach(object, function (val) {
+                arr.push(val);
+            });
+
+            if (res) {
+                res = $filter('filter')(arr, $scope.search.input).length;
+            }
+            labels.push($scope.search.input);
+        }
+
+        $scope.filterLabels = labels.join(' / ');
+
+        return res;
+    };
+    
+    $http.get('/admin/processos/ajax-status-processo').success(function(response){
+        $scope.statusProcesso = response;
+    });
+
+    $http.get('/admin/processos/ajax-processos', loading()).success(function (response) {
         $scope.collection = response;
         $scope.count = $scope.collection.length;
         loaded();
     });
 
-    $scope.updateModel = function(model, $event) {
+    $scope.updateModel = function (model, $event) {
         $($event.target).parents('tbody').find('tr').removeClass('success');
         $($event.target).parent('tr').addClass('success');
         $scope.model = model;
     };
 
     //Fazer filtro em capo data invertendo formato
-    $scope.filterDateInverse = function() {
+    $scope.filterDateInverse = function () {
         if ($scope.dtColeta !== null) {
             var split = $scope.dtColeta.split('-');
             return (split[2] ? split[2] + '-' : '') + (split[1] ? split[1] + '-' : '') + (split[0] ? split[0] : '');
@@ -130,7 +170,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     ;
 
     //Fitro por data de coleta
-    $scope.filterDataColeta = function(data) {
+    $scope.filterDataColeta = function (data) {
 
         if ($scope.dtColeta != null) {
             var dtColeta = dateToEua($scope.dtColeta);
@@ -145,7 +185,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     };
 
     //Fitro por data de entrega
-    $scope.filterDataEntrega = function(data) {
+    $scope.filterDataEntrega = function (data) {
         if ($scope.dtEntrega != null) {
             var dtEntrega = dateToEua($scope.dtEntrega);
             if (data <= dtEntrega) {
@@ -159,29 +199,20 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
     };
 
     //Metodo para resetar dados do formulario de pesquisa
-    $scope.resetForm = function() {
+    $scope.resetForm = function () {
         $scope.dtColeta = null;
         $scope.dtEntrada = null;
         $scope.search = null;
     };
 
-    $scope.$watch("search", function(query) {
-        $scope.count = $filter('filter')($scope.collection, query).length;
-    });
-
-    $scope.$watch("cmb_empresa", function(query) {
-        $scope.search = query;
-        $scope.count = $filter('filter')($scope.collection, query).length;
-    });
-
-    $scope.historico = function(model) {
+    $scope.historico = function (model) {
         $('.modal').modal('show');
         $scope.message = {text: 'Aguarde carregando...', type: 'success'};
 
         $scope.historicoCollection = [];
         $scope.historicoProcessoId = model.cod_processo;
 
-        $http.get('/admin/processos/find-historico-processo/id/' + model.id_processo).success(function(response) {
+        $http.get('/admin/processos/find-historico-processo/id/' + model.id_processo).success(function (response) {
             $scope.historicoCollection = response;
 
             if (!$scope.historicoCollection.length) {
@@ -192,13 +223,13 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
         return false;
     };
 
-    $scope.imprimirHistorico = function(id) {
+    $scope.imprimirHistorico = function (id) {
         if (id) {
             $window.open('/admin/processos/detalhes/id/' + id);
         }
     };
 
-    $scope.deleteModel = function(model) {
+    $scope.deleteModel = function (model) {
         if (model && confirm('Deseja realmente executar esta operação?')) {
             $scope.model = model;
             ModelFactory.remove({id_processo: $scope.model.id_processo}, $scope.model);
@@ -207,7 +238,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
         }
     };
 
-    $scope.addHistorico = function() {
+    $scope.addHistorico = function () {
 
         $scope.historicoModel = {
             texto_historico: $scope.texto_historico,
@@ -221,9 +252,9 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
 
 });
 
-app.controller('ProcessosEditController', function($scope, $log, $routeParams, $location, ModelFactory, $window, $http) {
+app.controller('ProcessosEditController', function ($scope, $log, $routeParams, $location, ModelFactory, $window, $http) {
 
-    $http.get('/admin/processos/ajax-get-processo-by-id/id/' + $routeParams.id).success(function(response) {
+    $http.get('/admin/processos/ajax-get-processo-by-id/id/' + $routeParams.id).success(function (response) {
         loading();
 
         $scope.model = response;
@@ -236,7 +267,7 @@ app.controller('ProcessosEditController', function($scope, $log, $routeParams, $
 
     $('.add-popover').popover({show: 500, hide: 100});
 
-    $scope.save = function(saveNew) {
+    $scope.save = function (saveNew) {
         $scope.model = ModelFactory.save({id_processo: $scope.model.id_processo}, $scope.model);
 
         new PNotify({
@@ -253,37 +284,37 @@ app.controller('ProcessosEditController', function($scope, $log, $routeParams, $
 
     };
 
-    $scope.back = function() {
+    $scope.back = function () {
         $window.history.back();
     };
 
-    $scope.inputNumberUp = function() {
+    $scope.inputNumberUp = function () {
         $scope.model.quantidade++;
     };
 
-    $scope.inputNumberDown = function() {
+    $scope.inputNumberDown = function () {
         if ($scope.model.quantidade > 0) {
             $scope.model.quantidade--;
         }
     };
 
-    $scope.checkFormaFaturamento = function(idFormaFaturamento) {
+    $scope.checkFormaFaturamento = function (idFormaFaturamento) {
         $scope.model.forma_faturamento_id = idFormaFaturamento;
     };
 
-    $scope.clear = function(el, val) {
+    $scope.clear = function (el, val) {
         $scope.model[el] = val;
     };
 
 });
 
-app.controller('ProcessosAddController', function($scope, $log, $location, ModelFactory, $window) {
+app.controller('ProcessosAddController', function ($scope, $log, $location, ModelFactory, $window) {
 
     $scope.model = {quantidade: 1, forma_faturamento_id: 3};
 
     $('#div-quantidade').popover({show: 500, hide: 100});
 
-    $scope.save = function(saveNew) {
+    $scope.save = function (saveNew) {
         $scope.model = ModelFactory.save(null, $scope.model);
 
         new PNotify({
@@ -299,25 +330,25 @@ app.controller('ProcessosAddController', function($scope, $log, $location, Model
         }
     };
 
-    $scope.back = function() {
+    $scope.back = function () {
         $window.history.back();
     };
 
-    $scope.inputNumberUp = function() {
+    $scope.inputNumberUp = function () {
         $scope.model.quantidade++;
     };
 
-    $scope.inputNumberDown = function() {
+    $scope.inputNumberDown = function () {
         if ($scope.model.quantidade > 0) {
             $scope.model.quantidade--;
         }
     };
 
-    $scope.checkFormaFaturamento = function(idFormaFaturamento) {
+    $scope.checkFormaFaturamento = function (idFormaFaturamento) {
         $scope.model.forma_faturamento_id = idFormaFaturamento;
     };
 
-    $scope.clear = function(el) {
+    $scope.clear = function (el) {
         $scope.model[el] = null;
     };
 

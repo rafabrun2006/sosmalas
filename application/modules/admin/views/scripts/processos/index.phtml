@@ -11,8 +11,8 @@
                 <h3>Processos</h3>
                 <div class="control-group">
                     <label class="control-label">
-                        <strong>Buscar: </strong><input ng-model="search" autocomplete="off" id="auto-complete" 
-                               placeholder="ID, Nome Empresa, Cliente ou Serviço" name="nome_cliente" class="search-query input-xlarge" type="text"/>
+                        <strong>Buscar: </strong><input ng-model="search.input" autocomplete="off" id="auto-complete" 
+                               placeholder="ID, Cliente ou Serviço" name="nome_cliente" class="search-query input-xlarge" type="text"/>
                     </label>
                     <label class="control-label">
                         <input ng-model="dtColeta" ng-controller="DatePicker" ui-mask="99-99-9999" id="appendInput" name="dt_coleta" type="text" class="date input-small">
@@ -21,8 +21,13 @@
                         <input ng-model="dtEntrega" ui-mask="99-99-9999" name="dt_entrega" type="text" class="date input-small">
                     </label>
                     <label class="control-label">
+                        <select ng-model="search.id_status" ng-options="item.tx_status for item in statusProcesso">
+                            <option value="">--</option>
+                        </select>
+                    </label>
+                    <label class="control-label">
                         <?php if($this->acl->isAllowed($this->user->tipo_acesso_id, 'admin:processos', 'combo-filter')): ?>
-                            <select ng-model="cmb_empresa">
+                            <select ng-model="search.nome_empresa">
                                 <option value="">--</option>
                                 <?php foreach($this->parceiros as $value): ?>
                                     <option><?=$value->nome_empresa ?></option>

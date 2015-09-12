@@ -22,7 +22,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->view->form = new Admin_Form_Processos();
         $this->view->parceiros = $pessoa->fetchAll();
-
+        
         $this->view->user = Zend_Auth::getInstance()->getIdentity();
         $this->view->acl = Zend_Registry::get('acl');
 
@@ -193,6 +193,23 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         $result = $modelHistProc->find($processo_id)->toArray();
 
         $this->_helper->json($result[0]);
+    }
+    
+    public function ajaxStatusProcessoAction(){
+        $array = SOSMalas_Const::getStatusProcesso();
+        
+        $status = array(
+            array(
+                'id_status' => SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO,
+                'tx_status' => $array[SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO]
+            ),
+            array(
+                'id_status' => SOSMalas_Const::STATUS_PROCESSO_FINALIZADO,
+                'tx_status' => $array[SOSMalas_Const::STATUS_PROCESSO_FINALIZADO]
+            ),
+        );
+        
+        $this->_helper->json($status);
     }
 
 }

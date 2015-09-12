@@ -170,7 +170,7 @@ app.controller('ProcessosController', function($scope, $http, $filter, $log, Mod
         $scope.search = query;
         $scope.count = $filter('filter')($scope.collection, query).length;
     });
-
+    
     $scope.historico = function(model) {
         $('.modal').modal('show');
         $scope.message = {text:'Aguarde carregando...', type:'success'};

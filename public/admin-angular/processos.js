@@ -104,7 +104,7 @@ app.controller('ProcessosController', function ($scope, $http, $filter, $log, Mo
 
     $scope.search = {};
     $scope.filterLabels = '';
-
+    
     $scope.filterGrid = function (object) {
         
         var res = true;
@@ -202,7 +202,7 @@ app.controller('ProcessosController', function ($scope, $http, $filter, $log, Mo
     $scope.resetForm = function () {
         $scope.dtColeta = null;
         $scope.dtEntrada = null;
-        $scope.search = null;
+        $scope.search = {};
     };
 
     $scope.historico = function (model) {

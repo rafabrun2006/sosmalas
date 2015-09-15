@@ -107,17 +107,22 @@ app.controller('ProcessosController', function ($scope, $http, $filter, $log, Mo
     
     $scope.filterGrid = function (object) {
         
-        var res = true;
+        var res1 = true, res2 = true, res3 = true;
+        
         var arr = [];
         var labels = [];
 
         if ($scope.search.nome_empresa) {
-            res = $scope.search.nome_empresa === object.nome_empresa ? true : false;
+            if ($scope.search.nome_empresa !== object.nome_empresa){
+                res1 = false;
+            }
             labels.push($scope.search.nome_empresa);
         }
 
         if ($scope.search.id_status) {
-            res = $scope.search.id_status.id_status === parseInt(object.id_status) ? true : false;
+            if ($scope.search.id_status.id_status !== parseInt(object.id_status)){
+                res2 = false;
+            }
             labels.push($scope.search.id_status.tx_status);
         }
 
@@ -126,15 +131,27 @@ app.controller('ProcessosController', function ($scope, $http, $filter, $log, Mo
                 arr.push(val);
             });
 
-            if (res) {
-                res = $filter('filter')(arr, $scope.search.input).length;
-            }
+            res3 = $filter('filter')(arr, $scope.search.input).length;
+            
             labels.push($scope.search.input);
         }
 
         $scope.filterLabels = labels.join(' / ');
 
-        return res;
+        if (!res1){
+            return false;
+        }
+            
+        if (!res2){
+            return false;
+        }
+
+        if (!res3){
+            return false;
+        }
+        
+        return true;
+        
     };
     
     $http.get('/admin/processos/ajax-status-processo').success(function(response){

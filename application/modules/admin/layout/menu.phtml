@@ -8,13 +8,13 @@ $acl = Zend_Registry::get('acl');
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>-->
-    <a href="/admin/index" class="brand" title="SOS Malas">SOS Malas</a>
+    <a ui-sref="index" class="brand" title="SOS Malas">SOS Malas</a>
     <div class="nav-collapse collapse">
         <ul class="nav">
-            <li class="active"><a href="/admin/index">Área de Trabalho</a></li>
+            <li class="active"><a ui-sref="index">Área de Trabalho</a></li>
             <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:pessoa')): ?>
                 <li class="dropdown">
-                    <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="/">
                         <strong>Parceiro/Funcionário</strong>
                         <b class="caret"></b>
                     </a>
@@ -24,7 +24,7 @@ $acl = Zend_Registry::get('acl');
                             <li><a href="/admin/pessoa/cadastro"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>
                         <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:pessoa', 'pesquisar-pessoa')): ?>
-                            <li><a href="/admin/pessoa/index"><i class="icon-eye-open"></i> Visualizar</a></li>
+                            <li><a ui-sref="pessoa"><i class="icon-eye-open"></i> Visualizar</a></li>
                         <?php endif ?>
                     </ul>
                 </li>
@@ -41,7 +41,7 @@ $acl = Zend_Registry::get('acl');
                             <li><a href="/admin/processos/#cadastrar"><i class="icon-plus"></i> Cadastrar</a></li>
                         <?php endif ?>
                         <?php if ($acl->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
-                            <li><a href="/admin/processos"><i class="icon-search"></i> Consultar</a></li>
+                            <li><a ui-sref="processos"><i class="icon-search"></i> Consultar</a></li>
                         <?php endif ?>
                     </ul>
                 </li>

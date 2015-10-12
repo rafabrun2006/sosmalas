@@ -6,6 +6,11 @@ and open the template in the editor.
 
 <root>
     <roles>
+        <client>
+            <parent></parent>
+            <name>client</name>
+            <level>4</level>
+        </client>
         <user>
             <parent></parent>
             <name>user</name>
@@ -46,6 +51,14 @@ and open the template in the editor.
             <role>user|admin|user|user|user|admin|admin|user|user|member|user|member</role>
             <label>Processo</label>
         </processos>
+        
+        <marca class="active">
+            <module>admin</module>
+            <controller>marca</controller>
+            <action>index</action>
+            <role>user</role>
+            <label>Marca</label>
+        </marca>
         
         <utils class="">
             <module>admin</module>

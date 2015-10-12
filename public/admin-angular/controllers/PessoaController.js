@@ -4,8 +4,7 @@
  * and open the template in the editor.
  */
 
-function AppPessoaController($scope, $http) {
-    
+app.controller('PessoaController', function($scope, $http) {
     $scope.pessoaCollection = [];
     $scope.user = 'Texto';
 
@@ -21,6 +20,5 @@ function AppPessoaController($scope, $http) {
 
     $scope.submitForm = function() {
         $('#form-edit-person').submit();
-    }
-}
-
+    };
+});

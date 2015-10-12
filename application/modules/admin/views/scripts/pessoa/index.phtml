@@ -4,45 +4,42 @@
     }
 </style>
 
-<div ng-controller="AppPessoaController" ng-app="">
-    <form action="" method="post" class="form-inline">
-        <legend>Parceiro/Funcionário</legend>
-        <div class="control-group">
-            <div class="controls">
-                <label class="control-label"><strong>Buscar:</strong></label>
-                <input placeholder="Digite nome, email, fone, contato, empresa/funcionario" ng-model="search" 
-                       required="required" class="input-xxlarge search-query" autocomplete="off" 
-                       name="nome_contato" type="text" size="40">
-            </div>
+<form action="" method="post" class="form-inline">
+    <legend>Parceiro/Funcionário</legend>
+    <div class="control-group">
+        <div class="controls">
+            <label class="control-label"><strong>Buscar:</strong></label>
+            <input placeholder="Digite nome, email, fone, contato, empresa/funcionario" ng-model="search" 
+                   required="required" class="input-xxlarge search-query" autocomplete="off" 
+                   name="nome_contato" type="text" size="40">
         </div>
-        <br>
-        <table class="table table-striped table-bordered">
-            <thead>
-            <th>ID</th>
-            <th>Empresa/Funcionário</th>
-            <th>Contato</th>
-            <th>Fone</th>
-            <th>Email</th>
-            <th>Rec. Notif.</th>
-            <th></th>
-            </thead>
-            <tbody>
-                <tr ng-repeat="pessoaModel in pessoaCollection| filter:search">
-                    <td>{{pessoaModel.id_pessoa}}</td>
-                    <td>{{pessoaModel.nome_empresa}}</td>
-                    <td>{{pessoaModel.nome_contato}}</td>
-                    <td>{{pessoaModel.fone_empresa}}</td>
-                    <td>{{pessoaModel.email}}</td>
-                    <td>{{(pessoaModel.recebe_notificacao == 1) ? 'Sim' : 'Não'}}</td>
-                    <td>
-                        <div class="btn-group">
-                            <a class="btn" href="/admin/pessoa/editar/id_pessoa/{{pessoaModel.id_pessoa}}"><i class="icon-edit"></i></a>
-                            <a class="btn btn-danger" href="/admin/pessoa/delete/id_pessoa/{{pessoaModel.id_pessoa}}"><i class="icon-trash icon-white"></i></a>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </form>
-</div>
-<script type="text/javascript" src="/pessoa/js"></script>
+    </div>
+    <br>
+    <table class="table table-striped table-bordered">
+        <thead>
+        <th>ID</th>
+        <th>Empresa/Funcionário</th>
+        <th>Contato</th>
+        <th>Fone</th>
+        <th>Email</th>
+        <th>Rec. Notif.</th>
+        <th></th>
+        </thead>
+        <tbody>
+            <tr ng-repeat="pessoaModel in pessoaCollection| filter:search">
+                <td>{{pessoaModel.id_pessoa}}</td>
+                <td>{{pessoaModel.nome_empresa}}</td>
+                <td>{{pessoaModel.nome_contato}}</td>
+                <td>{{pessoaModel.fone_empresa}}</td>
+                <td>{{pessoaModel.email}}</td>
+                <td>{{(pessoaModel.recebe_notificacao == 1) ? 'Sim' : 'Não'}}</td>
+                <td>
+                    <div class="btn-group">
+                        <a class="btn" href="/admin/pessoa/editar/id_pessoa/{{pessoaModel.id_pessoa}}"><i class="icon-edit"></i></a>
+                        <a class="btn btn-danger" href="/admin/pessoa/delete/id_pessoa/{{pessoaModel.id_pessoa}}"><i class="icon-trash icon-white"></i></a>
+                    </div>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</form>

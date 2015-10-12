@@ -17,17 +17,20 @@ class Admin_ProcessosController extends Zend_Controller_Action {
      */
     public function indexAction() {
         //Conteudo correspondente em HTML e Ajax
+        
+        $this->_helper->layout()->disableLayout();
 
         $pessoa = new Application_Model_Pessoa();
 
         $this->view->form = new Admin_Form_Processos();
         $this->view->parceiros = $pessoa->fetchAll();
-        
+
         $this->view->user = Zend_Auth::getInstance()->getIdentity();
         $this->view->acl = Zend_Registry::get('acl');
-
-        $this->view->formTemplate = $this->view->render('processos/form-template.phtml');
-        $this->view->listarTemplate = $this->view->render('processos/listar-template.phtml');
+    }
+    
+    public function addEditAction(){
+        $this->_helper->layout()->disableLayout();
     }
 
     public function ajaxProcessosAction() {
@@ -55,6 +58,7 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $form = new Admin_Form_Processos();
         $processosModel = new Application_Model_Processo();
+        $pessoaModel = new Application_Model_Pessoa();
 
         $post = Zend_Json::decode($this->getRequest()->getRawBody());
         $post['pessoa_cadastro_id'] = Zend_Auth::getInstance()->getIdentity()->id_pessoa;
@@ -62,25 +66,45 @@ class Admin_ProcessosController extends Zend_Controller_Action {
         if ($this->_request->isPost()) {
 
             if ($form->isValid($post)) {
-                $isUpdate = array_key_exists('id_processo', $post) ? TRUE : FALSE;
+
+                $res = array();
+
+                if (array_key_exists('email', $post) || array_key_exists('nome_contato', $post)) {
+                    
+                    $email = isset($post['email']) ? $post['email'] : NULL;
+                    $nome_contato = isset($post['nome_contato']) ? $post['nome_contato'] : NULL;
+                    
+                    $res = $pessoaModel->verifyExistsPessoaByEmailAndName($nome_contato, $email);
+
+                    if (!$res) {
+                        $post['senha'] = $post['cod_processo'];
+                        $post['tipo_acesso_id'] = 'client';
+                        $post['pessoa_cliente_id'] = $pessoaModel->insert($post);
+                        $res = $pessoaModel->find($post['pessoa_cliente_id'])->current();
+                    } else {
+                        $post['pessoa_cliente_id'] = $res->id_pessoa;
+                    }
+                    
+                    $post['nome_cliente'] = $res->nome_contato;
+                }
 
                 $post['id_processo'] = $processosModel->save($post);
 
+//                $isUpdate = array_key_exists('id_processo', $post) ? TRUE : FALSE;
                 //Chamando o processo de envio de email
+//                if ($isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_FINALIZADO) {
+//                    $this->enviarEmailProcessoAction($post);
+//                }
+//
+//                if (!$isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO) {
+//                    $this->enviarEmailProcessoAction($post, TRUE);
+//                }
+
                 $model = new Application_Model_VwProcessos();
-
-                if ($isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_FINALIZADO) {
-                    $this->enviarEmailProcessoAction($post);
-                }
-
-                if (!$isUpdate && $post['status_id'] == SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO) {
-                    $this->enviarEmailProcessoAction($post, TRUE);
-                }
-
-                $result = $model->find($post['id_processo'])->toArray();
+                $result = $model->find($post['id_processo'])->current()->toArray();
 
                 $this->_helper->json(array(
-                    'model' => $result[0],
+                    'model' => $result,
                     'result' => TRUE,
                     'messages' => SOSMalas_Const::MSG01)
                 );
@@ -194,10 +218,10 @@ class Admin_ProcessosController extends Zend_Controller_Action {
 
         $this->_helper->json($result[0]);
     }
-    
-    public function ajaxStatusProcessoAction(){
+
+    public function ajaxStatusProcessoAction() {
         $array = SOSMalas_Const::getStatusProcesso();
-        
+
         $status = array(
             array(
                 'id_status' => SOSMalas_Const::STATUS_PROCESSO_EM_CONSERTO,
@@ -208,8 +232,13 @@ class Admin_ProcessosController extends Zend_Controller_Action {
                 'tx_status' => $array[SOSMalas_Const::STATUS_PROCESSO_FINALIZADO]
             ),
         );
-        
+
         $this->_helper->json($status);
+    }
+
+    public function ajaxLocalEntregaColetaAction() {
+        $model = new Application_Model_LocalEntregaColeta();
+        $this->_helper->json($model->fetchAll()->toArray());
     }
 
 }

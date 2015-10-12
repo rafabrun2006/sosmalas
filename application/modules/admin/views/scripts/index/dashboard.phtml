@@ -1,0 +1,57 @@
+<?php 
+    $user = Zend_Auth::getInstance()->getIdentity();
+    $session = new Zend_Session_Namespace(); 
+?>
+<fieldset>
+    <legend>Área de Trabalho</legend>
+    <ul class="thumbnails">
+       <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:pessoa')): ?> 
+        <li class="span2" alt="Registro de Entradas">
+            <div class="thumbnail">
+                <center><h4>Parceiro/<br>Funcionário</h4></center>
+                <i class="icon-person"></i>
+                <center>
+                    <div class="btn-group">
+                        <a href="/admin/pessoa/cadastro" class="btn btn-navbar" title="Cadastrar">
+                            <i class="icon-plus"></i>
+                        </a>
+                        <a href="/admin/pessoa" class="btn btn-navbar btn-info" title="Visualizar">
+                            <i class="icon-search icon-white"></i>
+                        </a>
+                    </div>
+                </center>
+            </div>
+        </li>
+        <?php endif; ?>
+        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>     
+        <li class="span2" alt="">
+            <div class="thumbnail">
+                <center><h4>Processos</h4></center>
+                <i class="icon-package"></i>
+                <center>
+                    <div class="btn-group">
+                        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:processos', 'cadastrar')): ?> 
+                            <a href="/admin/processos/#/cadastrar" class="btn" title="Cadastrar">
+                                <i class="icon-plus"></i>
+                            </a>
+                        <?php endif; ?>
+                        <?php if ($session->registerRoleResource->isAllowed($user->tipo_acesso_id, 'admin:processos', 'pesquisar')): ?>
+                            <a href="/admin/processos" class="btn btn-navbar btn-info" title="Consultar">
+                                <i class="icon-search icon-white"></i>
+                            </a>
+                        <?php endif; ?>
+                    </div>
+                </center>
+            </div>
+        </li>
+        <?php endif; ?>
+        <li class="span2">
+            <div class="thumbnail">
+                <i class="icon-logout" title="Sair do Sistema"></i>
+                <a href="/admin/auth/logout">
+                    <center><button class="btn btn-danger">Sair</button></center>
+                </a>
+            </div>
+        </li>
+    </ul>
+</fieldset>

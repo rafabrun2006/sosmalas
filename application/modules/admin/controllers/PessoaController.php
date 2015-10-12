@@ -115,7 +115,7 @@ class Admin_PessoaController extends Zend_Controller_Action {
             $request = $this->getRequest()->getRawBody();
             $post = Zend_Json_Decoder::decode($request);
         }
-        
+
         $array = $model->listPessoa($post)->toArray();
         $this->_helper->json($array);
     }
@@ -124,6 +124,44 @@ class Admin_PessoaController extends Zend_Controller_Action {
         $this->_helper->layout()->disableLayout();
         $this->_helper->viewRenderer->setNoRender(true);
         echo $this->view->render('/pessoa/datagrid.js');
+    }
+
+    public function ajaxGetParceirosAction() {
+        $model = new Application_Model_Pessoa();
+        $where = array('tipo_acesso_id = ?' => 'member');
+
+        $result = $model->fetchAll($where)->toArray();
+        $this->_helper->json($result);
+    }
+
+    public function ajaxCadastroClienteAction() {
+        $form = new Admin_Form_Pessoa();
+
+        $post = $this->_request->getPost();
+
+        if ($this->_request->isPost()) {
+            $model = new Application_Model_Pessoa();
+
+            if ($form->isValid($post)) {
+                $post['id_pessoa'] = $model->insert($post);
+                $this->_helper->json(array('result' => TRUE, 'messages' => $post));
+            } else {
+                $this->_helper->json(array('result' => FALSE, 'messages' => $post));
+            }
+        } else {
+            $this->_helper->json(array('result' => FALSE, 'messages' => $post));
+        }
+    }
+
+    public function ajaxGetClientAction() {
+        $model = new Application_Model_Pessoa();
+        
+        $where = array(
+            'id_pessoa = ?' => $this->getRequest()->getParam('id_pessoa')
+        );
+
+        $result = $model->find($where)->current()->toArray();
+        $this->_helper->json($result);
     }
 
 }

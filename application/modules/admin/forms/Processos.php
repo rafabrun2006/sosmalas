@@ -20,7 +20,7 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($id_processo);
 
         $cod_processo = new Zend_Form_Element_Text('cod_processo', array('required'=>'required'));
-        $cod_processo->setLabel('Processo')->setRequired(TRUE)->setAttrib('required', 'required');
+        $cod_processo->setLabel('Processo');
         $this->addElement($cod_processo);
 
         $id_empresa = new Zend_Form_Element_Select('id_empresa');
@@ -56,11 +56,10 @@ class Admin_Form_Processos extends Zend_Form {
         $this->addElement($dt_entrega);
 
         $status_id = new Zend_Form_Element_Select('status_id');
-        $status_id->setLabel('Status')->setRequired(TRUE)->setAttrib('required', 'required');
+        $status_id->setLabel('Status');
         $this->addElement($status_id);
 
         $pessoa_cadastro_id = new Zend_Form_Element_Hidden('pessoa_cadastro_id');
-        $pessoa_cadastro_id->setRequired(TRUE);
         $this->addElement($pessoa_cadastro_id);
         
         $local_entrega_id = new Zend_Form_Element_Select('local_entrega_id');

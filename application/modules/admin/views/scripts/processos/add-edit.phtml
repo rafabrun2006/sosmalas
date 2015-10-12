@@ -1,0 +1,212 @@
+<h3>{{prc.id_processo ? 'Editar Dados' : 'Cadastrar'}}</h3>
+<form ng-submit="save()" name="myForm" class="form-horizontal" method="post">
+    {{message}}
+    <div class="row-fluid">
+        <div class="span12 well well-small">
+            <div class="pull-right">
+                <strong>Processo:</strong>
+                <input name="cod_processo" ng-model="prc.cod_processo" required="" type="text" placeholder="Código do Processo">
+                <span class="label label-important" ng-show="myForm.cod_processo.$error.required">* Campo Processo obrigatório</span>
+            </div>
+        </div>
+    </div>
+    <div class="row-fluid">
+        <label class="control-group span6">
+            Cliente: <input ng-readonly="edit" ng-model="cliente.nome_contato" class="span12" type="text" placeholder="Nome do Cliente">
+        </label>
+        <label class="control-group span3">
+            Fone Fixo: <input ng-readonly="edit" ng-model="cliente.tx_tel_fixo" class="span12 fone" type="text" placeholder="Ex.: (11) 9999-9999">
+        </label>
+        <label class="control-group span3">
+            Celular: <input ng-readonly="edit" ng-model="cliente.tx_tel_celular" class="span12 fone" type="text" placeholder="Ex.: (11) 9999-9999">
+        </label>
+    </div>
+    <div class="row-fluid">
+        <label class="control-group span6">
+            Endereço: <input ng-readonly="edit" ng-model="cliente.tx_endereco" type="text" class="span12" placeholder="Ex.: Quadra 10 lote 123">
+        </label>
+        <label class="control-group span6">
+            Email: <input ng-readonly="edit" ng-model="cliente.email" type="email" class="span12" placeholder="Ex.: email@email.com">
+        </label>
+    </div>
+    <div class="row-fluid">
+        <label class="control-group span3">
+            Local Coleta: 
+            <select ng-model="prc.local_coleta_id" class="span12">
+                <option ng-repeat="opt in localEntregaColeta" value="{{opt.id_local_entrega_coleta}}">{{opt.tx_local}}</option>
+            </select>
+        </label>
+        <label class="control-group span2">
+            Data Coleta: <input ng-model="prc.dt_coleta" placeholder="___/___/___" type="datetime" class="span12 date">
+        </label>
+        <label class="control-group span3">
+            Local Entrega: 
+            <select ng-model="prc.local_entrega_id" class="span12">
+                <option ng-repeat="opt in localEntregaColeta" value="{{opt.id_local_entrega_coleta}}">{{opt.tx_local}}</option>
+            </select>
+        </label>
+        <label class="control-group span2">
+            Previsão Entrega: <input ng-model="prc.dt_previsao_entrega" placeholder="___/___/___" type="datetime" class="span12 date">
+        </label>
+        <label class="control-group span2">
+            Data Entrega: <input ng-model="prc.dt_entrega" placeholder="___/___/___" type="datetime" class="span12 date">
+        </label>
+    </div>
+    <div class="row-fluid">
+        <label class="control-group span3">
+            Parceiro:  
+            <select ng-model="prc.id_empresa" class="span12">
+                <option ng-repeat="opt in parceiros" value="{{opt.id_pessoa}}">{{opt.nome_empresa}}</option>
+            </select>
+        </label>
+        <label class="control-group span9">
+            Observação: <input ng-model="prc.tx_observacao" placeholder="Observação para o processo" type="text" class="span12">
+        </label>
+    </div>
+    <div class="row-fluid">
+        <div class="span3">
+            <div class="span12 alert alert-info">
+                <label class="checkbox span3">
+                    <input ng-change="checkTamanhos(0)" ng-model="produto.tamanhos[0]" type="checkbox"> P
+                </label>
+                <label class="checkbox span3">
+                    <input ng-change="checkTamanhos(1)" ng-model="produto.tamanhos[1]" type="checkbox"> M
+                </label>
+                <label class="checkbox span3">
+                    <input ng-change="checkTamanhos(2)" ng-model="produto.tamanhos[2]" type="checkbox"> G
+                </label>
+                <label class="checkbox span3">
+                    <input ng-change="checkTamanhos(3)" ng-model="produto.tamanhos[3]" type="checkbox"> EG
+                </label>
+            </div>
+            <div class="row-fluid">
+                <div class="span12 alert alert-info">
+                    <legend><center>Marcas</center></legend>
+                    <label class="span5 checkbox" ng-repeat="item in marcas| orderBy:'tx_marca'">
+                        <input ng-change="checkMarcas(item.id_marca)" ng-model="produto.marcas[item.id_marca]" type="checkbox"> {{item.tx_marca}}
+                    </label>
+                    <div class="input-append">
+                        <input ng-model="marca" class="span12" type="text" placeholder="Adicionar Marca">
+                        <span ng-click="addMarca()" class="btn btn-success add-on">
+                            <i class="icon icon-plus-sign icon-white"></i>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="span9">
+            <div class="row-fluid">
+                <div class="span8 alert alert-info">
+                    <div class="span3">
+                        <label class="checkbox">
+                            <input ng-change="checkCores(0)" ng-model="produto.cores[0]" type="checkbox"> Preta
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(1)" ng-model="produto.cores[1]" type="checkbox"> Azul
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(2)" ng-model="produto.cores[2]" type="checkbox"> Cinza
+                        </label>
+                    </div>
+                    <div class="span3">
+                        <label class="checkbox">
+                            <input ng-change="checkCores(3)" ng-model="produto.cores[3]" type="checkbox"> Vermelha
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(4)" ng-model="produto.cores[4]" type="checkbox"> Roxa
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(5)" ng-model="produto.cores[5]" type="checkbox"> Marrom
+                        </label>
+                    </div>
+                    <div class="span3">
+                        <label class="checkbox">
+                            <input ng-change="checkCores(6)" ng-model="produto.cores[6]" type="checkbox"> Rosa
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(7)" ng-model="produto.cores[7]" type="checkbox"> Vinho
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(8)" ng-model="produto.cores[8]" type="checkbox"> Branca
+                        </label>
+                    </div>
+                    <div class="span3">
+                        <label class="checkbox">
+                            <input ng-change="checkCores(9)" ng-model="produto.cores[9]" type="checkbox"> Amarela
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(10)" ng-model="produto.cores[10]" type="checkbox"> Verde
+                        </label>
+                        <label class="checkbox">
+                            <input ng-change="checkCores(11)" ng-model="produto.cores[11]" type="checkbox"> Estampada
+                        </label>
+                    </div>
+                </div>
+                <div class="span4 alert alert-info">
+                    <center>Empresa Aérea</center>
+                    <center>_____________________________</center>
+                    <center>Nº ___________________________</center>
+                </div>
+            </div>
+            <div class="row-fluid">
+                <table class="table table-bordered table-condensed table-striped">
+                    <thead>
+                    <th class="">Quant.</th>
+                    <th>Ref. Fábrica</th>
+                    <th>Conserto</th>
+                    <th>Situação</th>
+                    <th>Ações</th>
+                    </thead>
+                    <tbody>
+                        <tr ng-repeat="item in itens">
+                            <td>1</td>
+                            <td>Referencia Fabrica</td>
+                            <td>BK22</td>
+                            <td>
+                                <button class="btn btn-danger btn-small">
+                                    <i class="icon icon-trash icon-white"></i> 
+                                    Apagar
+                                </button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input class="span12" type="number"></td>
+                            <td><input type="text"></td>
+                            <td><textarea></textarea></td>
+                            <td>
+                                <select ng-model="item.id_status" ng-options="status.tx_status for status in statusProcesso"></select>
+                            </td>
+                            <td>
+                                <button type="button" class="btn btn-success">
+                                    <i class="icon icon-plus icon-white"></i>
+                                    Adicionar
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="well well-small">
+                <label class="control-group">
+                    <div class="input-prepend">
+                        <span class="add-on">VALOR A PAGAR: R$</span>
+                        <input type="text" ng-model="prc.valor">
+                    </div>
+                </label>
+            </div>
+            <div class="well well-small">
+                <div class="control-group">
+                    <div class="controls">
+                        <button ng-click="saveAction = 0" type="submit" ng-disabled="myForm.$invalid" class="btn btn-success"><i class="icon-ok icon-white"></i> Salvar</button>
+                        <button ng-click="saveAction = 1"  type="submit" ng-disabled="myForm.$invalid" class="btn btn-success"><i class="icon-ok-circle icon-white"></i> Salvar e Saír</button>
+                        <!--<button ng-click="saveAction = 2"  type="submit" ng-disabled="myForm.$invalid" class="btn btn-success"><i class="icon-ok-circle icon-white"></i> Salvar e Novo</button>-->
+                        <button ng-disabled="prc.cod_processo" type="reset" class="btn btn-danger"><i class="icon-trash icon-white"></i> Limpar</button>
+                        <button type="button" class="btn" ng-click="back()"><i class="icon-backward"></i> Voltar</button>
+                        <a ng-disabled="!prc.cod_processo" class="btn btn-primary" ui-sref="processosaddedit({})"><i class="icon-plus-sign icon-white"></i> Novo</a>
+                        <button type="button" class="btn btn-inverse" ng-click="back()"><i class="icon-remove icon-white"></i> Cancelar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

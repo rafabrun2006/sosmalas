@@ -53,8 +53,17 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
     public function update(array $data, $where = null) {
         $historico = new Application_Model_HistoricoProcesso();
         
-        $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
-        $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
+        if (array_key_exists('dt_coleta', $data)) {
+            $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
+        }
+        
+        if (array_key_exists('dt_entrega', $data)) {
+            $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
+        }
+        
+        if (array_key_exists('dt_previsao_entrega', $data)) {
+            $data['dt_previsao_entrega'] = SOSMalas_Date::dateToBanco($data['dt_previsao_entrega']);
+        }
 
         //Preenchendo atributo referencia na tabela historico de processo
         $data['processo_id'] = $data['id_processo'];
@@ -69,8 +78,17 @@ class Application_Model_Processo extends SOSMalas_Db_Mapper {
     public function insert(array $data) {
         $historico = new Application_Model_HistoricoProcesso();
         
-        $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
-        $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
+        if (array_key_exists('dt_coleta', $data)) {
+            $data['dt_coleta'] = SOSMalas_Date::dateToBanco($data['dt_coleta']);
+        }
+        
+        if (array_key_exists('dt_entrega', $data)) {
+            $data['dt_entrega'] = SOSMalas_Date::dateToBanco($data['dt_entrega']);
+        }
+        
+        if (array_key_exists('dt_previsao_entrega', $data)) {
+            $data['dt_previsao_entrega'] = SOSMalas_Date::dateToBanco($data['dt_previsao_entrega']);
+        }
 
         //Preenchendo atributo referencia na tabela historico de processo
         $data['processo_id'] = parent::insert($data);
